@@ -4,20 +4,26 @@
 import  {database} from "../firebase";
 
 // GET Action
-export const UPLOAD_LOADER = 'UPLOAD_LOADER';
-export const uploadLoader = () => ({
-  type: UPLOAD_LOADER
+export const UPLOAD_REQUEST = 'UPLOAD_REQUEST';
+export const uploadRequest = () => ({
+  type: UPLOAD_REQUEST
 });
 
-export const UPLOAD_GET = 'UPLOAD_GET';
-export const uploadGet = (data) => ({
-  type: UPLOAD_GET,
+export const UPLOAD_GET_SUCCESS = 'UPLOAD_GET_SUCCESS';
+export const uploadGetSuccess = (data) => ({
+  type: UPLOAD_GET_SUCCESS,
   data
 });
 
-export const UPLOAD_DELETE = 'UPLOAD_DELETE';
-export const uploadDelete = () => ({
-  type: UPLOAD_DELETE
+export const UPLOAD_POST_SUCCESS = 'UPLOAD_POST_SUCCESS';
+export const uploadPostSuccess = (data) => ({
+  type: UPLOAD_POST_SUCCESS,
+  data
+});
+
+export const UPLOAD_DELETE_SUCCESS = 'UPLOAD_DELETE_SUCCESS';
+export const uploadDeleteSuccess = () => ({
+  type: UPLOAD_DELETE_SUCCESS
 });
 
 export const UPLOAD_ERROR = 'UPLOAD_ERROR';
@@ -29,28 +35,23 @@ export const uploadError = error => ({
 // Methods
 export const getUploads = () => dispatch => {
   // TODO: Check Authentication
-  dispatch(uploadLoader());
+  dispatch(uploadRequest(true));
   return database.ref('posts/').on('value', data => {
-    dispatch(uploadGet(data.val()));
-  })
+    dispatch(uploadGetSuccess(data.val()));})
 };
 
 export const upload = (data) => dispatch => {
   // TODO: Check Authentication
-  dispatch(uploadLoader());
+  dispatch(uploadRequest());
   return database.ref('posts/').push(data)
-    .then(dispatch(uploadSuccess()))
-    .catch(err => {
-      dispatch(uploadError(err))
-    });
+    .then(dispatch(uploadPostSuccess()))
+    .catch(err => {dispatch(uploadError(err))});
 };
 
 export const deleteUpload = (id) => dispatch => {
   // TODO: Check Authentication
-  dispatch(uploadLoader());
+  dispatch(uploadRequest());
   return database.ref('posts/').child(id).remove()
-    .then(dispatch(uploadDelete()))
-    .catch(err => {
-      dispatch(uploadError(err));
-    });
+    .then(dispatch(uploadDeleteSuccess()))
+    .catch(err => {dispatch(uploadError(err));});
 };

@@ -10,16 +10,14 @@ class HeaderNav extends Component {
     return (
       <nav className="navbar navbar-expand-sm bg-light">
         <div className="container-fluid">
-          {/*<div className="navbar-header">*/}
           <Link className="navbar-brand" to="/">Logo</Link>
           <button type="button" className="navbar-toggler bg-dark" data-toggle="collapse" data-target="#HeadNav">
             <span className="navbar-toggler-icon"/>
           </button>
-          {/*</div>*/}
         </div>
         <div className="collapse navbar-collapse" id="HeadNav">
           {
-            _.isEmpty(this.props.auth) ? (
+            _.isEmpty(this.props.auth.data) ? (
               <ul className="navbar-nav navbar-right">
                 <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
               </ul>
@@ -41,7 +39,7 @@ class HeaderNav extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth.data
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {getAuth, signOut})(HeaderNav);

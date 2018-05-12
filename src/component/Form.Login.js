@@ -6,7 +6,7 @@ import {getAuth} from "../actions/action.auth";
 
 import Input from "./Input";
 
-import {loginEmailPassword} from '../actions/action.user';
+import {loginEmailPassword} from '../actions/action.auth';
 
 class FormLogin extends Component{
   constructor(props){
@@ -20,7 +20,6 @@ class FormLogin extends Component{
   onSubmit(values) {
     this.props.loginEmailPassword(values);
     this.props.dispatch(reset('login'));
-    this.props.getAuth();
   }
 
   handleChange = (e) => {

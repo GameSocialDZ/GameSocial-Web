@@ -9,13 +9,6 @@ import FormRegister from "../component/Form.Register";
 import FormLogin from "../component/Form.Login";
 
 class Register extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      hasAccount: false
-    }
-  }
-
   renderRegisterFooter() {
     return(
       <div>

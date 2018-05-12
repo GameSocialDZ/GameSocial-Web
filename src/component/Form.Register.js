@@ -4,9 +4,11 @@ import {reduxForm, Field, reset} from 'redux-form';
 
 import {getAuth} from "../actions/action.auth";
 
+import {createLoadingSelector} from "../selectors/select.loading";
+
 import Input from "./Input";
 
-import {registerEmailPassword} from '../actions/action.user';
+import {registerEmailPassword} from '../actions/action.auth';
 
 class FormRegister extends Component{
   constructor(props){
@@ -72,7 +74,13 @@ class FormRegister extends Component{
   }
 }
 
-FormRegister = connect(null, {registerEmailPassword, getAuth})(FormRegister);
+const loadingSelector = createLoadingSelector(['Auth']);
+
+const mapStateToProps = state => ({
+  loading: loadingSelector(state)
+});
+
+FormRegister = connect(mapStateToProps, {registerEmailPassword, getAuth})(FormRegister);
 
 export default reduxForm({
   form: 'register',
