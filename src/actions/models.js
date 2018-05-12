@@ -1,0 +1,99 @@
+class NewUserObject {
+  constructor(user, dob = '') {
+    this.profile = {
+      id: user.uid,
+      username: user.displayName,
+      email: user.email,
+      name: "",
+      avatar: "",
+      bio: "",
+      guild: "",
+      dob: dob
+    };
+    this.timestamp = new Date().getTime().toString();
+    this.lastLogin = [];
+    this.points = 0;
+    this.likes = {
+      videos: [],
+      comments: []
+    };
+    this.dislikes = {
+      videos: [],
+      comments: []
+    };
+    this.comments = [];
+    this.isAdmin = false; //SR Added 12/13 - default admin status false
+    this.notifications = [];
+    this.videos = [];
+    this.pictures = [];
+    this.following =[];
+    this.followers =[];
+    this.guild = "";
+  }
+}
+
+// class UserObject {
+//   constructor(isAuth, user) {
+//     this.isAuth = isAuth;
+//     this.isAdmin = user.isAdmin;
+//     this.profile = user.profile;
+//     this.likes = user.likes;
+//     this.dislikes = user.dislikes;
+//     this.favorite = user.favorite;
+//     this.followers = user.followers;
+//     this.following = user.following;
+//     this.points = user.points;
+//     this.teams = user.teams;
+//     this.comments = user.comments;
+//   }
+// }
+//
+// class UpdateUserProfileObject{
+//   constructor(user, profile, avatarUrl){
+//     this.avatar = avatarUrl;
+//     this.bio = profile.bio;
+//     this.id = user.id;
+//     this.name = profile.fullName;
+//     this.userName = user.userName;
+//     this.guild = profile.guild;
+//   }
+// }
+//
+// class LoginModel {
+//   constructor(isOpen, isLoading,showMsg,accountSubmitted, message) {
+//     this.openModal = isOpen;
+//     this.isLoading = isLoading;
+//     this.showMsg = showMsg;
+//     this.accountSubmitted = accountSubmitted;
+//     this.message = message;
+//   }
+// }
+//
+// class VideoObject{
+//   constructor(video){
+//     this.id = video.id;
+//     this.source = video.source;
+//     this.audio = (video.audio)?video.audio: null;
+//     this.content = video.content;
+//     this.publisher = video.publisher;
+//     this.thumbnail = video.thumbnail;
+//     this.points = video.points;
+//     this.status = video.status;
+//     this.options = video.options;
+//     this.featured = (video.status.featured)?video.status.featured:[]; // Might not need an array for this one. The "Featured Video" section in the DB should contain an array of IDs and possibly the date/time stamp when they were set.
+//     this.comments = (video.comments)?video.comments:[]
+//   }
+// }
+//
+// class CommentsObject{
+//   constructor(video, user, comment){
+//     this.profile = user.profile;
+//     this.videoId = video.id;
+//     this.flags = [];
+//     this.comment = comment;
+//     this.enabled = true;
+//     this.timestamp = new Date().getTime().toString();
+//   }
+// }
+
+module.exports = {NewUserObject};

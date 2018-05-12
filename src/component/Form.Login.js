@@ -2,22 +2,25 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 
+import {getAuth} from "../actions/action.auth";
+
 import Input from "./Input";
 
-import {postPost} from '../actions/postActions';
+import {loginEmailPassword} from '../actions/action.user';
 
-class Form extends Component{
+class FormLogin extends Component{
   constructor(props){
     super(props);
     this.state = {
-      name: '',
-      message: ''
+      username: '',
+      password: ''
     };
   }
 
   onSubmit(values) {
-    this.props.postPost(values);
-    this.props.dispatch(reset('posts'));
+    this.props.loginEmailPassword(values);
+    this.props.dispatch(reset('login'));
+    this.props.getAuth();
   }
 
   handleChange = (e) => {
@@ -32,20 +35,18 @@ class Form extends Component{
         <div className="row">
           <div className="col-sm-6 col-sm-offset-3 m-auto">
             <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
-              <label htmlFor="name">Full Name
-                <Field
-                  name="name"
-                  component={Input}
-                  type="text" required
-                  onChange={this.handleChange}/>
-              </label>
-              <label htmlFor="message">Message
-                <Field
-                  name="message"
-                  component={Input}
-                  type="text" required
-                  onChange={this.handleChange}/>
-              </label>
+              <Field
+                label="Email"
+                name="loginEmail"
+                component={Input}
+                type="text" required
+                onChange={this.handleChange}/>
+              <Field
+                label="Password"
+                name="loginPassword"
+                component={Input}
+                type="password" required
+                onChange={this.handleChange}/>
               <button
                 className="btn btn-primary col-sm-12"
                 type="submit" disabled={this.props.pristine || this.props.submitting}>
@@ -58,8 +59,8 @@ class Form extends Component{
   }
 }
 
-Form = connect(null, {postPost})(Form);
+FormLogin = connect(null, {loginEmailPassword, getAuth})(FormLogin);
 
 export default reduxForm({
-  form: 'posts',
-})(Form);
+  form: 'login',
+})(FormLogin);

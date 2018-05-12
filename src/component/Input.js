@@ -27,7 +27,7 @@ export default class Input extends React.Component {
           {error}
           {warning}
         </label>
-        <input
+        <input className="col-sm-12"
           {...this.props.input}
           id={this.props.input.name}
           type={this.props.type}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
-import {getPosts, deletePost} from "../actions/postActions";
+import {getUploads, deleteUpload} from "../actions/action.upload";
 
 import Card from '../component/Card';
 
@@ -13,18 +13,29 @@ class Home extends Component {
     }
   }
   componentDidMount() {
-    this.props.getPosts();
+    this.props.getUploads();
+  }
+
+  deleteUpload(key) {
+    this.props.deleteUpload(key);
+    this.props.getUploads();
   }
 
   renderPosts() {
-    return _.map(this.props.posts, (post, key) => {
+    return _.map(this.props.uploads, (post, key) => {
       return (
         <Card key={key}>
-          <h3>{post.name}</h3>
-          <p>{post.message}</p>
-          <button
-            className="btn btn-danger btn-xs"
-            onClick={()=>this.props.deletePost(key)}>Delete</button>
+          <h3>{post.title}</h3>
+          <p>{post.caption}</p>
+          {
+            _.isEmpty(this.props.auth) ? (
+              <span/>
+            ):(
+              <button
+                className="btn btn-danger btn-xs"
+                onClick={()=>this.deleteUpload()}>Delete</button>
+            )
+          }
         </Card>
       )
     });
@@ -40,7 +51,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts.data
+  uploads: state.uploads.data,
+  auth: state.auth.data
 });
 
-export default connect(mapStateToProps, {getPosts, deletePost})(Home);
+export default connect(mapStateToProps, {getUploads, deleteUpload})(Home);

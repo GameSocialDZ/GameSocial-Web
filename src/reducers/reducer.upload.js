@@ -1,27 +1,26 @@
 import {
-  POST_LOADER, POSTS_SUCCESS, POSTS_ERROR
-} from '../actions/postActions';
+  UPLOAD_LOADER, UPLOAD_SUCCESS, UPLOAD_ERROR
+} from '../actions/action.upload';
 
 const initialState = {
   loading: false,
-  data: [],
   error: null
 };
 
 export default function reducer(state = initialState, action) {
   switch(action.type){
-    case (POST_LOADER):
+    case (UPLOAD_LOADER):
       return Object.assign({}, state, {
         loading: true,
         error: null
       });
-    case(POSTS_SUCCESS):
+    case(UPLOAD_SUCCESS):
       return Object.assign({}, state, {
         data: action.data,
         error: null,
         loading: false
       });
-    case(POSTS_ERROR):
+    case(UPLOAD_ERROR):
       return Object.assign({}, state, {
         error: action.error,
         loading: false

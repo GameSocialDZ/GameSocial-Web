@@ -1,36 +1,66 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+//import {Tab} from 'semantic-ui-react';
+
+//import {FacebookLogin, TwitterLogin} from '../actions/action.user';
+
 import SimpleBox from "../component/SimpleBox";
+import FormRegister from "../component/Form.Register";
+import FormLogin from "../component/Form.Login";
 
-export default class Register extends Component {
-
-  renderRegisterForm() {
-    return(
-      <div className="col-sm-12">
-        <div><button className="btn btn-success w-100">Login with Microsoft</button></div>
-        {/*<br/>*/}
-        {/*<div><button className="btn btn-primary w-100">Login with Playstation</button></div>*/}
-        {/*<br/>*/}
-        {/*<div><button className="btn btn-secondary w-100">Login with Steam</button></div>*/}
-      </div>
-    );
+class Register extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      hasAccount: false
+    }
   }
 
   renderRegisterFooter() {
     return(
       <div>
-
+        <div className="col-sm-6 m-auto">
+          <button
+            className="btn btn-primary w-100"
+            // onClick={this.props.FacebookLogin}
+          >Facebook</button>
+        </div>
+        <br/>
+        <div className="col-sm-6 m-auto">
+          <button
+            className="btn btn-primary w-100"
+            // onClick={this.props.TwitterLogin}
+          >Twitter</button>
+        </div>
       </div>
     );
   }
 
   render() {
+
+    // TODO: Implement Tab with semantic-ui-react
+    // const panes = [
+    //   { menuItem: 'Tab 1', render: () => <Tab.Pane>Tab 1 Content</Tab.Pane> },
+    //   { menuItem: 'Tab 2', render: () => <Tab.Pane>Tab 2 Content</Tab.Pane> }
+    // ];
+    //
+    // const TabExampleBasic = () => (
+    //   <Tab panes={panes} />
+    // );
+
     return (
       <div>
         <SimpleBox
           title="Register"
-          body={this.renderRegisterForm()}
+          body={<FormRegister/>}
+          footer={this.renderRegisterFooter()}/>
+        <SimpleBox
+          title="Login"
+          body={<FormLogin/>}
           footer={this.renderRegisterFooter()}/>
       </div>
     );
   }
 }
+
+export default connect(null/*,{FacebookLogin, TwitterLogin}*/)(Register);

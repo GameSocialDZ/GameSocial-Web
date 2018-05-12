@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import SimpleBox from "../component/SimpleBox";
-import Form from "../component/Form";
+import FormUpload from "../component/Form.Upload";
 
 export default class Upload extends Component {
   renderUploadForm() {
     return(
-      <Form/>
+      <FormUpload/>
     );
   }
 
