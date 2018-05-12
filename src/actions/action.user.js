@@ -5,8 +5,13 @@ import {auth, database} from "../firebase";
 import {NewUserObject} from './models';
 
 export const USER_SUCCESS = 'USER_SUCCESS';
-export const userSuccess = data => ({
-  type: USER_SUCCESS,
+export const userSuccess = () => ({
+  type: USER_SUCCESS
+});
+
+export const USER_GET = 'USER_GET';
+export const userGet = (data) => ({
+  type: USER_GET,
   data
 });
 

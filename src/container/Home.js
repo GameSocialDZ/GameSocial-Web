@@ -16,26 +16,18 @@ class Home extends Component {
     this.props.getUploads();
   }
 
-  deleteUpload(key) {
-    this.props.deleteUpload(key);
-    this.props.getUploads();
-  }
-
   renderPosts() {
     return _.map(this.props.uploads, (post, key) => {
       return (
         <Card key={key}>
           <h3>{post.title}</h3>
           <p>{post.caption}</p>
-          {
-            _.isEmpty(this.props.auth) ? (
-              <span/>
-            ):(
-              <button
-                className="btn btn-danger btn-xs"
-                onClick={()=>this.deleteUpload()}>Delete</button>
-            )
-          }
+
+
+            <button
+            className="btn btn-danger btn-xs"
+            onClick={()=>this.props.deleteUpload(key)}>Delete</button>
+
         </Card>
       )
     });

@@ -1,10 +1,10 @@
 import {
-  UPLOAD_LOADER, UPLOAD_SUCCESS, UPLOAD_ERROR
+  UPLOAD_LOADER, UPLOAD_ERROR, UPLOAD_GET
 } from '../actions/action.upload';
 
 const initialState = {
   loading: false,
-  error: null
+  error: null,
 };
 
 export default function reducer(state = initialState, action) {
@@ -14,7 +14,7 @@ export default function reducer(state = initialState, action) {
         loading: true,
         error: null
       });
-    case(UPLOAD_SUCCESS):
+    case(UPLOAD_GET):
       return Object.assign({}, state, {
         data: action.data,
         error: null,
