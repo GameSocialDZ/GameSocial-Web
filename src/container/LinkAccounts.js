@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import _ from 'lodash';
 
-import SimpleBox from "../component/SimpleBox";
+import SimpleBox from "../component/Form.Box";
 
 class LinkAccounts extends Component {
 

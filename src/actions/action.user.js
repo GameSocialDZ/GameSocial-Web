@@ -33,3 +33,10 @@ export const getUserOnce = userId => dispatch => {
     dispatch(userGetSuccess(data.val()));
   });
 };
+
+// export const getUserUploads = (id) => dispatch => {
+//   dispatch(uploadRequest());
+//   return database.ref(`user/${id}/videos`).on('value', data => {
+//     dispatch(uploadGetSuccess())
+//   });
+// };

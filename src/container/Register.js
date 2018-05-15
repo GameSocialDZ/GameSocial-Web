@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import _ from 'lodash';
-import SimpleBox from "../component/SimpleBox";
+import SimpleBox from "../component/Form.Box";
 import FormRegister from "../component/Form.Register";
 import FormLogin from "../component/Form.Login";
 

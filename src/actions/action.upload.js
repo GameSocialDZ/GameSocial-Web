@@ -1,6 +1,5 @@
 //import {normalizeResponseErrors} from '../utils';
 //import {SubmissionError} from "redux-form";
-
 import  {database, storage} from "../firebase";
 //import {VideoObject} from "./models";
 
@@ -35,8 +34,7 @@ export const uploadError = error => ({
 
 // Methods
 export const getUploads = () => dispatch => {
-  // TODO: Check Authentication
-  dispatch(uploadRequest(true));
+  dispatch(uploadRequest());
   return database.ref('posts/').on('value', data => {
     dispatch(uploadGetSuccess(data.val()));})
 };
@@ -44,8 +42,6 @@ export const getUploads = () => dispatch => {
 export const upload = (data, file) => dispatch => {
   // TODO: Check Authentication
   dispatch(uploadRequest());
-
-  //TODO: Upload content to firestore get the public Id and the set child posts ref by Id
 
   const uploadRef = storage.child(`uploads/${file.name}`);
   uploadRef.put(file)
@@ -99,7 +95,7 @@ export const upload = (data, file) => dispatch => {
 
       const updates = {};
       updates[`posts/${postId}`] = upload;
-      updates[`users/${data.publisher.uid}/videos/${postId}`] = upload;
+      updates[`users/${data.publisher.id}/pictures/${postId}`] = upload;
 
       return database.ref().update(updates);
   })

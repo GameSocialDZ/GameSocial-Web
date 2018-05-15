@@ -9,19 +9,18 @@ import {getUploads} from "../actions/action.upload";
 
 import CardProfile from "../component/Card.Profile";
 
-
 export class Profile extends Component {
   componentDidMount() {
     this.props.getUploads();
+    this.props.getUser(this.props.auth.currentUser.uid);
   }
 
-  //TODO: Only get uploads for specific user
-  renderUserUploads(uploads) {
-    return _.map(uploads.data, (upload) => {
+  renderUserPictures(pictures) {
+    return _.map(pictures, (pic) => {
       return (
         <CardProfile
-          key={upload.id}
-          upload={upload} />
+          key={pic.id}
+          upload={pic} />
       )
     });
   }
@@ -33,7 +32,7 @@ export class Profile extends Component {
       return <Redirect to="/" />
     }
 
-    const {profile, uploads} = this.props;
+    const {profile, pictures} = this.props;
 
     return (
       <div>
@@ -57,7 +56,13 @@ export class Profile extends Component {
             </div>
           </div>
         </div>
-        {this.renderUserUploads(uploads)}
+        <div className="album py5 bg-light">
+          <div className="container">
+            <div className="row">
+              {this.renderUserPictures(pictures)}
+            </div>
+          </div>
+        </div>
       </div>
         );
   }
@@ -66,7 +71,8 @@ export class Profile extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   profile: state.user.data.profile,
-  uploads: state.uploads
+  uploads: state.uploads,
+  pictures: state.user.data.pictures
 });
 
 export default connect(mapStateToProps,

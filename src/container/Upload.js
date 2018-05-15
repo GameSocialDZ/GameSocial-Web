@@ -3,7 +3,7 @@ import _ from 'lodash';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
-import SimpleBox from "../component/SimpleBox";
+import SimpleBox from "../component/Form.Box";
 import FormUpload from "../component/Form.Upload";
 
 class Upload extends Component {
