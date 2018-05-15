@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
+//import _ from 'lodash';
 
 import {getAuth} from "../actions/action.auth";
+import {getUserOnce} from "../actions/action.user";
 
-import Input from "./Input";
+import Input from "./Form.Input";
 
 import {loginEmailPassword} from '../actions/action.auth';
 
@@ -16,6 +18,12 @@ class FormLogin extends Component{
       password: ''
     };
   }
+
+  // componentWillUnmount() {
+  //   if(!_.isEmpty(this.props.auth.currentUser)){
+  //     this.props.getUserOnce(this.props.auth.currentUser.uid);
+  //   }
+  // }
 
   onSubmit(values) {
     this.props.loginEmailPassword(values);
@@ -58,7 +66,12 @@ class FormLogin extends Component{
   }
 }
 
-FormLogin = connect(null, {loginEmailPassword, getAuth})(FormLogin);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+
+FormLogin = connect(mapStateToProps, {loginEmailPassword, getAuth, getUserOnce})(FormLogin);
 
 export default reduxForm({
   form: 'login',

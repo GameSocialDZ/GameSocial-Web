@@ -2,6 +2,7 @@
 //import {normalizeResponseErrors} from '../utils';
 
 import {auth, database} from "../firebase";
+import * as firebase from "firebase";
 import {NewUserObject} from "./models";
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
@@ -10,9 +11,9 @@ export const authRequest = () => ({
 });
 
 export const AUTH_GET_SUCCESS = 'AUTH_GET_SUCCESS';
-export const authGetSuccess = (data) => ({
+export const authGetSuccess = (currentUser) => ({
   type: AUTH_GET_SUCCESS,
-  data
+  currentUser
 });
 
 export const AUTH_UPDATE_SUCCESS = 'AUTH_UPDATE_SUCCESS';
@@ -31,16 +32,25 @@ export const authError = (error) => ({
   error
 });
 
+export const storeAuthInfo = (authToken, dispatch) => {
+  // const decodedToken = jwtDecode(authToken);
+  // //console.log(decodedToken.user);
+  // dispatch(setAuthToken(authToken));
+  // dispatch(authSuccess(decodedToken.user)); //changed user to username then removed username
+  // saveAuthToken(authToken);
+};
+
 export const registerEmailPassword = (user) => dispatch => {
   dispatch(authRequest());
   return auth.createUserWithEmailAndPassword(user.email, user.password)
     .then(auth => {
       // TODO: Make any further validations (Check if existing identifier and passwords match)
-
       auth.updateProfile({displayName: user.username})
         .catch(error => console.log(error.message));
 
-      const newUser = new NewUserObject(auth, '');
+      const username = user.username;
+
+      const newUser = new NewUserObject(auth, '', username);
       let userRef = database.ref('users');
       userRef.child(auth.uid).set(newUser);
 
@@ -54,12 +64,17 @@ export const registerEmailPassword = (user) => dispatch => {
 
 
 export const loginEmailPassword = (user) => dispatch => {
-  dispatch(authRequest());
-  return auth.signInWithEmailAndPassword(user.loginEmail, user.loginPassword)
-    .then(auth => dispatch(authGetSuccess(auth)))
-    .catch(error =>{
-      dispatch(authError(error));
-    })
+  return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(function() {
+      dispatch(authRequest());
+      return auth.signInWithEmailAndPassword(user.loginEmail, user.loginPassword)
+        .then(auth => dispatch(authGetSuccess(auth)))
+        .catch(error => {
+          dispatch(authError(error));
+        })
+    }).catch((error) =>{
+     dispatch(authError(error));
+  });
 };
 
 export const getAuth = () => dispatch => {

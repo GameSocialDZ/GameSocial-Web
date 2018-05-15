@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+import _ from 'lodash';
+
 import SimpleBox from "../component/SimpleBox";
 
-export default class LinkAccounts extends Component {
+class LinkAccounts extends Component {
 
   renderLinkForm() {
     return(
@@ -26,6 +30,11 @@ export default class LinkAccounts extends Component {
   }
 
   render() {
+    if(this.props.auth.loading) {
+      return <h1>Loading...</h1>
+    } else if (_.isEmpty(this.props.auth.currentUser) || this.props.auth.error){
+      return <Redirect to="/" />
+    }
     return (
       <div>
         <SimpleBox
@@ -36,3 +45,9 @@ export default class LinkAccounts extends Component {
     );
   }
 }
+
+const mapStateToProps = state =>({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(LinkAccounts);

@@ -6,7 +6,7 @@ import {getAuth} from "../actions/action.auth";
 
 import {createLoadingSelector} from "../selectors/select.loading";
 
-import Input from "./Input";
+import Input from "./Form.Input";
 
 import {registerEmailPassword} from '../actions/action.auth';
 
@@ -74,7 +74,7 @@ class FormRegister extends Component{
   }
 }
 
-const loadingSelector = createLoadingSelector(['Auth']);
+const loadingSelector = createLoadingSelector(['AUTH']);
 
 const mapStateToProps = state => ({
   loading: loadingSelector(state)

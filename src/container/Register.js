@@ -1,14 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-//import {Tab} from 'semantic-ui-react';
-
-//import {FacebookLogin, TwitterLogin} from '../actions/action.user';
-
+import {Redirect} from 'react-router-dom';
+import _ from 'lodash';
 import SimpleBox from "../component/SimpleBox";
 import FormRegister from "../component/Form.Register";
 import FormLogin from "../component/Form.Login";
 
+import {getUserOnce} from "../actions/action.user";
+
+//import {Tab} from 'semantic-ui-react';
+//import {FacebookLogin, TwitterLogin} from '../actions/action.user';
+
 class Register extends Component {
+  componentWillUnmount() {
+    if(!_.isEmpty(this.props.auth.currentUser)){
+      this.props.getUserOnce(this.props.auth.currentUser.uid);
+    }
+  }
+
   renderRegisterFooter() {
     return(
       <div>
@@ -30,6 +39,12 @@ class Register extends Component {
   }
 
   render() {
+    if(this.props.auth.loading && _.isEmpty(this.props.currentUser)) {
+      return <h1>Loading...</h1>
+    }
+    else if(!_.isEmpty(this.props.auth.currentUser)) {
+      return <Redirect to='/' />
+    }
 
     // TODO: Implement Tab with semantic-ui-react
     // const panes = [
@@ -56,4 +71,9 @@ class Register extends Component {
   }
 }
 
-export default connect(null/*,{FacebookLogin, TwitterLogin}*/)(Register);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+
+export default connect(mapStateToProps,{getUserOnce/*, FacebookLogin, TwitterLogin*/})(Register);

@@ -6,11 +6,11 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import './main.css';
 
 import store from './store';
-import Login from './container/Login';
 import Home from "./container/Home";
 import Register from "./container/Register";
 import LinkAccounts from "./container/LinkAccounts";
 import Upload from "./container/Upload";
+import Profile from './container/Profile';
 
 import HeaderNav from './component/Header.Nav';
 
@@ -22,8 +22,8 @@ ReactDOM.render(
         <Switch>
           <Route path="/link" component={LinkAccounts}/>
           <Route path="/upload" component={Upload} />
-          <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/profile" component={Profile}/>
           <Route path="/" component={Home} exact={true}/>
         </Switch>
       </div>

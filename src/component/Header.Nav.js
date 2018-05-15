@@ -17,18 +17,19 @@ class HeaderNav extends Component {
         </div>
         <div className="collapse navbar-collapse" id="HeadNav">
           {
-            _.isEmpty(this.props.auth.data) ? (
+            _.isEmpty(this.props.auth.currentUser) ? (
               <ul className="navbar-nav navbar-right">
                 <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
               </ul>
             ):(
               <ul className="navbar-nav navbar-right">
                 <li className="nav-item">
-                  <Link className="nav-link" to="/signout"
+                  <Link className="nav-link" to="/register"
                     onClick={() => this.props.sighOut()}>SignOut</Link>
                 </li>
                 <li className="nav-item"><Link className="nav-link" to="/upload">Upload</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/link">Link</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/profile">Profile</Link></li>
               </ul>
             )
           }

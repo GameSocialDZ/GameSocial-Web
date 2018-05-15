@@ -4,7 +4,7 @@ import {
 
 const initialState = {
   loading: false,
-  data: [],
+  currentUser: [],
   error: null
 };
 
@@ -17,7 +17,7 @@ export default function reducer(state = initialState, action) {
       });
     case AUTH_GET_SUCCESS:
       return Object.assign({}, state, {
-        data: action.data,
+        currentUser: action.currentUser,
         error: null,
         loading: false,
       });
@@ -34,7 +34,7 @@ export default function reducer(state = initialState, action) {
     case AUTH_ERROR:
       return Object.assign({}, state, {
         error: action.error,
-        loading: false
+        loading: false,
       });
     default:
       return state;

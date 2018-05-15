@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
+import _ from 'lodash';
+import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+
 import SimpleBox from "../component/SimpleBox";
 import FormUpload from "../component/Form.Upload";
 
-export default class Upload extends Component {
+class Upload extends Component {
+  // componentDidMount() {
+  //   this.props.getUser();
+  // }
+
   renderUploadForm() {
     return(
       <FormUpload/>
@@ -18,6 +26,11 @@ export default class Upload extends Component {
   }
 
   render() {
+    if(this.props.auth.loading) {
+      return <h1>Loading...</h1>
+    } else if (_.isEmpty(this.props.auth.currentUser) || this.props.auth.error){
+      return <Redirect to="/" />
+    }
     return (
       <div>
         <SimpleBox
@@ -28,3 +41,9 @@ export default class Upload extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(Upload);

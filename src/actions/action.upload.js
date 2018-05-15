@@ -1,7 +1,8 @@
 //import {normalizeResponseErrors} from '../utils';
 //import {SubmissionError} from "redux-form";
 
-import  {database} from "../firebase";
+import  {database, storage} from "../firebase";
+//import {VideoObject} from "./models";
 
 // GET Action
 export const UPLOAD_REQUEST = 'UPLOAD_REQUEST';
@@ -40,12 +41,68 @@ export const getUploads = () => dispatch => {
     dispatch(uploadGetSuccess(data.val()));})
 };
 
-export const upload = (data) => dispatch => {
+export const upload = (data, file) => dispatch => {
   // TODO: Check Authentication
   dispatch(uploadRequest());
-  return database.ref('posts/').push(data)
-    .then(dispatch(uploadPostSuccess()))
-    .catch(err => {dispatch(uploadError(err))});
+
+  //TODO: Upload content to firestore get the public Id and the set child posts ref by Id
+
+  const uploadRef = storage.child(`uploads/${file.name}`);
+  uploadRef.put(file)
+    .then(store =>{
+      const url = store.downloadURL;
+      console.log(url);
+      console.log(store);
+
+      const upload = {
+        id: '',
+        content: {
+          category: '', //values.category
+          title: data.title,
+          caption: data.caption,
+          createdAt: store.metadata.timeCreated
+        },
+        publisher: data.publisher,
+        source: {
+          name: store.metadata.name,
+          fullPath: store.metadata.fullPath,
+          url: url,
+          type: store.metadata.contentType,
+          size: store.metadata.size
+        },
+        points: {
+          comment_count: 0,
+          like_count: 0,
+          timestamp: '',
+          view_count: 0
+        },
+        status: {
+          enabled: true,
+          featured: false,
+          flagged: false
+        },
+        options: {
+          autoPlay: true,
+          looping_enabled: true,
+        },
+        thumbnail:{
+          small: '',
+          large: ''
+        }
+      };
+
+      //TODO: Use the newVideo Obj
+      // const newVideo = new VideoObject(data, url);
+      const postId = database.ref().child('posts').push().key;
+      upload.id = postId;
+      console.log(postId);
+
+      const updates = {};
+      updates[`posts/${postId}`] = upload;
+      updates[`users/${data.publisher.uid}/videos/${postId}`] = upload;
+
+      return database.ref().update(updates);
+  })
 };
 
 export const deleteUpload = (id) => dispatch => {

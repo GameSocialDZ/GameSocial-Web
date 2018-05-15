@@ -6,7 +6,7 @@ import {getUploads, deleteUpload} from "../actions/action.upload";
 
 import {createLoadingSelector} from '../selectors/select.loading';
 
-import Card from '../component/Card';
+import CardHome from '../component/Card.Home';
 
 class Home extends Component {
   constructor(props) {
@@ -19,22 +19,12 @@ class Home extends Component {
     this.props.getUploads();
   }
 
-  renderPosts() {
-    return _.map(this.props.uploads.data, (post, key) => {
+  renderPosts(uploads) {
+    return _.map(uploads.data, (upload) => {
       return (
-        <Card key={key}>
-          <h3>{post.title}</h3>
-          <p>{post.caption}</p>
-          {
-            _.isEmpty(this.props.auth.data) ? (
-              null
-              ):(
-                <button
-                className="btn btn-danger btn-xs"
-                onClick={() => this.props.deleteUpload(key)}>Delete</button>
-            )
-          }
-        </Card>
+        <CardHome
+          key={upload.id}
+          upload={upload} />
       )
     });
   }
@@ -44,9 +34,15 @@ class Home extends Component {
       return <h1>Loading...</h1>
     }
 
+    const {uploads} = this.props;
+
     return (
-      <div className="App">
-        {this.renderPosts()}
+      <div className="album py5 bg-light">
+        <div className="container">
+          <div className="row">
+            {this.renderPosts(uploads)}
+          </div>
+        </div>
       </div>
     );
   }

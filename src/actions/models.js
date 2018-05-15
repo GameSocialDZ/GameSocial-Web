@@ -1,11 +1,11 @@
 class NewUserObject {
-  constructor(user, dob = '') {
+  constructor(user, dob = '', username) {
     this.profile = {
       id: user.uid,
-      username: user.displayName,
+      username: username,
       email: user.email,
       name: "",
-      avatar: "",
+      avatar: "https://res.cloudinary.com/diygdnbei/image/upload/v1519444005/zumnvvbqi0fo1zthkal7.png",
       bio: "",
       guild: "",
       dob: dob
@@ -17,10 +17,6 @@ class NewUserObject {
       videos: [],
       comments: []
     };
-    this.dislikes = {
-      videos: [],
-      comments: []
-    };
     this.comments = [];
     this.isAdmin = false; //SR Added 12/13 - default admin status false
     this.notifications = [];
@@ -29,6 +25,22 @@ class NewUserObject {
     this.following =[];
     this.followers =[];
     this.guild = "";
+  }
+}
+
+class VideoObject{
+  constructor(video){
+    this.id = video.id;
+    this.source = video.source;
+    this.audio = (video.audio)?video.audio: null;
+    this.content = video.content;
+    this.publisher = video.publisher;
+    this.thumbnail = video.thumbnail;
+    this.points = video.points;
+    this.status = video.status;
+    this.options = video.options;
+    this.featured = (video.status.featured)?video.status.featured:[]; // Might not need an array for this one. The "Featured Video" section in the DB should contain an array of IDs and possibly the date/time stamp when they were set.
+    this.comments = (video.comments)?video.comments:[]
   }
 }
 
@@ -69,21 +81,6 @@ class NewUserObject {
 //   }
 // }
 //
-// class VideoObject{
-//   constructor(video){
-//     this.id = video.id;
-//     this.source = video.source;
-//     this.audio = (video.audio)?video.audio: null;
-//     this.content = video.content;
-//     this.publisher = video.publisher;
-//     this.thumbnail = video.thumbnail;
-//     this.points = video.points;
-//     this.status = video.status;
-//     this.options = video.options;
-//     this.featured = (video.status.featured)?video.status.featured:[]; // Might not need an array for this one. The "Featured Video" section in the DB should contain an array of IDs and possibly the date/time stamp when they were set.
-//     this.comments = (video.comments)?video.comments:[]
-//   }
-// }
 //
 // class CommentsObject{
 //   constructor(video, user, comment){
@@ -96,4 +93,4 @@ class NewUserObject {
 //   }
 // }
 
-module.exports = {NewUserObject};
+module.exports = {NewUserObject, VideoObject};
