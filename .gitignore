@@ -3,7 +3,9 @@
 # firebase adminsdk
 firebase-adminsdk.json
 database.rules.json
-
+env.config
+/src/firebase
+/src/cloudinary
 
 # dependencies
 /node_modules
@@ -23,7 +25,6 @@ admin-envconfig.json
 .env.development.local
 .env.test.local
 .env.production.local
-.env.config
 
 npm-debug.log*
 yarn-debug.log*
