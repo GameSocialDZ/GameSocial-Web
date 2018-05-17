@@ -6,7 +6,8 @@ import {getUploads, deleteUpload} from "../actions/action.upload";
 
 import {createLoadingSelector} from '../selectors/select.loading';
 
-import CardHome from '../component/Card.Home';
+import ImageCard from '../component/Image.Card';
+import VideoCard from '../component/Video.Card';
 
 class Home extends Component {
   constructor(props) {
@@ -19,28 +20,49 @@ class Home extends Component {
     this.props.getUploads();
   }
 
-  renderPosts(uploads) {
-    return _.map(uploads.data, (upload) => {
+  renderImageUploads(images) {
+    return _.map(images, (image) => {
       return (
-        <CardHome
-          key={upload.id}
-          upload={upload} />
+        <ImageCard
+          key={image.id}
+          image={image}
+          history={this.props.history}/>
+      )
+    });
+  }
+
+  renderVideoUploads(videos) {
+    return _.map(videos, (video) => {
+      return (
+        <VideoCard
+          key={video.id}
+          video={video}
+          history={this.props.history}/>
       )
     });
   }
 
   render() {
-    if(this.props.uploads.loading && !this.props.uploads.length) {
+    const {videos, images, uploads} = this.props;
+
+    if(uploads.loading){
       return <h1>Loading...</h1>
     }
 
-    const {uploads} = this.props;
-
     return (
-      <div className="album py5 bg-light">
-        <div className="container">
-          <div className="row">
-            {this.renderPosts(uploads)}
+      <div>
+        <div className="album py5 bg-light">
+          <div className="container">
+            <div className="row">
+              {this.renderImageUploads(images)}
+            </div>
+          </div>
+        </div>
+        <div className="album py5 bg-light">
+          <div className="container">
+            <div className="row">
+              {this.renderVideoUploads(videos)}
+            </div>
           </div>
         </div>
       </div>
@@ -53,6 +75,8 @@ const loadingSelector = createLoadingSelector(['UPLOADS']);
 
 const mapStateToProps = state => ({
   uploads: state.uploads,
+  images: state.uploads.data.images,
+  videos: state.uploads.data.videos,
   auth: state.auth,
   loading: loadingSelector(state)
 });

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-//import _ from 'lodash';
+//import {Redirect} from 'react-router-dom';
+import _ from 'lodash';
 
 import {deleteUpload} from "../actions/action.upload";
+import {deleteView} from "../actions/action.view";
 
-import PictureView from '../component/View.Picture';
+import ImageView from '../component/Image.View';
 
 class View extends Component {
   constructor(props) {
@@ -13,12 +15,21 @@ class View extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.deleteView();
+  }
+
   render() {
+    if (this.props.view.loading) {
+      return <h1>Loading...</h1>
+    }
+    else if (_.isEmpty(this.props.view.data)){
+      return this.props.history.goBack();
+    }
     return (
       <div className="">
-        <PictureView
-          key={this.props.view.data.id}
-          pictureUrl={this.props.view.data.url}/>
+        <ImageView
+          picture={this.props.view.data}/>
       </div>
     );
   }
@@ -31,4 +42,4 @@ const mapStateToProps = state => ({
   view: state.view
 });
 
-export default connect(mapStateToProps, {deleteUpload})(View);
+export default connect(mapStateToProps, {deleteUpload, deleteView})(View);

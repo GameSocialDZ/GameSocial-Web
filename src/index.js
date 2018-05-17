@@ -11,6 +11,7 @@ import Register from "./container/Register";
 import LinkAccounts from "./container/LinkAccounts";
 import Upload from "./container/Upload";
 import Profile from './container/Profile';
+import View from './container/View';
 
 import HeaderNav from './component/Header.Nav';
 
@@ -24,6 +25,7 @@ ReactDOM.render(
           <Route path="/upload" component={Upload} />
           <Route path="/register" component={Register} />
           <Route path="/profile" component={Profile}/>
+          <Route path="/view" component={View}/>
           <Route path="/" component={Home} exact={true}/>
         </Switch>
       </div>

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import {deleteUpload} from "../actions/action.upload";
 
-class VideoView extends Component {
+class ImageView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,14 +12,14 @@ class VideoView extends Component {
   }
 
   render() {
-    const videoId = this.props.videoId;
+    const picture = this.props.picture;
     return (
-      <div className="">
+      <div key={picture.id}>
         <div className="embed-responsive embed-responsive-16by9">
-          <iframe
+          <img
+            alt="selected"
             className="embed-responsive-item"
-            src={this.props.videos[videoId].source.url}
-            allowFullScreen
+            src={picture.source.url} //this.props.pictures[pictureId].source.url
           />
         </div>
       </div>
@@ -27,9 +27,4 @@ class VideoView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  videos: state.user.data.videos
-});
-
-export default connect(mapStateToProps, {deleteUpload})(VideoView);
+export default connect(null, {deleteUpload})(ImageView);

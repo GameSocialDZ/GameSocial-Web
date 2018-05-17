@@ -1,4 +1,3 @@
-//export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 import * as firebase from "firebase";
 
 const config = {
@@ -17,5 +16,6 @@ export const database =  firebase.database();
 export const storage = firebase.storage().ref();
 
 export const auth = firebase.auth();
+
 export const facebookProvider = new firebase.auth.FacebookAuthProvider();
 export const twitterProvider = new firebase.auth.TwitterAuthProvider();

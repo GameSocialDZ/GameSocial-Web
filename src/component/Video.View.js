@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { Player } from 'video-react';
 //import _ from 'lodash';
 
 import {deleteUpload} from "../actions/action.upload";
 
-class PictureView extends Component {
+class VideoView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,14 +13,17 @@ class PictureView extends Component {
   }
 
   render() {
-    const pictureId = this.key;
-    const pictureUrl = this.props.pictureUrl;
+    const video = this.props.video;
     return (
-      <div key={pictureId}>
+      <div className="">
         <div className="embed-responsive embed-responsive-16by9">
-          <img
+          <Player
             className="embed-responsive-item"
-            src={pictureUrl} //this.props.pictures[pictureId].source.url
+            loop
+            playsinline
+            aspectRatio="16:9"
+            poster={video.thumbnail.large}
+            src={video.source.url}
           />
         </div>
       </div>
@@ -27,9 +31,4 @@ class PictureView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  pictures: state.user.data.pictures
-});
-
-export default connect(mapStateToProps, {deleteUpload})(PictureView);
+export default connect(null, {deleteUpload})(VideoView);

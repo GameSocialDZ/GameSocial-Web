@@ -6,7 +6,7 @@ import {getAuth} from "../actions/action.auth";
 
 import {createLoadingSelector} from "../selectors/select.loading";
 
-import Input from "./Form.Input";
+import FormInput from "./Form.Input";
 
 import {registerEmailPassword} from '../actions/action.auth';
 
@@ -41,25 +41,25 @@ class FormRegister extends Component{
               <Field
                 label="Username"
                 name="username"
-                component={Input}
+                component={FormInput}
                 type="text" required
                 onChange={this.handleChange}/>
               <Field
                 label="Email"
                 name="email"
-                component={Input}
+                component={FormInput}
                 type="text" required
                 onChange={this.handleChange}/>
               <Field
                 label="Password"
                 name="password"
-                component={Input}
+                component={FormInput}
                 type="password" required
                 onChange={this.handleChange}/>
               <Field
                 label="Confirm Password"
                 name="confirmPassword"
-                component={Input}
+                component={FormInput}
                 type="password" required
                 onChange={this.handleChange}/>
               <button

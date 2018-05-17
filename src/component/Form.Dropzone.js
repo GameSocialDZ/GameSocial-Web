@@ -2,7 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import DropZone from 'react-dropzone';
 
-class Dropzone extends React.Component {
+import './form.css';
+
+class FormDropzone extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,10 +22,8 @@ class Dropzone extends React.Component {
   render() {
 
     return (
-      <div>
-        <div
-          className="dropzone"
-          style={{textAlign: '-webkit-center' || 'center'}}>
+      <section>
+        <div className="dropzone">
           <DropZone
             name="avatar"
             accept='image/*'
@@ -41,9 +41,9 @@ class Dropzone extends React.Component {
             }
           </ul>
         </aside>
-      </div>
+      </section>
     );
   }
 }
 
-export default connect()(Dropzone);
+export default connect()(FormDropzone);

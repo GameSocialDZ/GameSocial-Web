@@ -1,11 +1,11 @@
 //import  {database, storage} from "../firebase";
 //import {VideoObject} from "./models";
 
-// GET Action
 export const VIEW_REQUEST = 'VIEW_REQUEST';
 export const viewRequest = () => ({
   type: VIEW_REQUEST
 });
+
 
 export const VIEW_GET_SUCCESS = 'VIEW_GET_SUCCESS';
 export const viewGetSuccess = (data) => ({
@@ -13,14 +13,8 @@ export const viewGetSuccess = (data) => ({
   data
 });
 
-export const VIEW_POST_SUCCESS = 'VIEW_POST_SUCCESS';
-export const viewPostSuccess = (data) => ({
-  type: VIEW_POST_SUCCESS,
-  data
-});
-
 export const VIEW_DELETE_SUCCESS = 'VIEW_DELETE_SUCCESS';
-export const viewDeleteSuccess = () => ({
+export const viewDelete = () => ({
   type: VIEW_DELETE_SUCCESS
 });
 
@@ -30,13 +24,12 @@ export const viewError = error => ({
   error
 });
 
-export const VIEW_SET = 'VIEW_SET';
-export const viewSet = (data) => ({
-  type: VIEW_SET,
-  data
-});
-
-export const setView = data => dispatch => {
+export const getView = data => dispatch => {
   dispatch(viewRequest);
-  dispatch(viewSet(data))
+  return dispatch(viewGetSuccess(data));
+};
+
+export const deleteView = () => dispatch => {
+  dispatch(viewRequest());
+  dispatch(viewDelete());
 };

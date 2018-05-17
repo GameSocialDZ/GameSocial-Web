@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Input extends React.Component {
+export default class FormInput extends React.Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.meta.active && this.props.meta.active) {
       this.input.focus();
@@ -22,15 +22,18 @@ export default class Input extends React.Component {
 
     return (
       <div className="form-input">
-        <label htmlFor={this.props.input.name}>
+        <label
+          htmlFor={this.props.input.name}>
           {this.props.label}
           {error}
           {warning}
         </label>
-        <input className="col-sm-12"
+        <input
+          className="col-sm-12"
           {...this.props.input}
           id={this.props.input.name}
           type={this.props.type}
+          accept={this.props.accept}
           ref={input => (this.input = input)}
         />
       </div>

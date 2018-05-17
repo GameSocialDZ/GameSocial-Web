@@ -21,7 +21,7 @@ class NewUserObject {
     this.isAdmin = false; //SR Added 12/13 - default admin status false
     this.notifications = [];
     this.videos = [];
-    this.pictures = [];
+    this.images = [];
     this.following =[];
     this.followers =[];
     this.guild = "";
@@ -31,16 +31,35 @@ class NewUserObject {
 class VideoObject{
   constructor(video){
     this.id = video.id;
-    this.source = video.source;
+    this.url = video.url;
     this.audio = (video.audio)?video.audio: null;
     this.content = video.content;
     this.publisher = video.publisher;
-    this.thumbnail = video.thumbnail;
+    this.name = video.name;
+    this.config = video.config;
+    // this.thumbnail = video.thumbnail;
     this.points = video.points;
     this.status = video.status;
     this.options = video.options;
     this.featured = (video.status.featured)?video.status.featured:[]; // Might not need an array for this one. The "Featured Video" section in the DB should contain an array of IDs and possibly the date/time stamp when they were set.
     this.comments = (video.comments)?video.comments:[]
+  }
+}
+
+class ImageObject{
+  constructor(image){
+    this.id = image.id;
+    this.url = image.url;
+    this.content = image.content;
+    this.publisher = image.publisher;
+    this.name = image.name;
+    this.config = image.config;
+    // this.thumbnail = image.thumbnail;
+    this.points = image.points;
+    this.status = image.status;
+    this.options = image.options;
+    this.featured = (image.status.featured)?image.status.featured:[]; // Might not need an array for this one. The "Featured Video" section in the DB should contain an array of IDs and possibly the date/time stamp when they were set.
+    this.comments = (image.comments)?image.comments:[]
   }
 }
 
@@ -93,4 +112,4 @@ class VideoObject{
 //   }
 // }
 
-module.exports = {NewUserObject, VideoObject};
+module.exports = {NewUserObject, VideoObject, ImageObject};

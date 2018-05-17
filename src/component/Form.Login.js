@@ -6,7 +6,7 @@ import {reduxForm, Field, reset} from 'redux-form';
 import {getAuth} from "../actions/action.auth";
 import {getUserOnce} from "../actions/action.user";
 
-import Input from "./Form.Input";
+import FormInput from "./Form.Input";
 
 import {loginEmailPassword} from '../actions/action.auth';
 
@@ -45,13 +45,13 @@ class FormLogin extends Component{
               <Field
                 label="Email"
                 name="loginEmail"
-                component={Input}
+                component={FormInput}
                 type="text" required
                 onChange={this.handleChange}/>
               <Field
                 label="Password"
                 name="loginPassword"
-                component={Input}
+                component={FormInput}
                 type="password" required
                 onChange={this.handleChange}/>
               <button

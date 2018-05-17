@@ -7,7 +7,8 @@ import {getUser} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
 import {getUploads} from "../actions/action.upload";
 
-import CardProfile from "../component/Card.Profile";
+import ImageCard from "../component/Image.Card";
+import VideoCard from "../component/Video.Card";
 
 export class Profile extends Component {
   componentDidMount() {
@@ -15,24 +16,36 @@ export class Profile extends Component {
     this.props.getUser(this.props.auth.currentUser.uid);
   }
 
-  renderUserPictures(pictures) {
-    return _.map(pictures, (pic) => {
+  renderUserImages(images) {
+    return _.map(images, (image) => {
       return (
-        <CardProfile
-          key={pic.id}
-          upload={pic} />
+        <ImageCard
+          key={image.id}
+          image={image}
+          history={this.props.history}/>
+      )
+    });
+  }
+
+  renderUserVideos(videos) {
+    return _.map(videos, (video) => {
+      return (
+        <VideoCard
+          key={video.id}
+          video={video}
+          history={this.props.history}/>
       )
     });
   }
 
   render() {
-    if(this.props.auth.loading) {
+    const {profile, images, videos, loading} = this.props;
+
+    if(loading &&(!images.length || !videos.length)) {
       return <h1>Loading...</h1>
     } else if (_.isEmpty(this.props.auth.currentUser) || this.props.auth.error){
       return <Redirect to="/" />
     }
-
-    const {profile, pictures} = this.props;
 
     return (
       <div>
@@ -59,7 +72,14 @@ export class Profile extends Component {
         <div className="album py5 bg-light">
           <div className="container">
             <div className="row">
-              {this.renderUserPictures(pictures)}
+              {this.renderUserImages(images)}
+            </div>
+          </div>
+        </div>
+        <div className="album py5 bg-light">
+          <div className="container">
+            <div className="row">
+              {this.renderUserVideos(videos)}
             </div>
           </div>
         </div>
@@ -71,8 +91,9 @@ export class Profile extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   profile: state.user.data.profile,
-  uploads: state.uploads,
-  pictures: state.user.data.pictures
+  images: state.user.data.images,
+  videos: state.user.data.videos,
+  loading: state.user.data.loading && state.auth.data.loading
 });
 
 export default connect(mapStateToProps,
