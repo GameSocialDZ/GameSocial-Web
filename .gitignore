@@ -6,6 +6,8 @@ database.rules.json
 env.config
 /src/firebase
 /src/cloudinary
+src/firebase
+src/cloudinary
 
 # dependencies
 /node_modules

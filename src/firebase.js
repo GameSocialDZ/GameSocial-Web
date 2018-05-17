@@ -1,5 +1,8 @@
 import * as firebase from "firebase";
 
+// const Config = require('../env.config');
+// const firebaseConfig = Config['firebase'];
+
 const config = {
   apiKey: "AIzaSyALcEJyPvQDEb1bZZVGKbveu5woOpxw4hs",
   authDomain: "gamesocial-zb.firebaseapp.com",
