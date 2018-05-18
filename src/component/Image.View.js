@@ -12,14 +12,14 @@ class ImageView extends Component {
   }
 
   render() {
-    const picture = this.props.picture;
+    const {image} = this.props;
     return (
-      <div key={picture.id}>
+      <div key={image.id}>
         <div className="embed-responsive embed-responsive-16by9">
           <img
             alt="selected"
             className="embed-responsive-item"
-            src={picture.source.url} //this.props.pictures[pictureId].source.url
+            src={image.url} //this.props.pictures[pictureId].source.url
           />
         </div>
       </div>

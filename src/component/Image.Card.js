@@ -5,16 +5,12 @@ import {getView} from "../actions/action.view";
 
 class ImageCard extends Component {
   getViewState() {
-    this.props.getView(this.props.image);
+    const {getView, image} = this.props;
+    getView(image);
   };
 
   render() {
-    const image = this.props.image;
-    const history = this.props.history;
-    const {currentUser} = this.props;
-
-    //TODO: Remove debug
-    console.log(image);
+    const {currentUser, history, image} = this.props;
 
     return (
       <div className="col-md-4">
@@ -49,7 +45,7 @@ class ImageCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.cuurentUser
+  currentUser: state.auth.currentUser
 });
 
 export default connect(mapStateToProps, {getView})(ImageCard);

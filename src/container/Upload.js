@@ -3,47 +3,38 @@ import _ from 'lodash';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
-import SimpleBox from "../component/Form.Box";
+import CommonBox from "../component/Common.Box";
 import FormUpload from "../component/Form.Upload";
 
 class Upload extends Component {
-  // componentDidMount() {
-  //   this.props.getUser();
-  // }
-
   renderUploadForm() {
     return(
       <FormUpload/>
     );
   }
 
-  renderUploadFooter() {
-    return(
-      <div>
-
-      </div>
-    );
-  }
-
   render() {
-    if(this.props.auth.loading) {
+    const {currentUser, auth} = this.props;
+
+    if (auth.loading) {
       return <h1>Loading...</h1>
-    } else if (_.isEmpty(this.props.auth.currentUser) || this.props.auth.error){
+    } else if (_.isEmpty(currentUser) || auth.error){
       return <Redirect to="/" />
     }
+
     return (
       <div>
-        <SimpleBox
+        <CommonBox
           title="Upload"
-          body={this.renderUploadForm()}
-          footer={this.renderUploadFooter()}/>
+          body={this.renderUploadForm()}/>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  currentUser: state.auth.currentUser
 });
 
 export default connect(mapStateToProps)(Upload);

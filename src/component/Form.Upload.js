@@ -3,10 +3,10 @@ import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 import axios from 'axios';
 import _ from 'lodash';
-import {Input}  from 'semantic-ui-react';
 import {CloudinaryConfig} from '../cloudinary';
 
-import FormInput  from "./Form.Input";
+import CommonInput  from "./Common.Input";
+import FormDropzone from './Form.Dropzone';
 
 import {upload} from '../actions/action.upload';
 import {getUser} from "../actions/action.user";
@@ -18,6 +18,8 @@ class FormUpload extends Component{
   constructor(props){
     super(props);
     this.state = {
+      file:[],
+      disabled: false,
       fileProgress: null,
       fileStatus: null,
       fileSelected: null,
@@ -34,7 +36,7 @@ class FormUpload extends Component{
 
   onSubmit(values, file) {
     if(_.isEmpty(file)){
-      return alert('Must select a file!');
+      return alert('File not selected or still uploading!');
     }
     // Add publisher
     values.publisher = this.props.publisher;
@@ -43,13 +45,12 @@ class FormUpload extends Component{
     this.props.dispatch(reset('upload'));
   }
 
-  onFileSelect = (e) => {
+  //TODO: file is uploaded to cloudinay on select.
+  //TODO: Maybe move to on submit function and on select set state w/ file
+  onFileSelect(file) { // = (e) => {
     const unsignedUploadPreset = CloudinaryConfig.cloud_name;
     const thisComponent = this;
-    const fileSelected = e.target.files[0];
-
-    //TODO: Change video Selected var to fileSelected and check type to set
-    //TODO: appropriate video or image upload url
+    const fileSelected = file[0]; //e.target.files[0];
 
     //TODO: Remove dubug
     console.log(fileSelected);
@@ -130,6 +131,14 @@ class FormUpload extends Component{
     }
   };
 
+  handleOnDrop = (files) =>{
+    this.setState({
+      files,
+      disabled: files.length === 1
+    });
+    this.onFileSelect(files);
+  };
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -145,18 +154,25 @@ class FormUpload extends Component{
               <Field
                 label="Title"
                 name="title"
-                component={FormInput}
+                component={CommonInput}
                 type="text" required
                 onChange={this.handleChange}
               />
               <Field
                 label="Caption"
                 name="caption"
-                component={FormInput}
+                component={CommonInput}
                 type="text" required
                 onChange={this.handleChange}
               />
-              <Input type="file" id="file" className='hidden' onChange={this.onFileSelect.bind(this)} />
+              <FormDropzone
+                fileLabel="File"
+                fileType={''}
+                handleOnDrop={this.handleOnDrop.bind(this)}
+                disabled={this.state.disabled}
+                file={this.state.file}
+                directions="Drop or click to upload a video or image file."/>
+              {/*<Input type="file" id="file" className='hidden' onChange={this.onFileSelect.bind(this)} />*/}
               <button
                 className="btn btn-primary col-sm-12"
                 type="submit" disabled={this.props.pristine || this.props.submitting}>

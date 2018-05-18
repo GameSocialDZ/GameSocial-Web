@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-//import {Redirect} from 'react-router-dom';
 import _ from 'lodash';
 
 import {deleteUpload} from "../actions/action.upload";
 import {deleteView} from "../actions/action.view";
 
 import ImageView from '../component/Image.View';
+import VideoView from '../component/Video.View';
 
 class View extends Component {
   constructor(props) {
@@ -20,16 +20,27 @@ class View extends Component {
   }
 
   render() {
-    if (this.props.view.loading) {
+    const {view, history} = this.props;
+
+    if (view.loading) {
       return <h1>Loading...</h1>
     }
-    else if (_.isEmpty(this.props.view.data)){
-      return this.props.history.goBack();
+    else if (_.isEmpty(view.data)){
+      return history.goBack();
     }
     return (
-      <div className="">
-        <ImageView
-          picture={this.props.view.data}/>
+      <div>
+        {view.data.config.type === 'image' ? (
+          <div className="">
+            <ImageView
+              image={view.data}/>
+          </div>
+        ):(
+          <div className="">
+            <VideoView
+              video={view.data}/>
+          </div>)
+        }
       </div>
     );
   }

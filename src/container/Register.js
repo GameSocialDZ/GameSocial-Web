@@ -2,47 +2,29 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import _ from 'lodash';
-import SimpleBox from "../component/Form.Box";
+
+import CommonBox from "../component/Common.Box";
 import FormRegister from "../component/Form.Register";
 import FormLogin from "../component/Form.Login";
 
-import {getUserOnce} from "../actions/action.user";
+import {getUserOnce} from '../actions/action.user';
 
 //import {Tab} from 'semantic-ui-react';
-//import {FacebookLogin, TwitterLogin} from '../actions/action.user';
 
 class Register extends Component {
   componentWillUnmount() {
-    if(!_.isEmpty(this.props.auth.currentUser)){
-      this.props.getUserOnce(this.props.auth.currentUser.uid);
+    const {currentUser, getUserOnce} = this.props;
+    if(!_.isEmpty(currentUser)){
+      getUserOnce(currentUser.uid);
     }
-  }
-
-  renderRegisterFooter() {
-    return(
-      <div>
-        <div className="col-sm-6 m-auto">
-          <button
-            className="btn btn-primary w-100"
-            // onClick={this.props.FacebookLogin}
-          >Facebook</button>
-        </div>
-        <br/>
-        <div className="col-sm-6 m-auto">
-          <button
-            className="btn btn-primary w-100"
-            // onClick={this.props.TwitterLogin}
-          >Twitter</button>
-        </div>
-      </div>
-    );
   }
 
   render() {
-    if(this.props.auth.loading && _.isEmpty(this.props.currentUser)) {
+    const {currentUser, auth} = this.props;
+
+    if(auth.loading) {
       return <h1>Loading...</h1>
-    }
-    else if(!_.isEmpty(this.props.auth.currentUser)) {
+    } else if(!_.isEmpty(currentUser)) {
       return <Redirect to='/' />
     }
 
@@ -58,22 +40,21 @@ class Register extends Component {
 
     return (
       <div>
-        <SimpleBox
+        <CommonBox
           title="Register"
-          body={<FormRegister/>}
-          footer={this.renderRegisterFooter()}/>
-        <SimpleBox
+          body={<FormRegister/>}/>
+        <CommonBox
           title="Login"
-          body={<FormLogin/>}
-          footer={this.renderRegisterFooter()}/>
+          body={<FormLogin/>}/>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  currentUser: state.auth.currentUser
 });
 
 
-export default connect(mapStateToProps,{getUserOnce/*, FacebookLogin, TwitterLogin*/})(Register);
+export default connect(mapStateToProps, {getUserOnce})(Register);

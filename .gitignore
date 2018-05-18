@@ -22,7 +22,7 @@ admin-envconfig.json
 /build
 
 # misc
-.DS_Store
+.DS_Storegit
 .env.local
 .env.development.local
 .env.test.local

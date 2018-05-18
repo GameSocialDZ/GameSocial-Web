@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class FormInput extends React.Component {
+export default class CommonInput extends React.Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.meta.active && this.props.meta.active) {
       this.input.focus();
@@ -28,14 +28,25 @@ export default class FormInput extends React.Component {
           {error}
           {warning}
         </label>
-        <input
-          className="col-sm-12"
-          {...this.props.input}
-          id={this.props.input.name}
-          type={this.props.type}
-          accept={this.props.accept}
-          ref={input => (this.input = input)}
-        />
+        {
+          this.props.type === 'textarea' ? (
+            <textarea
+              className="col-sm-12"
+              {...this.props.input}
+              id={this.props.input.name}
+              ref={input => (this.input = input)}
+            />
+          ):(
+            <input
+              className="col-sm-12"
+              {...this.props.input}
+              id={this.props.input.name}
+              type={this.props.type}
+              accept={this.props.accept}
+              ref={input => (this.input = input)}
+            />
+          )
+        }
       </div>
     );
   }

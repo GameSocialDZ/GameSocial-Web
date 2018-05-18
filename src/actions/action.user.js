@@ -1,7 +1,4 @@
-//import {SubmissionError} from 'redux-form';
-//import {normalizeResponseErrors} from '../utils';
-import  {database} from "../firebase";
-
+import {database} from "../firebase";
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const userRequest = () => ({
@@ -31,7 +28,7 @@ export const getUserOnce = userId => dispatch => {
   dispatch(userRequest());
   return database.ref(`users/${userId}/`).once('value', (data) => {
     dispatch(userGetSuccess(data.val()));
-  });
+  }).catch(error => dispatch(userError(error)));
 };
 
 // export const getUserUploads = (id) => dispatch => {

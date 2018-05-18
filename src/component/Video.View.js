@@ -13,7 +13,7 @@ class VideoView extends Component {
   }
 
   render() {
-    const video = this.props.video;
+    const {video} = this.props;
     return (
       <div className="">
         <div className="embed-responsive embed-responsive-16by9">
@@ -23,7 +23,7 @@ class VideoView extends Component {
             playsinline
             aspectRatio="16:9"
             poster={video.thumbnail.large}
-            src={video.source.url}
+            src={video.url}
           />
         </div>
       </div>

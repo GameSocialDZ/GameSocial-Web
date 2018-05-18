@@ -7,16 +7,12 @@ import {getView} from "../actions/action.view";
 
 class VideoCard extends Component {
   getViewState() {
-    this.props.getView(this.props.video);
+    const {video, getView} = this.props;
+    getView(video);
   };
 
   render() {
-    const video = this.props.video;
-    const history = this.props.history;
-    const {currentUser} = this.props;
-
-    //TODO: Remove debug
-    console.log(video);
+    const {currentUser, history, video} = this.props;
 
     return (
       <div className="col-md-4">

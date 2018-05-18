@@ -7,7 +7,7 @@ import {
 const initialState = {
   loading: false,
   error: null,
-  data:[]
+  data:{}
 };
 
 export default function reducer(state = initialState, action) {

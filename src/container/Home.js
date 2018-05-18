@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
-import {getUploads, deleteUpload} from "../actions/action.upload";
-
-import {createLoadingSelector} from '../selectors/select.loading';
+import {getUploads} from "../actions/action.upload";
 
 import ImageCard from '../component/Image.Card';
 import VideoCard from '../component/Video.Card';
+
+//import {createLoadingSelector} from '../selectors/select.loading';
 
 class Home extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class Home extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getUploads();
   }
 
@@ -71,14 +71,15 @@ class Home extends Component {
 }
 
 //TODO: Get loading selector working
-const loadingSelector = createLoadingSelector(['UPLOADS']);
+//const loadingSelector = createLoadingSelector(['UPLOADS']);
 
 const mapStateToProps = state => ({
   uploads: state.uploads,
   images: state.uploads.data.images,
   videos: state.uploads.data.videos,
-  auth: state.auth,
-  loading: loadingSelector(state)
+  auth: state.auth
+  //loading: loadingSelector(state)
 });
 
-export default connect(mapStateToProps, {getUploads, deleteUpload})(Home);
+export default connect(mapStateToProps,
+  {getUploads})(Home);

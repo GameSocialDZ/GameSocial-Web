@@ -98,7 +98,9 @@ export const upload = (data, file) => dispatch => {
         updates[`uploads/videos/${postId}`] = upload;
         updates[`users/${data.publisher.id}/videos/${postId}`] = upload;
 
-        return database.ref().update(updates);
+        return database.ref().update(updates)
+          .then(dispatch(uploadPostSuccess()))
+          .catch(dispatch(error => dispatch(uploadError(error))));
       }
       else if (file.resource_type === 'image'){
         //TODO: Use the newImage Obj
@@ -147,13 +149,14 @@ export const upload = (data, file) => dispatch => {
 
         const postId = database.ref().child('uploads/images').push().key;
         upload.id = postId;
-        console.log(postId);
 
         const updates = {};
         updates[`uploads/images/${postId}`] = upload;
         updates[`users/${data.publisher.id}/images/${postId}`] = upload;
 
-        return database.ref().update(updates);
+        return database.ref().update(updates)
+          .then(dispatch(uploadPostSuccess()))
+          .catch(dispatch(error => dispatch(uploadError(error))));
       }
 };
 
@@ -167,7 +170,6 @@ export const deleteUpload = (id, type) => dispatch => {
   } else {
     refType = 'videos/';
   }
-
   return database.ref('uploads/').child(`${refType}/${id}`).remove()
     .then(dispatch(uploadDeleteSuccess()))
     .catch(err => {dispatch(uploadError(err));});

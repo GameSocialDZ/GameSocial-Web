@@ -3,10 +3,11 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
-import {getAuth, signOut } from "../actions/action.auth";
+import {signOut } from "../actions/action.auth";
 
 class HeaderNav extends Component {
   render() {
+    const {currentUser, signOut} = this.props;
     return (
       <nav className="navbar navbar-expand-sm bg-light">
         <div className="container-fluid">
@@ -17,7 +18,7 @@ class HeaderNav extends Component {
         </div>
         <div className="collapse navbar-collapse" id="HeadNav">
           {
-            _.isEmpty(this.props.auth.currentUser) ? (
+            _.isEmpty(currentUser) ? (
               <ul className="navbar-nav navbar-right">
                 <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
               </ul>
@@ -25,10 +26,9 @@ class HeaderNav extends Component {
               <ul className="navbar-nav navbar-right">
                 <li className="nav-item">
                   <Link className="nav-link" to="/register"
-                    onClick={() => this.props.sighOut()}>SignOut</Link>
+                    onClick={() => signOut()}>SignOut</Link>
                 </li>
                 <li className="nav-item"><Link className="nav-link" to="/upload">Upload</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/link">Link</Link></li>
                 <li className="nav-item"><Link className="nav-link" to="/profile">Profile</Link></li>
               </ul>
             )
@@ -40,7 +40,7 @@ class HeaderNav extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  currentUser: state.auth.currentUser
 });
 
-export default connect(mapStateToProps, {getAuth, signOut})(HeaderNav);
+export default connect(mapStateToProps, {signOut})(HeaderNav);

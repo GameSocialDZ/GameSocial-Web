@@ -1,19 +1,22 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import _ from 'lodash';
 
 import {getUser} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
-import {getUploads} from "../actions/action.upload";
 
 import ImageCard from "../component/Image.Card";
 import VideoCard from "../component/Video.Card";
+import {ProfileCard} from "../component/Prorfile.Card";
+import ProfileModal from "../component/Profile.Modal";
 
 export class Profile extends Component {
-  componentDidMount() {
-    this.props.getUploads();
-    this.props.getUser(this.props.auth.currentUser.uid);
+  renderProfile(profile) {
+    return(
+      <ProfileCard
+        profile={profile}/>
+    );
   }
 
   renderUserImages(images) {
@@ -39,36 +42,17 @@ export class Profile extends Component {
   }
 
   render() {
-    const {profile, images, videos, loading} = this.props;
+    const {profile, images, videos, user, auth, currentUser} = this.props;
 
-    if(loading &&(!images.length || !videos.length)) {
+     if (user.loading || auth.loading) {
       return <h1>Loading...</h1>
-    } else if (_.isEmpty(this.props.auth.currentUser) || this.props.auth.error){
+    } else if (_.isEmpty(currentUser) || auth.error){
       return <Redirect to="/" />
     }
 
     return (
       <div>
-        <div className="card">
-          <div className="card-content">
-            <div className="media">
-              <div className="media-left">
-                <figure className="image is-48x48">
-                  <img src={profile.avatar} alt="Placeholder"/>
-                </figure>
-              </div>
-              <div className="media-content">
-                <p className="title is-4">{profile.name}</p>
-                <p className="subtitle is-6">@{profile.username}</p>
-              </div>
-            </div>
-
-            <div className="content">
-              <a type='email'>{profile.email}</a>
-              <Link style={{float: 'right'}} to="/profile/update">Edit</Link>
-            </div>
-          </div>
-        </div>
+        {this.renderProfile(profile)}
         <div className="album py5 bg-light">
           <div className="container">
             <div className="row">
@@ -83,6 +67,7 @@ export class Profile extends Component {
             </div>
           </div>
         </div>
+        <ProfileModal/>
       </div>
         );
   }
@@ -90,11 +75,12 @@ export class Profile extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  user: state.user,
   profile: state.user.data.profile,
+  currentUser: state.auth.currentUser,
   images: state.user.data.images,
   videos: state.user.data.videos,
-  loading: state.user.data.loading && state.auth.data.loading
 });
 
 export default connect(mapStateToProps,
-  {getAuth, getUser, getUploads})(Profile);
+  {getAuth, getUser})(Profile);

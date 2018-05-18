@@ -2,42 +2,27 @@ import React from 'react';
 import {connect} from 'react-redux';
 import DropZone from 'react-dropzone';
 
-import './form.css';
-
 class FormDropzone extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      files:[],
-      disabled: false,
-    };
-  }
-
-  onDrop(files) {
-    this.setState({
-      disabled: files.length === 1
-    });
-  }
-
   render() {
-
+    // Parent Props
+    const {disabled, handleOnDrop, file, fileLabel, directions, fileType} = this.props;
     return (
       <section>
-        <div className="dropzone">
+        <div className="dropzone" style={{textAlign: 'center' && '-webkit-center'}}>
           <DropZone
-            name="avatar"
-            accept='image/*'
-            onDrop={this.props.handleOnDrop}
-            disabled={this.props.disabled}
+            name="file"
+            accept={fileType}
+            onDrop={handleOnDrop}
+            disabled={disabled}
           >
-            <p>Try dropping some files here, or click to select files to upload.</p>
+            <h2>{fileLabel}</h2>
+            <p>{directions}</p>
           </DropZone>
         </div>
         <aside>
-          <h2>Dropped files</h2>
           <ul>
             {
-              this.props.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
+              file.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
             }
           </ul>
         </aside>
