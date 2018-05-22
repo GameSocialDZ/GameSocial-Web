@@ -20,6 +20,11 @@ export const uploadPostSuccess = () => ({
   type: UPLOAD_POST_SUCCESS,
 });
 
+export const UPLOAD_UPDATE_SUCCESS = 'UPLOAD_POST_SUCCESS';
+export const uploadUpdateSuccess = () => ({
+  type: UPLOAD_UPDATE_SUCCESS
+});
+
 export const UPLOAD_DELETE_SUCCESS = 'UPLOAD_DELETE_SUCCESS';
 export const uploadDeleteSuccess = () => ({
   type: UPLOAD_DELETE_SUCCESS
@@ -42,135 +47,148 @@ export const upload = (data, file) => dispatch => {
   // TODO: Check Authentication
   dispatch(uploadRequest());
 
-      let upload;
-      if(file.resource_type === 'video') {
-        //TODO: Use the newVideo Obj
-        // const newVideo = new VideoObject(data, file);
-        upload = {
-          id: file.public_id,
-          content: {
-            category: '', //values.category
-            title: data.title || '',
-            caption: data.caption || '',
-            createdAt: file.created_at
-          },
-          publisher: data.publisher,
-          name: file.original_filename,
-          url: file.secure_url,
-          config: {
-            type: file.resource_type,
-            size: file.bytes,
-            format: file.format,
-            width: file.width,
-            height: file.height,
-            codec: file.video.codec
-          },
-          audio: file.audio,
-          points: {
-            comment_count: 0,
-            like_count: 0,
-            timestamp: '',
-            view_count: 0
-          },
-          status: {
-            enabled: true,
-            featured: false,
-            flagged: false
-          },
-          options: {
-            autoPlay: true,
-            looping_enabled: true,
-          },
-          thumbnail: {
-            small: '',
-            large: ''
-          }
-        };
-
-        //TODO: Remove debug
-        console.log(upload);
-
-        const postId = database.ref().child('uploads/videos').push().key;
-        upload.id = postId;
-        console.log(postId);
-
-        const updates = {};
-        updates[`uploads/videos/${postId}`] = upload;
-        updates[`users/${data.publisher.id}/videos/${postId}`] = upload;
-
-        return database.ref().update(updates)
-          .then(dispatch(uploadPostSuccess()))
-          .catch(dispatch(error => dispatch(uploadError(error))));
+    let upload;
+  if(file.resource_type === 'video') {
+    //TODO: Use the newVideo Obj
+    // const newVideo = new VideoObject(data, file);
+    upload = {
+      id: file.public_id,
+      c_id: file.public_id,
+      content: {
+        category: '', //values.category
+        title: data.title || '',
+        caption: data.caption || '',
+        createdAt: file.created_at
+      },
+      publisher: data.publisher,
+      name: file.original_filename,
+      url: file.secure_url,
+      config: {
+        type: file.resource_type,
+        size: file.bytes,
+        format: file.format,
+        width: file.width,
+        height: file.height,
+        codec: file.video.codec
+      },
+      audio: file.audio,
+      points: {
+        comment_count: 0,
+        like_count: 0,
+        timestamp: '',
+        view_count: 0
+      },
+      status: {
+        enabled: true,
+        featured: false,
+        flagged: false
+      },
+      options: {
+        autoPlay: true,
+        looping_enabled: true,
+      },
+      thumbnail: {
+        small: '',
+        large: ''
       }
-      else if (file.resource_type === 'image'){
-        //TODO: Use the newImage Obj
-        // const newImage = new ImageObject(data, file)
-        upload = {
-          id: file.public_id,
-          content: {
-            category: '', //values.category
-            title: data.title || '',
-            caption: data.caption || '',
-            createdAt: file.created_at
-          },
-          publisher: data.publisher,
-          name: file.original_filename,
-          url: file.secure_url,
-          config: {
-            type: file.resource_type,
-            size: file.bytes,
-            format: file.format,
-            width: file.width,
-            height: file.height,
-          },
-          points: {
-            comment_count: 0,
-            like_count: 0,
-            timestamp: '',
-            view_count: 0
-          },
-          status: {
-            enabled: true,
-            featured: false,
-            flagged: false
-          },
-          options: {
-            autoPlay: true,
-            looping_enabled: true,
-          },
-          thumbnail: {
-            small: '',
-            large: ''
-          }
-        };
+    };
 
-        //TODO: Remove debug
-        console.log(upload);
+    //TODO: Remove debug
+    console.log(upload);
 
-        const postId = database.ref().child('uploads/images').push().key;
-        upload.id = postId;
+    const postId = database.ref().child('uploads/videos').push().key;
+    upload.id = postId;
+    console.log(postId);
 
-        const updates = {};
-        updates[`uploads/images/${postId}`] = upload;
-        updates[`users/${data.publisher.id}/images/${postId}`] = upload;
+    const updates = {};
+    updates[`uploads/videos/${postId}`] = upload;
+    updates[`users/${data.publisher.id}/videos/${postId}`] = upload;
 
-        return database.ref().update(updates)
-          .then(dispatch(uploadPostSuccess()))
-          .catch(dispatch(error => dispatch(uploadError(error))));
+    return database.ref().update(updates)
+      .then(dispatch(uploadPostSuccess()))
+      .catch(dispatch(error => dispatch(uploadError(error))));
+  }
+  else if (file.resource_type === 'image'){
+    //TODO: Use the newImage Obj
+    // const newImage = new ImageObject(data, file)
+    upload = {
+      id: file.public_id,
+      content: {
+        category: '', //values.category
+        title: data.title || '',
+        caption: data.caption || '',
+        createdAt: file.created_at
+      },
+      publisher: data.publisher,
+      name: file.original_filename,
+      url: file.secure_url,
+      config: {
+        type: file.resource_type,
+        size: file.bytes,
+        format: file.format,
+        width: file.width,
+        height: file.height,
+      },
+      points: {
+        comment_count: 0,
+        like_count: 0,
+        timestamp: '',
+        view_count: 0
+      },
+      status: {
+        enabled: true,
+        featured: false,
+        flagged: false
+      },
+      options: {
+        autoPlay: true,
+        looping_enabled: true,
+      },
+      thumbnail: {
+        small: '',
+        large: ''
       }
+    };
+
+    //TODO: Remove debug
+    console.log(upload);
+
+    const postId = database.ref().child('uploads/images').push().key;
+    upload.id = postId;
+
+    const updates = {};
+    updates[`uploads/images/${postId}`] = upload;
+    updates[`users/${data.publisher.id}/images/${postId}`] = upload;
+
+    return database.ref().update(updates)
+      .then(dispatch(uploadPostSuccess()))
+      .catch(dispatch(error => dispatch(uploadError(error))));
+  }
 };
 
-export const deleteUpload = (id, type) => dispatch => {
+export const updateUpload = (data) => dispatch => {
+  dispatch(uploadRequest());
+
+  const upload =  {
+    title: data.title,
+    caption: data.caption
+  };
+
+  const updates = {};
+  updates[`uploads/${data.type}s/${data.uploadId}/content/title`] = data.title;
+  updates[`uploads/${data.type}s/${data.uploadId}/content/caption`] = data.caption;
+  //updates[`users/${data.publisher.id}/${type}/${postId}/content`] = upload;
+
+  return database.ref().update(updates)
+    .then(dispatch(uploadUpdateSuccess()))
+    .catch(error => dispatch(uploadError(error)));
+};
+
+export const deleteUpload = (uploadId, type) => dispatch => {
   // TODO: Check Authentication
   dispatch(uploadRequest());
 
-  let refType;
-  if(type === 'image'){
-    refType = 'images/';
-  } else {
-    refType = 'videos/';
-  }
-  return database.ref('uploads/').child(`${refType}/${id}`).remove()
+  return database.ref('uploads/').child(`${type}/${uploadId}`).remove()
     .then(dispatch(uploadDeleteSuccess()))
     .catch(err => {dispatch(uploadError(err));});
 };

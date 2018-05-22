@@ -8,10 +8,18 @@ import {getAuth} from '../actions/action.auth';
 
 import ImageCard from "../component/Image.Card";
 import VideoCard from "../component/Video.Card";
-import {ProfileCard} from "../component/Prorfile.Card";
+import ProfileCard from "../component/Prorfile.Card";
 import ProfileModal from "../component/Profile.Modal";
 
 export class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalIsOpen: false,
+      modalType: null
+    }
+  }
+
   renderProfile(profile) {
     return(
       <ProfileCard

@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import DropZone from 'react-dropzone';
 
+import _ from 'lodash';
+
 class FormDropzone extends React.Component {
   render() {
     // Parent Props
@@ -22,7 +24,8 @@ class FormDropzone extends React.Component {
         <aside>
           <ul>
             {
-              file.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
+              !_.isEmpty(this.props.file) &&
+              <li>{file.original_name} - {file.bytes} bytes</li>
             }
           </ul>
         </aside>

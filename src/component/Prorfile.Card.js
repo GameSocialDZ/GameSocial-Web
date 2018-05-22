@@ -34,21 +34,26 @@ export class ProfileCard extends Component {
           <div className="media">
             <div className="media-left">
               <figure className="image is-48x48">
-                <img src={profile.avatar} alt="Placeholder"/>
+                <img style={{maxWidth: '250px'}} src={profile.avatar.url} alt="Placeholder"/>
               </figure>
             </div>
             <div className="media-content">
               <p className="title is-4">{profile.name}</p>
               <p className="subtitle is-6">@{profile.username}</p>
+              <p className="text">{profile.bio}</p>
             </div>
           </div>
 
           <div className="content">
             <a type='email'>{profile.email}</a>
             <button
+              type="button"
+              className="btn btn-sm btn-outline-secondary"
               style={{position: 'absolute', top: '0px', right: '0px'}}
               onClick={this.openLinkModal}>Link</button>
             <button
+              type="button"
+              className="btn btn-sm btn-outline-secondary"
               style={{position: 'absolute', bottom: '0px', right: '0px'}}
               onClick={this.openEditModal}>Edit</button>
           </div>

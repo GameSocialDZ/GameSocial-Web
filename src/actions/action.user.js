@@ -11,6 +11,11 @@ export const userGetSuccess = (data) => ({
   data
 });
 
+export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS';
+export const userUpdateSuccess = () => ({
+  type: USER_UPDATE_SUCCESS,
+});
+
 export const USER_ERROR = 'USER_ERROR';
 export const userError = error => ({
   type: USER_ERROR,
@@ -30,6 +35,43 @@ export const getUserOnce = userId => dispatch => {
     dispatch(userGetSuccess(data.val()));
   }).catch(error => dispatch(userError(error)));
 };
+
+export const updateUserProfile = (userId, data, file) => dispatch => {
+  dispatch(userRequest());
+  return database.ref(`users/${userId}/profile`).update({
+    name: data.editName,
+    bio: data.editBio,
+    avatar: {
+      etag: file.etag,
+      url: file.secure_url,
+      height: file.height,
+      width: file.width,
+      format: file.format,
+      createdAt: file.created_at
+    }
+  })
+    .then(dispatch(userUpdateSuccess()))
+    .catch(error => dispatch(userError(error)))
+};
+
+export const updateUserUpload = (data) => dispatch => {
+  dispatch(userRequest());
+
+  const upload =  {
+    title: data.title,
+    caption: data.caption
+  };
+
+  const updates = {};
+  //updates[`uploads/${type}/${postId}/content`] = upload;
+  updates[`users/${data.userId}/${data.type}s/${data.uploadId}/content/title`] = data.title;
+  updates[`users/${data.userId}/${data.type}s/${data.uploadId}/content/caption`] = data.caption;
+
+  return database.ref().update(updates)
+    .then(dispatch(userUpdateSuccess()))
+    .catch(error => dispatch(userError(error)));
+};
+
 
 // export const getUserUploads = (id) => dispatch => {
 //   dispatch(uploadRequest());

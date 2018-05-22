@@ -1,7 +1,8 @@
 import {
   USER_REQUEST,
   USER_GET_SUCCESS,
-  USER_ERROR
+  USER_ERROR,
+  USER_UPDATE_SUCCESS
 } from '../actions/action.user';
 
 const initialState = {
@@ -20,6 +21,11 @@ export default function reducer(state = initialState, action) {
     case USER_GET_SUCCESS:
       return Object.assign({}, state, {
         data: action.data,
+        loading: false,
+        error: null
+      });
+    case USER_UPDATE_SUCCESS:
+      return Object.assign({}, state, {
         loading: false,
         error: null
       });

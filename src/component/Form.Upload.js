@@ -40,7 +40,6 @@ class FormUpload extends Component{
     }
     // Add publisher
     values.publisher = this.props.publisher;
-    console.log(file);
     this.props.upload(values, file);
     this.props.dispatch(reset('upload'));
   }
@@ -109,8 +108,8 @@ class FormUpload extends Component{
           //let vidUrl = resUrl + res.data.public_id + "." + res.data.format;
           thisComponent.setState({
             videoError: fileError,
-            videoSelected: res.data,
-            videoUrl: res.data.secure_url
+            fileSelected: res.data,
+            fileUrl: res.data.secure_url
           });
         })
         .catch(error => {
@@ -125,7 +124,7 @@ class FormUpload extends Component{
 
       let videoError = {
         status: true,
-        msg: 'Unsupported file type: ' + videoFileType === false ? imageFileType: videoFileType
+        msg: 'Unsupported file type: ' + videoFileType === false ? imageFileType : videoFileType
       };
       thisComponent.setState({videoError: videoError});
     }
@@ -150,7 +149,7 @@ class FormUpload extends Component{
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-6 col-sm-offset-3 m-auto">
-            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values, this.state.videoSelected))}>
+            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values, this.state.fileSelected))}>
               <Field
                 label="Title"
                 name="title"
@@ -172,7 +171,6 @@ class FormUpload extends Component{
                 disabled={this.state.disabled}
                 file={this.state.file}
                 directions="Drop or click to upload a video or image file."/>
-              {/*<Input type="file" id="file" className='hidden' onChange={this.onFileSelect.bind(this)} />*/}
               <button
                 className="btn btn-primary col-sm-12"
                 type="submit" disabled={this.props.pristine || this.props.submitting}>

@@ -8,41 +8,43 @@ export default class CommonInput extends React.Component {
   }
 
   render() {
+    const {placeholder, input, label, type, accept, meta} = this.props;
     let error;
-    if (this.props.meta.touched && this.props.meta.error) {
+    if (meta.touched && meta.error) {
       error = <div className="form-error">{this.props.meta.error}</div>;
     }
 
     let warning;
-    if (this.props.meta.touched && this.props.meta.warning) {
+    if (meta.touched && meta.warning) {
       warning = (
-        <div className="form-warning">{this.props.meta.warning}</div>
+        <div className="form-warning">{meta.warning}</div>
       );
     }
 
     return (
       <div className="form-input">
         <label
-          htmlFor={this.props.input.name}>
-          {this.props.label}
+          htmlFor={input.name}>
+          {label}
           {error}
           {warning}
         </label>
         {
-          this.props.type === 'textarea' ? (
+          type === 'textarea' ? (
             <textarea
               className="col-sm-12"
-              {...this.props.input}
-              id={this.props.input.name}
+              {...input}
+              id={input.name}
               ref={input => (this.input = input)}
             />
           ):(
             <input
+              placeholder={placeholder !== null && placeholder}
               className="col-sm-12"
-              {...this.props.input}
-              id={this.props.input.name}
-              type={this.props.type}
-              accept={this.props.accept}
+              {...input}
+              id={input.name}
+              type={type}
+              accept={accept}
               ref={input => (this.input = input)}
             />
           )
