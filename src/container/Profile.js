@@ -20,6 +20,10 @@ export class Profile extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.getUser(this.props.currentUser.uid)
+  }
+
   renderProfile(profile) {
     return(
       <ProfileCard

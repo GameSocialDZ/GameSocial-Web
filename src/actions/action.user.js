@@ -57,15 +57,17 @@ export const updateUserProfile = (userId, data, file) => dispatch => {
 export const updateUserUpload = (data) => dispatch => {
   dispatch(userRequest());
 
-  const upload =  {
-    title: data.title,
-    caption: data.caption
-  };
+  // const upload =  {
+  //   title: data.editTitle,
+  //   caption: data.editCaption
+  // };
+
+  console.log(data);
 
   const updates = {};
   //updates[`uploads/${type}/${postId}/content`] = upload;
-  updates[`users/${data.userId}/${data.type}s/${data.uploadId}/content/title`] = data.title;
-  updates[`users/${data.userId}/${data.type}s/${data.uploadId}/content/caption`] = data.caption;
+  updates[`users/${data.userId}/${data.type}s/${data.uploadId}/content/title`] = data.editTitle;
+  updates[`users/${data.userId}/${data.type}s/${data.uploadId}/content/caption`] = data.editCaption;
 
   return database.ref().update(updates)
     .then(dispatch(userUpdateSuccess()))

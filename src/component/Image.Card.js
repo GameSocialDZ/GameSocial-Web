@@ -48,7 +48,7 @@ class ImageCard extends Component {
             {
               this.state.editing === true ? (
                 <FormEditUserUpload
-                  //onSubmit={this.onSubmit.bind(this)}
+                  onSubmit={this.onSubmit.bind(this)}
                   uploadId={image.id}
                   type={image.config.type}
                   title={image.content.title}

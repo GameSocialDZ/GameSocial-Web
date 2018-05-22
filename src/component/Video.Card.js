@@ -51,7 +51,7 @@ class VideoCard extends Component {
             {
               this.state.editing === true ? (
                 <FormEditUserUpload
-                  //onSubmit={this.onSubmit.bind(this)}
+                  onSubmit={this.onSubmit.bind(this)}
                   uploadId={video.id}
                   type={video.config.type}
                   title={video.content.title}

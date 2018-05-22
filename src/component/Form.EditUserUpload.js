@@ -28,11 +28,11 @@ class FormEditUserUpload extends Component{
     values.type = this.state.type;
     values.uploadId = this.props.uploadId;
 
-    console.log(values);
-
     this.props.updateUserUpload(values);
     this.props.updateUpload(values);
+
     this.props.dispatch(reset('editUserUpload'));
+    this.props.onSubmit();
   }
 
   handleChange = (e) => {
@@ -47,9 +47,7 @@ class FormEditUserUpload extends Component{
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12 col-sm-offset-3 m-auto">
-            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))
-              //this.props.onSubmit();
-            }>
+            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
               <Field
                 placeholder={title}
                 name="editTitle"

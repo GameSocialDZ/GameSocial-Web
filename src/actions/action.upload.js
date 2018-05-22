@@ -170,13 +170,15 @@ export const updateUpload = (data) => dispatch => {
   dispatch(uploadRequest());
 
   const upload =  {
-    title: data.title,
-    caption: data.caption
+    title: data.editTitle,
+    caption: data.editCaption
   };
 
+  console.log(data);
+
   const updates = {};
-  updates[`uploads/${data.type}s/${data.uploadId}/content/title`] = data.title;
-  updates[`uploads/${data.type}s/${data.uploadId}/content/caption`] = data.caption;
+
+  updates[`uploads/${data.type}s/${data.uploadId}/content`] = upload;
   //updates[`users/${data.publisher.id}/${type}/${postId}/content`] = upload;
 
   return database.ref().update(updates)
