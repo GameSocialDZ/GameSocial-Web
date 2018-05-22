@@ -6,6 +6,7 @@ import {getUploads} from "../actions/action.upload";
 
 import ImageCard from '../component/Image.Card';
 import VideoCard from '../component/Video.Card';
+import HomeHero from '../component/Home.Hero';
 
 //import {createLoadingSelector} from '../selectors/select.loading';
 
@@ -51,6 +52,7 @@ class Home extends Component {
 
     return (
       <div>
+        <HomeHero/>
         <div className="album py5 bg-light">
           <div className="container">
             <div className="row">

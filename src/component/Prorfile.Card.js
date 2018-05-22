@@ -34,7 +34,11 @@ export class ProfileCard extends Component {
           <div className="media">
             <div className="media-left">
               <figure className="image is-48x48">
-                <img style={{maxWidth: '250px'}} src={profile.avatar.url} alt="Placeholder"/>
+                <img
+                  className="img-thumbnail"
+                  style={{maxWidth: '250px'}}
+                  src={profile.avatar.url}
+                  alt="Placeholder"/>
               </figure>
             </div>
             <div className="media-content">
