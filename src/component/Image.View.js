@@ -25,6 +25,7 @@ class ImageView extends Component {
             </div>
             <div className="col-md-2 border rounded">
               <p>Likes</p>
+              <p>Views</p>
               <button>Favorite</button>
             </div>
           </div>
@@ -34,7 +35,7 @@ class ImageView extends Component {
             <div className="col-sm-8 border rounded">
               <h1>Title</h1>
               <p>Caption</p>
-              <span>Time Stamp</span>
+              <span>Tags</span><span style={{float: 'right'}}>Time Stamp</span>
             </div>
             <div className="col-sm-4 border rounded">
               <h1>Publisher</h1>
