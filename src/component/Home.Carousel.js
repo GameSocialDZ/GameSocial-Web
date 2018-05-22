@@ -12,7 +12,8 @@ class HomeCarousel extends Component {
   }
 
   renderContent(featuredList) {
-    return _.map(featuredList, item => {
+    //TODO: Add key to div (videoId)
+    return _.map(featuredList.list, item => {
       return (
         <div>
           <img src="https://res.cloudinary.com/diygdnbei/image/upload/v1519444005/zumnvvbqi0fo1zthkal7.png" />
@@ -20,13 +21,12 @@ class HomeCarousel extends Component {
         </div>
       );
     })
-  }
+  };
 
   render() {
     const {featured} = this.props;
     return (
-      <Carousel showArrows={true}>
-                {/*onChange={onChange}> onClickItem={onClickItem} onClickThumb={onClickThumb}>*/}
+      <Carousel showArrows={true} infiniteLoop autoPlay>
         {this.renderContent(featured)}
       </Carousel>
     );
