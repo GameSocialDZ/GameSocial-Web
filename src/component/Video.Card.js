@@ -69,16 +69,13 @@ class VideoCard extends Component {
               <button type="button" className="btn btn-sm btn-outline-secondary" onClick={this.getViewState.bind(this)}>
                 <Link className="" to="/view">View</Link>
               </button>
+              <button type="button" className="btn btn-sm btn-outline-secondary">comment</button>
               {
-                (history.location.pathname === '/profile' && currentUser !==null) ?
-                  (
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => this.setFormState(this.state.editing)}>Edit</button>
-                  ):(
-                    <button type="button" className="btn btn-sm btn-outline-secondary">comment</button>
-                  )
+                (history.location.pathname === '/profile' && currentUser !== null) &&
+                <button
+                  type="button"
+                  className="btn btn-sm btn-outline-secondary"
+                  onClick={() => this.setFormState(this.state.editing)}>Edit</button>
               }
             </div>
             <small>{video.content.createdAt}</small>

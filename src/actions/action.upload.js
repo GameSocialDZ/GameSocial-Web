@@ -169,17 +169,9 @@ export const upload = (data, file) => dispatch => {
 export const updateUpload = (data) => dispatch => {
   dispatch(uploadRequest());
 
-  const upload =  {
-    title: data.editTitle,
-    caption: data.editCaption
-  };
-
-  console.log(data);
-
   const updates = {};
-
-  updates[`uploads/${data.type}s/${data.uploadId}/content`] = upload;
-  //updates[`users/${data.publisher.id}/${type}/${postId}/content`] = upload;
+  updates[`uploads/${data.type}s/${data.uploadId}/content/title`] = data.editTitle;
+  updates[`uploads/${data.type}s/${data.uploadId}/content/caption`] = data.editCaption;
 
   return database.ref().update(updates)
     .then(dispatch(uploadUpdateSuccess()))

@@ -20,7 +20,7 @@ export class Profile extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getUser(this.props.currentUser.uid)
   }
 

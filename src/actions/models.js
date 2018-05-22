@@ -1,5 +1,6 @@
 class NewUserObject {
   constructor(user, dob = '', username) {
+    this.id = user.uid;
     this.profile = {
       id: user.uid,
       username: username,
