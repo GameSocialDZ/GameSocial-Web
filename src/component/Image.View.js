@@ -17,13 +17,13 @@ class ImageView extends Component {
       <div>
         <div className="container-fluid">
           <div className="row">
-            <div className="ui-media col-md-10 border rounded embed-responsive embed-responsive-16by9 m-auto">
+            <div className="ui-media col-md-8 border rounded embed-responsive embed-responsive-16by9 m-auto">
               <img
                 alt="selected"
                 className="embed-responsive-item"
                 src={image.url}/>
             </div>
-            <div className="col-md-2 border rounded">
+            <div className="col-md-4 border rounded">
               <p>Likes</p>
               <p>Views</p>
               <button>Favorite</button>

@@ -18,7 +18,7 @@ class VideoView extends Component {
       <div>
         <div className="container-fluid">
           <div className="row">
-            <div className="ui-media col-md-10 border rounded embed-responsive embed-responsive-16by9">
+            <div className="ui-media col-md-8 border rounded embed-responsive embed-responsive-16by9">
               <Player
                 className="embed-responsive-item"
                 loop
@@ -27,7 +27,7 @@ class VideoView extends Component {
                 poster={video.thumbnail.large}
                 src={video.url}/>
             </div>
-            <div className="col-md-2 border rounded">
+            <div className="col-md-4 border rounded">
               <p>Likes</p>
               <p>Views</p>
               <button>Favorite</button>

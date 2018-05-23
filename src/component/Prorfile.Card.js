@@ -32,9 +32,9 @@ export class ProfileCard extends Component {
       <div className="container-fluid">
         <div className="row justify-content-between">
           <div className="col-lg-8">
-            <div className="container">
+            <div className="container-fluid">
               <div className="row">
-                <div className="col-md-auto">
+                <div className="col-sm-auto">
                   <figure className="image">
                     <img
                       className="img-thumbnail"
@@ -43,25 +43,36 @@ export class ProfileCard extends Component {
                       alt="Placeholder"/>
                   </figure>
                 </div>
-                <div className="col-md-6">
+                <div className="col-sm-6">
                   <p className="title is-4">{profile.name}</p>
                   <p className="subtitle is-6">@{profile.username}</p>
                   <p className="text">{profile.bio}</p>
-                  <a type='email'>{profile.email}</a>
-                  <button
-                    type="button"
-                    style={{position: 'absolute', top: '0px', right: '0px'}}
-                    className="btn btn-sm btn-outline-secondary"
-                    onClick={this.openLinkModal}>Link</button>
-                  <button
-                    type="button"
-                    style={{position: 'absolute', bottom: '0px', right: '0px'}}
-                    className="btn btn-sm btn-outline-secondary"
-                    onClick={this.openEditModal}>Edit</button>
+                  <div>
+                    <a type='email'>{profile.email}</a>
+                  </div>
+                  <div className="btn-group">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-secondary"
+                      onClick={this.openLinkModal}>Link</button>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-secondary"
+                      onClick={this.openEditModal}>Edit</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <div className="col-lg-4 d-flex">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col m-auto">Points</div>
+                <div className="col m-auto">Followers</div>
+                <div className="col m-auto">Following</div>
+            </div>
+          </div>
+        </div>
         </div>
         <ModalView
           modalIsOpen={modalIsOpen}
