@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Card, Icon, Image } from 'semantic-ui-react';
-import HomeCarousel from './Home.Carousel';
+import { Container } from 'semantic-ui-react';
+
+//import HomeCarousel from './Home.Carousel';
 import HomeSlider from './Home.Slider';
 
 //import { getFeaturedVideos } from '../actions/action.featured';
@@ -12,9 +13,9 @@ class HomeHero extends Component {
     this.state = {
       featured: {
         list: [
-          {title: 1},
-          {title: 2},
-          {title: 3}
+          {title: 1, id: 1},
+          {title: 2, id: 2},
+          {title: 3, id: 3}
         ]
       }
     }
@@ -26,7 +27,7 @@ class HomeHero extends Component {
 
   render() {
     // let hasFeatured = !!(this.props.featured && this.props.featured.list && this.props.featured.list.length > 0 );
-    let hasFeatured = !!(this.state.featured && this.state.featured.list && this.state.featured.list.length > 0 );
+    //let hasFeatured = !!(this.state.featured && this.state.featured.list && this.state.featured.list.length > 0 );
     return (
       <section id='hero'>
         <Container fluid textAlign='center'>

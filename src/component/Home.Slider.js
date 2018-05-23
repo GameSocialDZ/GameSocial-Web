@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 // import {Link} from 'react-router-dom';
 import Slider from 'react-slick';
 import _ from 'lodash';
-import { Container, Grid, Segment, Button, Header, Item, Image, Icon } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 //import {FacebookLogin, TwitterLogin} from '../actions/action.user';
 
 const settings = {
@@ -30,9 +30,9 @@ class HomeSlider extends Component {
         {
           _.map(this.props.featured.list, feature => {
             return(
-              <div >
+              <div key={feature.id}>
                 <div className="slideContent">
-                  <img src="https://res.cloudinary.com/diygdnbei/image/upload/v1519444005/zumnvvbqi0fo1zthkal7.png" />
+                  <img alt="test" src="https://res.cloudinary.com/diygdnbei/image/upload/v1519444005/zumnvvbqi0fo1zthkal7.png" />
                   <h1>{feature.title}</h1>
                 </div>
                 <div className="slideInner">

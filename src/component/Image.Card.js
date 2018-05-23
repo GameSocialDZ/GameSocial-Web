@@ -39,44 +39,41 @@ class ImageCard extends Component {
   render() {
     const {currentUser, history, image} = this.props;
     return (
-      <div className="col-md-4">
-        <div id={this.key} className="card mb-4 box-shadow">
-          <img
-            className="card-img-top" alt="upload"
-            src={image.url}/>
-          <div className="card-body">
+      <div>
+        <img className="card-img-top" alt="upload"
+          src={image.url}/>
+        <div className="card-body">
+          {
+            this.state.editing === true ? (
+              <FormEditUserUpload
+                onSubmit={this.onSubmit.bind(this)}
+                uploadId={image.id}
+                type={image.config.type}
+                title={image.content.title}
+                caption={image.content.caption}/>
+            ):(
+              <div>
+                <div className="card-header">{image.content.title}</div>
+                <p className="card-text">{image.content.caption}</p>
+            </div>
+            )
+          }
+        </div>
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="btn-group">
+            <button type="button" className="btn btn-sm btn-outline-secondary" onClick={this.getViewState.bind(this)}>
+              <Link className="" to="/view">View</Link>
+            </button>
+            <button type="button" className="btn btn-sm btn-outline-secondary">comment</button>
             {
-              this.state.editing === true ? (
-                <FormEditUserUpload
-                  onSubmit={this.onSubmit.bind(this)}
-                  uploadId={image.id}
-                  type={image.config.type}
-                  title={image.content.title}
-                  caption={image.content.caption}/>
-              ):(
-                <div>
-                  <div className="card-header">{image.content.title}</div>
-                  <p className="card-text">{image.content.caption}</p>
-              </div>
-              )
+              (history.location.pathname === '/profile' && currentUser !==null) &&
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary"
+                onClick={() => this.setFormState(this.state.editing)}>Edit</button>
             }
-          </div>
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="btn-group">
-              <button type="button" className="btn btn-sm btn-outline-secondary" onClick={this.getViewState.bind(this)}>
-                <Link className="" to="/view">View</Link>
-              </button>
-              <button type="button" className="btn btn-sm btn-outline-secondary">comment</button>
-              {
-                (history.location.pathname === '/profile' && currentUser !==null) &&
-                <button
-                  type="button"
-                  className="btn btn-sm btn-outline-secondary"
-                  onClick={() => this.setFormState(this.state.editing)}>Edit</button>
-              }
-              </div>
-            <small>{image.content.createdAt}</small>
-          </div>
+            </div>
+          <small>{image.content.createdAt}</small>
         </div>
       </div>
     );

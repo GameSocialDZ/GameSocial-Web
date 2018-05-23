@@ -24,10 +24,11 @@ class Home extends Component {
   renderImageUploads(images) {
     return _.map(images, (image) => {
       return (
-        <ImageCard
-          key={image.id}
-          image={image}
-          history={this.props.history}/>
+        <div key={image.id} className="card col-md-4">
+          <ImageCard
+            image={image}
+            history={this.props.history}/>
+        </div>
       )
     });
   }
@@ -35,10 +36,11 @@ class Home extends Component {
   renderVideoUploads(videos) {
     return _.map(videos, (video) => {
       return (
-        <VideoCard
-          key={video.id}
-          video={video}
-          history={this.props.history}/>
+        <div key={video.id} className="card col-md-4">
+          <VideoCard
+            video={video}
+            history={this.props.history}/>
+        </div>
       )
     });
   }
@@ -53,18 +55,14 @@ class Home extends Component {
     return (
       <div>
         <HomeHero/>
-        <div className="album py5 bg-light">
-          <div className="container">
-            <div className="row">
-              {this.renderImageUploads(images)}
-            </div>
+        <div className="container">
+          <div className="row">
+            {this.renderImageUploads(images)}
           </div>
         </div>
-        <div className="album py5 bg-light">
-          <div className="container">
-            <div className="row">
-              {this.renderVideoUploads(videos)}
-            </div>
+        <div className="container">
+          <div className="row">
+            {this.renderVideoUploads(videos)}
           </div>
         </div>
       </div>

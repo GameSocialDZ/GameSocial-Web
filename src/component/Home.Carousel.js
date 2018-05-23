@@ -15,7 +15,7 @@ class HomeCarousel extends Component {
     //TODO: Add key to div (videoId)
     return _.map(featuredList.list, item => {
       return (
-        <div>
+        <div key={item.id}>
           <img src="https://res.cloudinary.com/diygdnbei/image/upload/v1519444005/zumnvvbqi0fo1zthkal7.png" />
           <p className="legend">{item.title}</p>
         </div>

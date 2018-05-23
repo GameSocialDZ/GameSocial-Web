@@ -34,10 +34,11 @@ export class Profile extends Component {
   renderUserImages(images) {
     return _.map(images, (image) => {
       return (
-        <ImageCard
-          key={image.id}
-          image={image}
-          history={this.props.history}/>
+        <div key={image.id} className="card col-md-4">
+          <ImageCard
+            image={image}
+            history={this.props.history}/>
+        </div>
       )
     });
   }
@@ -45,10 +46,11 @@ export class Profile extends Component {
   renderUserVideos(videos) {
     return _.map(videos, (video) => {
       return (
-        <VideoCard
-          key={video.id}
-          video={video}
-          history={this.props.history}/>
+        <div key={video.id} className="card col-md-4">
+          <VideoCard
+            video={video}
+            history={this.props.history}/>
+        </div>
       )
     });
   }
@@ -65,23 +67,19 @@ export class Profile extends Component {
     return (
       <div>
         {this.renderProfile(profile)}
-        <div className="album py5 bg-light">
           <div className="container">
             <div className="row">
               {this.renderUserImages(images)}
             </div>
           </div>
-        </div>
-        <div className="album py5 bg-light">
           <div className="container">
             <div className="row">
               {this.renderUserVideos(videos)}
             </div>
           </div>
-        </div>
         <ProfileModal/>
       </div>
-        );
+    );
   }
 }
 

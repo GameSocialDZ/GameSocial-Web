@@ -40,46 +40,47 @@ class VideoCard extends Component {
 
   render() {
     const {currentUser, history, video} = this.props;
-
     return (
-      <div className="col-md-4">
-        <div id={this.key} className="card mb-4 box-shadow">
-          <Player className="card-img-top" alt="upload" aspectRatio='16:9' controls={false} playsInline={true} muted={true} autoPlay={false} loop={false}>
-            <source src={video.url}/>
-          </Player>
-          <div className="card-body">
+      <div>
+        <Player
+          className="card-img-top"
+          alt="upload" aspectRatio='16:9'
+          controls={false} playsInline={true}
+          muted={true} autoPlay={false} loop={false}>
+          <source src={video.url}/>
+        </Player>
+        <div className="card-body">
+          {
+            this.state.editing === true ? (
+              <FormEditUserUpload
+                onSubmit={this.onSubmit.bind(this)}
+                uploadId={video.id}
+                type={video.config.type}
+                title={video.content.title}
+                caption={video.content.caption}/>
+            ):(
+              <div>
+                <div className="card-header">{video.content.title}</div>
+                <p className="card-text">{video.content.caption}</p>
+              </div>
+            )
+          }
+        </div>
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="btn-group">
+            <button type="button" className="btn btn-sm btn-outline-secondary" onClick={this.getViewState.bind(this)}>
+              <Link className="" to="/view">View</Link>
+            </button>
+            <button type="button" className="btn btn-sm btn-outline-secondary">comment</button>
             {
-              this.state.editing === true ? (
-                <FormEditUserUpload
-                  onSubmit={this.onSubmit.bind(this)}
-                  uploadId={video.id}
-                  type={video.config.type}
-                  title={video.content.title}
-                  caption={video.content.caption}/>
-              ):(
-                <div>
-                  <div className="card-header">{video.content.title}</div>
-                  <p className="card-text">{video.content.caption}</p>
-                </div>
-              )
+              (history.location.pathname === '/profile' && currentUser !== null) &&
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary"
+                onClick={() => this.setFormState(this.state.editing)}>Edit</button>
             }
           </div>
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="btn-group">
-              <button type="button" className="btn btn-sm btn-outline-secondary" onClick={this.getViewState.bind(this)}>
-                <Link className="" to="/view">View</Link>
-              </button>
-              <button type="button" className="btn btn-sm btn-outline-secondary">comment</button>
-              {
-                (history.location.pathname === '/profile' && currentUser !== null) &&
-                <button
-                  type="button"
-                  className="btn btn-sm btn-outline-secondary"
-                  onClick={() => this.setFormState(this.state.editing)}>Edit</button>
-              }
-            </div>
-            <small>{video.content.createdAt}</small>
-          </div>
+          <small>{video.content.createdAt}</small>
         </div>
       </div>
     );
