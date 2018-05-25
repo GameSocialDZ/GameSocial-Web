@@ -56,9 +56,9 @@ export class ProfileCard extends Component {
               </Button.Group>
             </Grid.Column>
             <Grid.Column>
-              <span>Points</span>
-              <span>Followers</span>
-              <span>Following</span>
+              <Segment><span>Points</span></Segment>
+              <Segment><span>Followers</span></Segment>
+              <Segment><span>Following</span></Segment>
             </Grid.Column>
           </Grid.Row>
         </Grid>

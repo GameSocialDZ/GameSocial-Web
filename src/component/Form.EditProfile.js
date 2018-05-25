@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 import _ from 'lodash';
 
-import {From} from 'semantic-ui-react';
+import {Form, Button} from 'semantic-ui-react';
 
 import CommonInput from "./Common.Input";
 import FormDropzone from '../component/Form.Dropzone';
@@ -136,33 +136,32 @@ class FormEditProfile extends Component{
     const {fileSelected} = this.state;
     const {userId} = this.props;
     return(
-            <Form size='large' onSubmit={this.props.handleSubmit(values => this.onSubmit(values, userId, fileSelected))}>
-              <Field
-                label="Edit Name"
-                name="editName"
-                component={CommonInput}
-                type="text"
-                onChange={this.handleChange}/>
-              <Field
-                label="Edit Bio"
-                name="editBio"
-                component={CommonInput}
-                type="textarea"
-                onChange={this.handleChange}/>
-              <FormDropzone
-                fileLabel="Avatar"
-                fileType="image/*"
-                handleOnDrop={this.handleOnDrop.bind(this)}
-                disabled={this.state.disabled}
-                file={this.state.fileSelected}
-                directions="Drop or click to upload an avatar for your profile picture."/>
-              <button
-                className="btn btn-primary col-sm-12"
-                type="submit" disabled={this.props.pristine || this.props.submitting}>
-                Submit</button>
-            </Form>
-          </div>
-        </div>
+      <div>
+        <Form size='large' onSubmit={this.props.handleSubmit(values => this.onSubmit(values, userId, fileSelected))}>
+          <Field
+            label="Edit Name"
+            name="editName"
+            component={CommonInput}
+            type="text"
+            onChange={this.handleChange}/>
+          <Field
+            label="Edit Bio"
+            name="editBio"
+            component={CommonInput}
+            type="textarea"
+            onChange={this.handleChange}/>
+          <FormDropzone
+            fileLabel="Avatar"
+            fileType="image/*"
+            handleOnDrop={this.handleOnDrop.bind(this)}
+            disabled={this.state.disabled}
+            file={this.state.fileSelected}
+            directions="Drop or click to upload an avatar for your profile picture."/>
+          <Button
+            className="btn btn-primary col-sm-12"
+            type="submit" disabled={this.props.pristine || this.props.submitting}>
+            Submit</Button>
+        </Form>
       </div>
     );
   }
