@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
+import {Grid} from 'semantic-ui-react';
+
 import {getUploads} from "../actions/action.upload";
 
 import ImageCard from '../component/Image.Card';
@@ -24,11 +26,11 @@ class Home extends Component {
   renderImageUploads(images) {
     return _.map(images, (image) => {
       return (
-        <div key={image.id} className="card col-md-4">
+        <Grid.Column key={image.id}>
           <ImageCard
             image={image}
             history={this.props.history}/>
-        </div>
+        </Grid.Column>
       )
     });
   }
@@ -36,11 +38,11 @@ class Home extends Component {
   renderVideoUploads(videos) {
     return _.map(videos, (video) => {
       return (
-        <div key={video.id} className="card col-md-4">
+        <Grid.Column key={video.id}>
           <VideoCard
             video={video}
             history={this.props.history}/>
-        </div>
+        </Grid.Column>
       )
     });
   }
@@ -55,16 +57,16 @@ class Home extends Component {
     return (
       <div>
         <HomeHero/>
-        <div className="container">
-          <div className="row">
+        <Grid column={3} divided>
+          <Grid.Row>
             {this.renderImageUploads(images)}
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
+          </Grid.Row>
+        </Grid>
+        <Grid>
+          <Grid.Row>
             {this.renderVideoUploads(videos)}
-          </div>
-        </div>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }

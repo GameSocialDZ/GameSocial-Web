@@ -2,15 +2,26 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import _ from 'lodash';
+import {Icon, Dropdown, Input, tagOptions} from 'semantic-ui-react';
 
 import {signOut } from "../actions/action.auth";
 
+const DropdownExampleMultipleSearchInMenu = () => (
+  <Dropdown text='Search' multiple icon='dropdown'>
+    <Dropdown.Menu>
+      <Input icon='search' iconPosition='left' className='search' />
+    </Dropdown.Menu>
+  </Dropdown>
+);
+
 class HeaderNav extends Component {
+
   render() {
     const {currentUser, signOut} = this.props;
     return (
       <nav className="navbar navbar-expand-sm bg-light">
         <div className="container-fluid">
+          <DropdownExampleMultipleSearchInMenu />
           <Link className="navbar-brand" to="/">Logo</Link>
           <button type="button" className="navbar-toggler bg-dark" data-toggle="collapse" data-target="#HeadNav">
             <span className="navbar-toggler-icon"/>

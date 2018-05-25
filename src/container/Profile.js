@@ -34,7 +34,7 @@ export class Profile extends Component {
   renderUserImages(images) {
     return _.map(images, (image) => {
       return (
-        <div key={image.id} className="card col-md-4">
+        <div key={image.id} className="card col-md-4 no-pad">
           <ImageCard
             image={image}
             history={this.props.history}/>
@@ -46,7 +46,7 @@ export class Profile extends Component {
   renderUserVideos(videos) {
     return _.map(videos, (video) => {
       return (
-        <div key={video.id} className="card col-md-4">
+        <div key={video.id} className="card col-md-4 no-pad">
           <VideoCard
             video={video}
             history={this.props.history}/>

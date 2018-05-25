@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getView} from "../actions/action.view";
 
+import {Image} from 'semantic-ui-react';
+
 import FormEditUserUpload from './Form.EditUserUpload';
 
 class ImageCard extends Component {
@@ -40,7 +42,7 @@ class ImageCard extends Component {
     const {currentUser, history, image} = this.props;
     return (
       <div>
-        <img className="card-img-top" alt="upload"
+        <Image alt="upload"
           src={image.url}/>
         <div className="card-body">
           {

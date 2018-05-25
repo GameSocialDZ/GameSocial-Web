@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
-import './main.css';
+//import './main.css';
 
 import store from './store';
 import Home from "./container/Home";
