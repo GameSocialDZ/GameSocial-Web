@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 
-import {Grid, Form} from 'semantic-ui-react';
+import {Grid, Form, Button} from 'semantic-ui-react';
 
 import {getAuth} from "../actions/action.auth";
 
@@ -62,10 +62,9 @@ class FormRegister extends Component{
                 component={CommonInput}
                 type="password" required
                 onChange={this.handleChange}/>
-              <button
-                className="btn btn-primary col-sm-12"
+              <Button
                 type="submit" disabled={this.props.pristine || this.props.submitting}>
-                Submit</button>
+                Submit</Button>
             </Form>
           </Grid.Column>
         </Grid.Row>

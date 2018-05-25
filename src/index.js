@@ -3,27 +3,19 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
-//import './main.css';
-
 import store from './store';
 import Home from "./container/Home";
-import Register from "./container/Register";
-import LinkAccounts from "./container/LinkAccounts";
-import Upload from "./container/Upload";
 import Profile from './container/Profile';
 import View from './container/View';
 
-import HeaderNav from './component/Header.Nav';
+import MenuHeader from './component/Menu.Header';
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        <HeaderNav />
+        <MenuHeader/>
         <Switch>
-          <Route path="/link" component={LinkAccounts}/>
-          <Route path="/upload" component={Upload} />
-          <Route path="/register" component={Register} />
           <Route path="/profile" component={Profile}/>
           <Route path="/view" component={View}/>
           <Route path="/" component={Home} exact={true}/>

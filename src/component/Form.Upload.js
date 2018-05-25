@@ -5,6 +5,8 @@ import axios from 'axios';
 import _ from 'lodash';
 import {CloudinaryConfig} from '../cloudinary';
 
+import {Form, Button} from 'semantic-ui-react';
+
 import CommonInput  from "./Common.Input";
 import FormDropzone from './Form.Dropzone';
 
@@ -146,38 +148,33 @@ class FormUpload extends Component{
 
   render(){
     return(
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-6 col-sm-offset-3 m-auto">
-            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values, this.state.fileSelected))}>
-              <Field
-                label="Title"
-                name="title"
-                component={CommonInput}
-                type="text" required
-                onChange={this.handleChange}
-              />
-              <Field
-                label="Caption"
-                name="caption"
-                component={CommonInput}
-                type="text" required
-                onChange={this.handleChange}
-              />
-              <FormDropzone
-                fileLabel="File"
-                fileType={''}
-                handleOnDrop={this.handleOnDrop.bind(this)}
-                disabled={this.state.disabled}
-                file={this.state.file}
-                directions="Drop or click to upload a video or image file."/>
-              <button
-                className="btn btn-primary col-sm-12"
-                type="submit" disabled={this.props.pristine || this.props.submitting}>
-                Submit</button>
-            </form>
-          </div>
-        </div>
+      <div>
+        <Form onSubmit={this.props.handleSubmit(values => this.onSubmit(values, this.state.fileSelected))}>
+          <Field
+            label="Title"
+            name="title"
+            component={CommonInput}
+            type="text" required
+            onChange={this.handleChange}
+          />
+          <Field
+            label="Caption"
+            name="caption"
+            component={CommonInput}
+            type="text" required
+            onChange={this.handleChange}
+          />
+          <FormDropzone
+            fileLabel="File"
+            fileType={''}
+            handleOnDrop={this.handleOnDrop.bind(this)}
+            disabled={this.state.disabled}
+            file={this.state.file}
+            directions="Drop or click to upload a video or image file."/>
+          <Button
+            type="submit" disabled={this.props.pristine || this.props.submitting}>
+            Submit</Button>
+        </Form>
       </div>
     );
   }

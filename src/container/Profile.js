@@ -11,7 +11,7 @@ import {getAuth} from '../actions/action.auth';
 import ImageCard from "../component/Image.Card";
 import VideoCard from "../component/Video.Card";
 import ProfileCard from "../component/Prorfile.Card";
-import ProfileModal from "../component/Modal.Popup";
+import ProfileModal from "../trash/Modal.Popup";
 
 export class Profile extends Component {
   constructor(props) {
@@ -22,9 +22,9 @@ export class Profile extends Component {
     }
   }
 
-  componentWillMount() {
-    this.props.getUser(this.props.currentUser.uid)
-  }
+  // componentWillMount() {
+  //   this.props.getUser(this.props.currentUser.uid)
+  // }
 
   renderProfile(profile) {
     return(

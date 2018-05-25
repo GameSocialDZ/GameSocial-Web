@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import _ from 'lodash';
 
-import CommonBox from "../component/Common.Box";
+import CommonBox from "./Common.Box";
 
 //import {FacebookLogin, TwitterLogin} from '../actions/action.user';
 

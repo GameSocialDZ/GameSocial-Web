@@ -1,6 +1,8 @@
 import {auth, database} from "../firebase";
 import * as firebase from "firebase";
 import {NewUserObject} from "./models";
+import {getUserOnce} from "./action.user";
+import {userError} from './action.user';
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const authRequest = () => ({
@@ -58,8 +60,11 @@ export const loginEmailPassword = (user) => dispatch => {
       dispatch(authRequest());
       return auth.signInWithEmailAndPassword(user.loginEmail, user.loginPassword)
         .then(auth => {
+          console.log(auth);
           // Add Authentication to state
           dispatch(authGetSuccess(auth));
+          return dispatch(getUserOnce(auth.uid))
+            .catch(error => dispatch(userError(error)))
         })
         .catch(error => {
           dispatch(authError(error));

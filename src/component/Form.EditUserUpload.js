@@ -48,24 +48,22 @@ class FormEditUserUpload extends Component{
     return(
       <div >
         <Form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
-          <Segment stacked>
-            <Field
-              placeholder={title}
-              name="editTitle"
-              component={CommonInput}
-              type="text"
-              onChange={this.handleChange}/>
-            <Field
-              placeholder={caption}
-              name="editCaption"
-              component={CommonInput}
-              type="textarea"
-              onChange={this.handleChange}/>
-            <Button
-              color='teal' fluid size='large'
-              type="submit" disabled={this.props.pristine || this.props.submitting}>
-              Submit</Button>
-          </Segment>
+          <Field
+            placeholder={title}
+            name="editTitle"
+            component={CommonInput}
+            type="text"
+            onChange={this.handleChange}/>
+          <Field
+            placeholder={caption}
+            name="editCaption"
+            component={CommonInput}
+            type="textarea"
+            onChange={this.handleChange}/>
+          <Button
+            color='teal' fluid size='large'
+            type="submit" disabled={this.props.pristine || this.props.submitting}>
+            Submit</Button>
         </Form>
       </div>
     );

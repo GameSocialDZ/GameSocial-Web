@@ -1,35 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import ModalPopup from "./Modal.Popup";
 
 import {Grid, Image, Button, Segment} from 'semantic-ui-react';
+
+import ModalEditProfile from './Modal.EditProfile';
+import ModalLinkAccounts from './Modal.LinkAccounts';
 
 export class ProfileCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalIsOpen: false,
-      modalType: null
     }
   }
 
-  openLinkModal = () => {
-    this.setState({modalIsOpen: true});
-    this.setState({modalType: 'link'});
-  };
-  openEditModal = () => {
-    this.setState({modalIsOpen: true});
-    this.setState({modalType: 'edit'});
-  };
-
-  closeModal = () => {
-    this.setState({modalIsOpen: false});
-  };
-
-
   render() {
     const {profile} = this.props;
-    const {modalType, modalIsOpen} = this.state;
     return (
       <div>
         <Grid columns={3} stackable>
@@ -47,12 +32,8 @@ export class ProfileCard extends Component {
                 <a type='email'>{profile.email}</a>
               </div>
               <Button.Group>
-                <Button
-                  type="button"
-                  onClick={this.openLinkModal}>Link</Button>
-                <Button
-                  type="button"
-                  onClick={this.openEditModal}>Edit</Button>
+                <ModalLinkAccounts/>
+                <ModalEditProfile/>
               </Button.Group>
             </Grid.Column>
             <Grid.Column>
@@ -62,10 +43,6 @@ export class ProfileCard extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <ModalPopup
-          modalIsOpen={modalIsOpen}
-          closeModal={this.closeModal}
-          modalType={modalType}/>
       </div>
     );
   }

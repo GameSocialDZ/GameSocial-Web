@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 
-import {Form, Grid} from 'semantic-ui-react';
+import {Form, Grid, Button} from 'semantic-ui-react';
 
 import CommonInput from "./Common.Input";
 
@@ -46,10 +46,10 @@ class FormLogin extends Component{
                 component={CommonInput}
                 type="password" required
                 onChange={this.handleChange}/>
-              <button
+              <Button
                 className="btn btn-primary col-sm-12"
                 type="submit" disabled={this.props.pristine || this.props.submitting}>
-                Submit</button>
+                Submit</Button>
             </Form>
           </Grid.Column>
         </Grid.Row>
@@ -59,7 +59,7 @@ class FormLogin extends Component{
 }
 
 const mapStateToProps = state => ({
-
+  currentUser: state.auth.currentUser
 });
 
 
