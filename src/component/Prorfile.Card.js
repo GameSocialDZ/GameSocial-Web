@@ -32,47 +32,38 @@ export class ProfileCard extends Component {
     const {modalType, modalIsOpen} = this.state;
     return (
       <div>
-      <Grid celled='internally'>
-        <Grid.Row >
-          <Grid.Column width={11}>
-            <Grid>
-              <Grid.Row>
-                <Grid.Column width={6}>
-                  <Image
-                    style={{width: '250px'}}
-                    src={profile.avatar.url}
-                    alt="Placeholder"/>
-                </Grid.Column>
-                <Grid.Column width={10}>
-                  <p className="title is-4">{profile.name}</p>
-                  <p className="subtitle is-6">@{profile.username}</p>
-                  <p className="text">{profile.bio}</p>
-                  <div>
-                    <a type='email'>{profile.email}</a>
-                  </div>
-                    <Button.Group>
-                      <Button
-                        type="button"
-                        onClick={this.openLinkModal}>Link</Button>
-                      <Button
-                        type="button"
-                        onClick={this.openEditModal}>Edit</Button>
-                    </Button.Group>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Grid.Column>
-          <Grid.Column width={5}>
-            <Grid>
-              <Grid.Row className="row">
-                <Grid.Column>Points</Grid.Column>
-                <Grid.Column>Followers</Grid.Column>
-                <Grid.Colmun>Following</Grid.Colmun>
-            </Grid.Row>
-          </Grid>
-        </Grid.Column>
-        </Grid.Row>
-      </Grid>
+        <Grid stackable>
+          <Grid.Row>
+            <Grid.Column width={4}>
+              <Image
+                style={{width: '250px'}}
+                src={profile.avatar.url}
+                alt="Placeholder"/>
+            </Grid.Column>
+
+            <Grid.Column width={8}>
+              <p className="title is-4">{profile.name}</p>
+              <p className="subtitle is-6">@{profile.username}</p>
+              <p className="text">{profile.bio}</p>
+              <div>
+                <a type='email'>{profile.email}</a>
+              </div>
+              <Button.Group>
+                <Button
+                  type="button"
+                  onClick={this.openLinkModal}>Link</Button>
+                <Button
+                  type="button"
+                  onClick={this.openEditModal}>Edit</Button>
+              </Button.Group>
+            </Grid.Column>
+            <Grid.Column width={4}>
+              <span>Points</span>
+              <span>Followers</span>
+              <span>Following</span>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
         <ModalView
           modalIsOpen={modalIsOpen}
           closeModal={this.closeModal}

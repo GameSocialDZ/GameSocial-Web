@@ -74,12 +74,12 @@ export class Profile extends Component {
         <Grid stackable columns={3} divided>
           <Grid.Row>
             {this.renderUserImages(images)}
-            </Grid.Row>
+          </Grid.Row>
         </Grid>
         <Grid stackable columns={3} divided>
           <Grid.Row>
             {this.renderUserVideos(videos)}
-            </Grid.Row>
+          </Grid.Row>
         </Grid>
         <ProfileModal/>
       </div>
