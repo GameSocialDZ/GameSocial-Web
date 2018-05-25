@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getView} from "../actions/action.view";
 
-import {Image} from 'semantic-ui-react';
+import {Image, Card, Button} from 'semantic-ui-react';
 
 import FormEditUserUpload from './Form.EditUserUpload';
 
@@ -41,43 +41,40 @@ class ImageCard extends Component {
   render() {
     const {currentUser, history, image} = this.props;
     return (
-      <div>
+      <Card>
         <Image alt="upload"
           src={image.url}/>
-        <div className="card-body">
           {
             this.state.editing === true ? (
-              <FormEditUserUpload
-                onSubmit={this.onSubmit.bind(this)}
-                uploadId={image.id}
-                type={image.config.type}
-                title={image.content.title}
-                caption={image.content.caption}/>
+              <Card.Content>
+                <FormEditUserUpload
+                  onSubmit={this.onSubmit.bind(this)}
+                  uploadId={image.id}
+                  type={image.config.type}
+                  title={image.content.title}
+                  caption={image.content.caption}/>
+              </Card.Content>
             ):(
-              <div>
-                <div className="card-header">{image.content.title}</div>
-                <p className="card-text">{image.content.caption}</p>
-            </div>
+              <Card.Content>
+                <Card.Header>{image.content.title}</Card.Header>
+                <Card.Meta><span className='date'>{image.content.createdAt}</span></Card.Meta>
+                <Card.Description>{image.content.caption}</Card.Description>
+              </Card.Content>
             )
           }
-        </div>
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="btn-group">
-            <button type="button" className="btn btn-sm btn-outline-secondary" onClick={this.getViewState.bind(this)}>
+          <Button.Group>
+            <Button type="button" onClick={this.getViewState.bind(this)}>
               <Link className="" to="/view">View</Link>
-            </button>
-            <button type="button" className="btn btn-sm btn-outline-secondary">comment</button>
+            </Button>
+            <Button type="button">comment</Button>
             {
               (history.location.pathname === '/profile' && currentUser !==null) &&
-              <button
+              <Button
                 type="button"
-                className="btn btn-sm btn-outline-secondary"
-                onClick={() => this.setFormState(this.state.editing)}>Edit</button>
+                onClick={() => this.setFormState(this.state.editing)}>Edit</Button>
             }
-            </div>
-          <small>{image.content.createdAt}</small>
-        </div>
-      </div>
+            </Button.Group>
+      </Card>
     );
   };
 }

@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import _ from 'lodash';
 
+import {Grid, Header} from 'semantic-ui-react';
+
 import {getUser} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
 
@@ -34,11 +36,11 @@ export class Profile extends Component {
   renderUserImages(images) {
     return _.map(images, (image) => {
       return (
-        <div key={image.id} className="card col-md-4 no-pad">
+        <Grid.Column key={image.id}>
           <ImageCard
             image={image}
             history={this.props.history}/>
-        </div>
+        </Grid.Column>
       )
     });
   }
@@ -46,11 +48,11 @@ export class Profile extends Component {
   renderUserVideos(videos) {
     return _.map(videos, (video) => {
       return (
-        <div key={video.id} className="card col-md-4 no-pad">
+        <Grid.Column key={video.id}>
           <VideoCard
             video={video}
             history={this.props.history}/>
-        </div>
+        </Grid.Column>
       )
     });
   }
@@ -59,24 +61,26 @@ export class Profile extends Component {
     const {profile, images, videos, user, auth, currentUser} = this.props;
 
      if (user.loading || auth.loading) {
-      return <h1>Loading...</h1>
+      return <Header as={'h1'}>Loading...</Header>
     } else if (_.isEmpty(currentUser) || auth.error){
       return <Redirect to="/" />
     }
 
     return (
       <div>
-        {this.renderProfile(profile)}
-          <div className="container">
-            <div className="row">
-              {this.renderUserImages(images)}
-            </div>
-          </div>
-          <div className="container">
-            <div className="row">
-              {this.renderUserVideos(videos)}
-            </div>
-          </div>
+        <div>
+          {this.renderProfile(profile)}
+        </div>
+        <Grid stackable columns={3} divided>
+          <Grid.Row>
+            {this.renderUserImages(images)}
+            </Grid.Row>
+        </Grid>
+        <Grid stackable columns={3} divided>
+          <Grid.Row>
+            {this.renderUserVideos(videos)}
+            </Grid.Row>
+        </Grid>
         <ProfileModal/>
       </div>
     );

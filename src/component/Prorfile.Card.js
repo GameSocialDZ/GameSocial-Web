@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ModalView from "./Profile.Modal";
 
+import {Grid, Image, Button} from 'semantic-ui-react';
+
 export class ProfileCard extends Component {
   constructor(props) {
     super(props);
@@ -29,51 +31,48 @@ export class ProfileCard extends Component {
     const {profile} = this.props;
     const {modalType, modalIsOpen} = this.state;
     return (
-      <div className="container-fluid">
-        <div className="row justify-content-between">
-          <div className="col-lg-8">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-sm-auto">
-                  <figure className="image">
-                    <img
-                      className="img-thumbnail"
-                      style={{width: '250px'}}
-                      src={profile.avatar.url}
-                      alt="Placeholder"/>
-                  </figure>
-                </div>
-                <div className="col-sm-6">
+      <div>
+      <Grid celled='internally'>
+        <Grid.Row >
+          <Grid.Column width={11}>
+            <Grid>
+              <Grid.Row>
+                <Grid.Column width={6}>
+                  <Image
+                    style={{width: '250px'}}
+                    src={profile.avatar.url}
+                    alt="Placeholder"/>
+                </Grid.Column>
+                <Grid.Column width={10}>
                   <p className="title is-4">{profile.name}</p>
                   <p className="subtitle is-6">@{profile.username}</p>
                   <p className="text">{profile.bio}</p>
                   <div>
                     <a type='email'>{profile.email}</a>
                   </div>
-                  <div className="btn-group">
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={this.openLinkModal}>Link</button>
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={this.openEditModal}>Edit</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-4 d-flex">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col m-auto">Points</div>
-                <div className="col m-auto">Followers</div>
-                <div className="col m-auto">Following</div>
-            </div>
-          </div>
-        </div>
-        </div>
+                    <Button.Group>
+                      <Button
+                        type="button"
+                        onClick={this.openLinkModal}>Link</Button>
+                      <Button
+                        type="button"
+                        onClick={this.openEditModal}>Edit</Button>
+                    </Button.Group>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <Grid>
+              <Grid.Row className="row">
+                <Grid.Column>Points</Grid.Column>
+                <Grid.Column>Followers</Grid.Column>
+                <Grid.Colmun>Following</Grid.Colmun>
+            </Grid.Row>
+          </Grid>
+        </Grid.Column>
+        </Grid.Row>
+      </Grid>
         <ModalView
           modalIsOpen={modalIsOpen}
           closeModal={this.closeModal}

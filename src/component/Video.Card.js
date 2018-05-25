@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Player} from 'video-react';
 
+import {Button, Card} from 'semantic-ui-react';
+
 import FormEditUserUpload from './Form.EditUserUpload';
 
 import {getView} from "../actions/action.view";
@@ -41,7 +43,7 @@ class VideoCard extends Component {
   render() {
     const {currentUser, history, video} = this.props;
     return (
-      <div>
+      <Card>
         <Player
           className="card-img-top"
           alt="upload" aspectRatio='16:9'
@@ -49,40 +51,37 @@ class VideoCard extends Component {
           muted={true} autoPlay={false} loop={false}>
           <source src={video.url}/>
         </Player>
-        <div className="card-body">
           {
             this.state.editing === true ? (
-              <FormEditUserUpload
-                onSubmit={this.onSubmit.bind(this)}
-                uploadId={video.id}
-                type={video.config.type}
-                title={video.content.title}
-                caption={video.content.caption}/>
+              <Card.Content>
+                <FormEditUserUpload
+                  onSubmit={this.onSubmit.bind(this)}
+                  uploadId={video.id}
+                  type={video.config.type}
+                  title={video.content.title}
+                  caption={video.content.caption}/>
+              </Card.Content>
             ):(
-              <div>
-                <div className="card-header">{video.content.title}</div>
-                <p className="card-text">{video.content.caption}</p>
-              </div>
+              <Card.Content>
+                <Card.Header>{video.content.title}</Card.Header>
+                <Card.Meta><span className='date'>{video.content.createdAt}</span></Card.Meta>
+                <Card.Description>{video.content.caption}</Card.Description>
+              </Card.Content>
             )
           }
-        </div>
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="btn-group">
-            <button type="button" className="btn btn-sm btn-outline-secondary" onClick={this.getViewState.bind(this)}>
-              <Link className="" to="/view">View</Link>
-            </button>
-            <button type="button" className="btn btn-sm btn-outline-secondary">comment</button>
+          <Button.Group>
+            <Button type="button" onClick={this.getViewState.bind(this)}>
+              <Link to="/view">View</Link>
+            </Button>
+            <Button type="button" >comment</Button>
             {
               (history.location.pathname === '/profile' && currentUser !== null) &&
-              <button
+              <Button
                 type="button"
-                className="btn btn-sm btn-outline-secondary"
-                onClick={() => this.setFormState(this.state.editing)}>Edit</button>
+                onClick={() => this.setFormState(this.state.editing)}>Edit</Button>
             }
-          </div>
-          <small>{video.content.createdAt}</small>
-        </div>
-      </div>
+          </Button.Group>
+      </Card>
     );
   };
 }

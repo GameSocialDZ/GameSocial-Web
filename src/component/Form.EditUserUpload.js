@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 
+import { Button, Form, Grid, Segment } from 'semantic-ui-react'
+
 import CommonInput from "./Common.Input";
 
 import {updateUserUpload} from '../actions/action.user';
@@ -44,29 +46,31 @@ class FormEditUserUpload extends Component{
   render(){
     const {caption, title} = this.props;
     return(
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-12 col-sm-offset-3 m-auto">
-            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
-              <Field
-                placeholder={title}
-                name="editTitle"
-                component={CommonInput}
-                type="text"
-                onChange={this.handleChange}/>
-              <Field
-                placeholder={caption}
-                name="editCaption"
-                component={CommonInput}
-                type="textarea"
-                onChange={this.handleChange}/>
-              <button
-                className="btn btn-primary col-sm-12"
-                type="submit" disabled={this.props.pristine || this.props.submitting}>
-                Submit</button>
-            </form>
-          </div>
-        </div>
+      <div >
+        <Grid>
+          <Grid.Column>
+            <Form size='large' onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
+              <Segment stacked>
+                <Field
+                  placeholder={title}
+                  name="editTitle"
+                  component={CommonInput}
+                  type="text"
+                  onChange={this.handleChange}/>
+                <Field
+                  placeholder={caption}
+                  name="editCaption"
+                  component={CommonInput}
+                  type="textarea"
+                  onChange={this.handleChange}/>
+                <Button
+                  color='teal' fluid size='large'
+                  type="submit" disabled={this.props.pristine || this.props.submitting}>
+                  Submit</Button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }

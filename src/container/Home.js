@@ -57,12 +57,12 @@ class Home extends Component {
     return (
       <div>
         <HomeHero/>
-        <Grid column={3} divided>
+        <Grid stackable columns={3} divided>
           <Grid.Row>
             {this.renderImageUploads(images)}
           </Grid.Row>
         </Grid>
-        <Grid>
+        <Grid stackable columns={3} divided>
           <Grid.Row>
             {this.renderVideoUploads(videos)}
           </Grid.Row>
