@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 import _ from 'lodash';
 
+import {From} from 'semantic-ui-react';
+
 import CommonInput from "./Common.Input";
 import FormDropzone from '../component/Form.Dropzone';
 import {CloudinaryConfig} from "../cloudinary";
@@ -134,10 +136,7 @@ class FormEditProfile extends Component{
     const {fileSelected} = this.state;
     const {userId} = this.props;
     return(
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-6 col-sm-offset-3 m-auto">
-            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values, userId, fileSelected))}>
+            <Form size='large' onSubmit={this.props.handleSubmit(values => this.onSubmit(values, userId, fileSelected))}>
               <Field
                 label="Edit Name"
                 name="editName"
@@ -161,7 +160,7 @@ class FormEditProfile extends Component{
                 className="btn btn-primary col-sm-12"
                 type="submit" disabled={this.props.pristine || this.props.submitting}>
                 Submit</button>
-            </form>
+            </Form>
           </div>
         </div>
       </div>

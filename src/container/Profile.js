@@ -11,7 +11,7 @@ import {getAuth} from '../actions/action.auth';
 import ImageCard from "../component/Image.Card";
 import VideoCard from "../component/Video.Card";
 import ProfileCard from "../component/Prorfile.Card";
-import ProfileModal from "../component/Profile.Modal";
+import ProfileModal from "../component/Modal.Popup";
 
 export class Profile extends Component {
   constructor(props) {

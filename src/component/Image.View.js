@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 //import _ from 'lodash';
 
+import {Image, Grid, Button} from 'semantic-ui-react';
+
 import {deleteUpload} from "../actions/action.upload";
 
 class ImageView extends Component {
@@ -15,39 +17,38 @@ class ImageView extends Component {
     const {image} = this.props;
     return (
       <div>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="ui-media col-md-8 border rounded embed-responsive embed-responsive-16by9 m-auto">
-              <img
+        <Grid>
+          <Grid.Row className="row">
+            <Grid.Column width={12}>
+              <Image
                 alt="selected"
-                className="embed-responsive-item"
                 src={image.url}/>
-            </div>
-            <div className="col-md-4 border rounded">
+            </Grid.Column>
+            <Grid.Column width={4}>
               <p>Likes</p>
               <p>Views</p>
               <button>Favorite</button>
-            </div>
-          </div>
-        </div>
-        <div className="container">
-          <div className="row justify-content-between">
-            <div className="col-sm-8 border rounded">
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={10}>
               <h1>Title</h1>
               <p>Caption</p>
               <span>Tags</span><span style={{float: 'right'}}>Time Stamp</span>
-            </div>
-            <div className="col-sm-4 border rounded">
+            </Grid.Column>
+            <Grid.Column width={6}>
               <h1>Publisher</h1>
-              <button className="btn btn-sm btn-outline-secondary">Follow</button>
-            </div>
-          </div>
-          <div className="row justify-content-around">
-            <div className="col-sm-12 border rounded">
+              <button>Follow</button>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={16}>
               <h1>Comments</h1>
-            </div>
-          </div>
-        </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }

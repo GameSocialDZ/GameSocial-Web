@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 
+import {Grid, Form} from 'semantic-ui-react';
+
 import {getAuth} from "../actions/action.auth";
 
 import CommonInput from "./Common.Input";
@@ -32,10 +34,10 @@ class FormRegister extends Component{
 
   render(){
     return(
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-6 col-sm-offset-3 m-auto">
-            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column>
+            <Form size='large' onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
               <Field
                 label="Username"
                 name="username"
@@ -64,10 +66,10 @@ class FormRegister extends Component{
                 className="btn btn-primary col-sm-12"
                 type="submit" disabled={this.props.pristine || this.props.submitting}>
                 Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }

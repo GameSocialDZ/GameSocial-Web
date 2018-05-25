@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import ReactModal from 'react-modal';
 
+import {Button} from 'semantic-ui-react';
+
 import CommonBox from '../component/Common.Box';
 import FormEditProfile from './Form.EditProfile';
 
-class ProfileModal extends Component {
+class ModalPopup extends Component {
   renderEditModal = () => {
     return (
       <div>
@@ -16,17 +18,17 @@ class ProfileModal extends Component {
 
   renderLinkModal = () => {
     return(
-      <div className="col-sm-12">
-        <div><button className="btn btn-success w-100">Link Microsoft Account</button></div>
-        <br/><div><button className="btn btn-primary w-100">Link Sony Account</button></div>
-        <br/><div><button className="btn btn-secondary w-100">Link Steam Account</button></div>
-        <br/><div><button className="btn btn-danger w-100">Link Nintendo Account</button></div>
-        <br/><div><button
-          // onClick={this.props.FacebookLogin}
-          className="btn btn-primary w-100">Link Facebook Account</button></div>
-        <br/><div><button
-          // onClick={this.props.TwitterLogin}
-          className="btn btn-success w-100">Link Twitter Account</button></div>
+      <div>
+        <Button fluid>Link Microsoft Account</Button>
+        <Button fluid>Link Sony Account</Button>
+        <Button fluid>Link Steam Account</Button>
+        <Button fluid>Link Nintendo Account</Button>
+        <Button fluid
+        // onClick={this.props.FacebookLogin}
+        >Link Facebook Account</Button>
+        <Button fluid
+        // onClick={this.props.TwitterLogin}
+        >Link Twitter Account</Button>
       </div>
     );
   };
@@ -41,13 +43,13 @@ class ProfileModal extends Component {
           style={{overFlowY: 'scroll'}}
           contentLabel="Profile Modal"
           ariaHideApp={false}>
-          <button
+          <Button
             type="button"
-            className="close"
+            as="close"
             aria-label="Close"
             onClick={closeModal}>
             <span aria-hidden="true">&times;</span>
-          </button>
+          </Button>
           {
             modalType === 'link' &&
             <CommonBox
@@ -65,4 +67,4 @@ class ProfileModal extends Component {
   }
 }
 
-export default ProfileModal;
+export default ModalPopup;

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 
+import {Form, Grid} from 'semantic-ui-react';
+
 import CommonInput from "./Common.Input";
 
 import {loginEmailPassword} from '../actions/action.auth';
@@ -28,10 +30,10 @@ class FormLogin extends Component{
 
   render(){
     return(
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-6 col-sm-offset-3 m-auto">
-            <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
+      <Grid className="container-fluid">
+        <Grid.Row className="row">
+          <Grid.Column className="col-sm-6 col-sm-offset-3 m-auto">
+            <Form size='large' onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
               <Field
                 label="Email"
                 name="loginEmail"
@@ -48,10 +50,10 @@ class FormLogin extends Component{
                 className="btn btn-primary col-sm-12"
                 type="submit" disabled={this.props.pristine || this.props.submitting}>
                 Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }

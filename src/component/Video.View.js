@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import { Player } from 'video-react';
 //import _ from 'lodash';
 
+import {Grid, Button} from 'semantic-ui-react';
+
 import {deleteUpload} from "../actions/action.upload";
 
 class VideoView extends Component {
@@ -16,9 +18,9 @@ class VideoView extends Component {
     const {video} = this.props;
     return (
       <div>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="ui-media col-md-8 border rounded embed-responsive embed-responsive-16by9">
+        <Grid className="container-fluid">
+          <Grid.Row className="row">
+            <Grid.Column width={12} className="ui-media col-md-8 border rounded embed-responsive embed-responsive-16by9">
               <Player
                 className="embed-responsive-item"
                 loop
@@ -26,32 +28,32 @@ class VideoView extends Component {
                 aspectRatio="16:9"
                 poster={video.thumbnail.large}
                 src={video.url}/>
-            </div>
-            <div className="col-md-4 border rounded">
+            </Grid.Column>
+            <Grid.Cloumn width={4} className="col-md-4 border rounded">
               <p>Likes</p>
               <p>Views</p>
-              <button>Favorite</button>
-            </div>
-          </div>
-        </div>
-        <div className="container">
-          <div className="row justify-content-around">
-            <div className="col-sm-8 border rounded">
+              <Button>Favorite</Button>
+            </Grid.Cloumn>
+          </Grid.Row>
+        </Grid>
+        <Grid className="container">
+          <Grid.Row className="row justify-content-around">
+            <Grid.Column width={10} className="col-sm-8 border rounded">
               <h1>Title</h1>
               <p>Caption</p>
               <span>tage</span><span style={{float: 'right'}}>Time Stamp</span>
-            </div>
-            <div className="col-sm-4 border rounded">
+            </Grid.Column>
+            <Grid.Column width={6} className="col-sm-4 border rounded">
               <h1>Publisher</h1>
               <button className="btn btn-sm btn-outline-secondary">Follow</button>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-12 border rounded">
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row className="row">
+            <Grid.Column width={16} className="col-sm-12 border rounded">
               <h1>Comments</h1>
-            </div>
-          </div>
-        </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }

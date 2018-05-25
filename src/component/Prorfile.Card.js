@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import ModalView from "./Profile.Modal";
+import ModalPopup from "./Modal.Popup";
 
-import {Grid, Image, Button} from 'semantic-ui-react';
+import {Grid, Image, Button, Segment} from 'semantic-ui-react';
 
 export class ProfileCard extends Component {
   constructor(props) {
@@ -32,19 +32,17 @@ export class ProfileCard extends Component {
     const {modalType, modalIsOpen} = this.state;
     return (
       <div>
-        <Grid stackable>
+        <Grid columns={3} stackable>
           <Grid.Row>
-            <Grid.Column width={4}>
+            <Grid.Column>
               <Image
-                style={{width: '250px'}}
                 src={profile.avatar.url}
                 alt="Placeholder"/>
             </Grid.Column>
-
-            <Grid.Column width={8}>
-              <p className="title is-4">{profile.name}</p>
-              <p className="subtitle is-6">@{profile.username}</p>
-              <p className="text">{profile.bio}</p>
+            <Grid.Column>
+              <p>{profile.name}</p>
+              <p>@{profile.username}</p>
+              <p>{profile.bio}</p>
               <div>
                 <a type='email'>{profile.email}</a>
               </div>
@@ -57,14 +55,14 @@ export class ProfileCard extends Component {
                   onClick={this.openEditModal}>Edit</Button>
               </Button.Group>
             </Grid.Column>
-            <Grid.Column width={4}>
+            <Grid.Column>
               <span>Points</span>
               <span>Followers</span>
               <span>Following</span>
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <ModalView
+        <ModalPopup
           modalIsOpen={modalIsOpen}
           closeModal={this.closeModal}
           modalType={modalType}/>

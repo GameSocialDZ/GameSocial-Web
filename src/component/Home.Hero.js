@@ -30,7 +30,7 @@ class HomeHero extends Component {
     //let hasFeatured = !!(this.state.featured && this.state.featured.list && this.state.featured.list.length > 0 );
     return (
       <section id='hero'>
-        <Container fluid textAlign='center'>
+        <Container textAlign='center'>
           {/*<HomeCarousel*/}
             {/*featured={this.state.featured}/>*/}
           <HomeSlider
