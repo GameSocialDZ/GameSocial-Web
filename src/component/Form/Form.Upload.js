@@ -3,15 +3,15 @@ import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 import axios from 'axios';
 import _ from 'lodash';
-import {CloudinaryConfig} from '../cloudinary';
+import {CloudinaryConfig} from '../../cloudinary';
 
 import {Form, Button} from 'semantic-ui-react';
 
-import CommonInput  from "./Common.Input";
+import CommonInput  from "../Common/Common.Input";
 import FormDropzone from './Form.Dropzone';
 
-import {upload} from '../actions/action.upload';
-import {getUser} from "../actions/action.user";
+import {upload} from '../../actions/action.upload';
+import {getUser} from "../../actions/action.user";
 
 //TODO: Remove dubug
 console.log(CloudinaryConfig);

@@ -2,15 +2,25 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
-import {Grid} from 'semantic-ui-react';
+import {Grid, Container} from 'semantic-ui-react';
 
 import {getUploads} from "../actions/action.upload";
 
-import ImageCard from '../component/Image.Card';
-import VideoCard from '../component/Video.Card';
+import ContentSlider from '../component/Slider/Content.Slider';
+import ImageCard from '../component/Card/Image.Card';
+import VideoCard from '../component/Card/Video.Card';
 import HomeHero from '../component/Home.Hero';
 
 //import {createLoadingSelector} from '../selectors/select.loading';
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  lazyLoad: true,
+  slidesToShow: 1,
+  slidesToScroll: 1
+};
 
 class Home extends Component {
   constructor(props) {
@@ -26,11 +36,11 @@ class Home extends Component {
   renderImageUploads(images) {
     return _.map(images, (image) => {
       return (
-        <Grid.Column key={image.id}>
+        <div key={image.id}>
           <ImageCard
             image={image}
             history={this.props.history}/>
-        </Grid.Column>
+        </div>
       )
     });
   }
@@ -38,11 +48,11 @@ class Home extends Component {
   renderVideoUploads(videos) {
     return _.map(videos, (video) => {
       return (
-        <Grid.Column key={video.id}>
+        <div key={video.id}>
           <VideoCard
             video={video}
             history={this.props.history}/>
-        </Grid.Column>
+        </div>
       )
     });
   }
@@ -55,18 +65,18 @@ class Home extends Component {
     }
 
     return (
-      <div>
+      <div style={{marginTop: '68.5px'}}>
         <HomeHero/>
-        <Grid stackable columns={3} divided>
-          <Grid.Row>
-            {this.renderImageUploads(images)}
-          </Grid.Row>
-        </Grid>
-        <Grid stackable columns={3} divided>
-          <Grid.Row>
-            {this.renderVideoUploads(videos)}
-          </Grid.Row>
-        </Grid>
+        <Container>
+          <ContentSlider
+            content={this.renderImageUploads(images)}>
+          </ContentSlider>
+        </Container>
+        <Container>
+          <ContentSlider
+            content={this.renderVideoUploads(videos)}>
+          </ContentSlider>
+        </Container>
       </div>
     );
   }

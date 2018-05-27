@@ -5,8 +5,8 @@ import _ from 'lodash';
 import {deleteUpload} from "../actions/action.upload";
 import {deleteView} from "../actions/action.view";
 
-import ImageView from '../component/Image.View';
-import VideoView from '../component/Video.View';
+import ImageView from '../component/View/Image.View';
+import VideoView from '../component/View/Video.View';
 
 class View extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class View extends Component {
       return history.goBack();
     }
     return (
-      <div>
+      <div style={{marginTop: '68.5px'}}>
         {view.data.config.type === 'image' ? (
           <div className="">
             <ImageView

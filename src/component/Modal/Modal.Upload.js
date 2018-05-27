@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Header, Image, Modal } from 'semantic-ui-react'
 
-import FormUpload from './Form.Upload';
+import FormUpload from '../Form/Form.Upload';
 
 const ModalUpload = () => (
   <Modal trigger={<Button>Upload</Button>}>

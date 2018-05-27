@@ -4,8 +4,8 @@ import {Redirect} from 'react-router-dom';
 import _ from 'lodash';
 
 import CommonBox from "./Common.Box";
-import FormRegister from "../component/Form.Register";
-import FormLogin from "../component/Form.Login";
+import FormRegister from "../component/Form/Form.Register";
+import FormLogin from "../component/Form/Form.Login";
 
 import {getUserOnce} from '../actions/action.user';
 

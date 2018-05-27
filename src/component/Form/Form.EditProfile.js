@@ -5,12 +5,12 @@ import _ from 'lodash';
 
 import {Form, Button} from 'semantic-ui-react';
 
-import CommonInput from "./Common.Input";
-import FormDropzone from '../component/Form.Dropzone';
-import {CloudinaryConfig} from "../cloudinary";
+import CommonInput from "../Common/Common.Input";
+import FormDropzone from './Form.Dropzone';
+import {CloudinaryConfig} from "../../cloudinary";
 import axios from "axios/index";
 
-import {updateUserProfile} from '../actions/action.user';
+import {updateUserProfile} from '../../actions/action.user';
 
 class FormEditProfile extends Component{
   constructor(props){

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Header, Modal } from 'semantic-ui-react'
 
-import FormEditProfile from './Form.EditProfile';
+import FormEditProfile from '../Form/Form.EditProfile';
 
 const ModalEditProfile = () => (
   <Modal trigger={<Button>Edit</Button>}>

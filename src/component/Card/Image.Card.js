@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getView} from "../actions/action.view";
+import {getView} from "../../actions/action.view";
 
 import {Image, Card, Button} from 'semantic-ui-react';
 
-import FormEditUserUpload from './Form.EditUserUpload';
+import FormEditUserUpload from '../Form/Form.EditUserUpload';
 
 class ImageCard extends Component {
   constructor(props) {

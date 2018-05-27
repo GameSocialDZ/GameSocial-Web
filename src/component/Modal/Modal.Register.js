@@ -2,10 +2,10 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import { Button, Header, Image, Icon, Modal, Menu } from 'semantic-ui-react'
 
-import FormLogin from './Form.Login';
-import FormRegister from './Form.Register';
+import FormLogin from '../Form/Form.Login';
+import FormRegister from '../Form/Form.Register';
 
-import {getUserOnce} from '../actions/action.user';
+import {getUserOnce} from '../../actions/action.user';
 
 class ModalRegister extends Component {
   constructor(props){

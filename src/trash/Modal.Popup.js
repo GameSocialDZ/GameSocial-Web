@@ -4,7 +4,7 @@ import ReactModal from 'react-modal';
 import {Button} from 'semantic-ui-react';
 
 import CommonBox from './Common.Box';
-import FormEditProfile from '../component/Form.EditProfile';
+import FormEditProfile from '../component/Form/Form.EditProfile';
 
 class ModalPopup extends Component {
   renderEditModal = () => {

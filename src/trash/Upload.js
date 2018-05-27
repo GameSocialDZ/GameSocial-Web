@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
 import CommonBox from "./Common.Box";
-import FormUpload from "../component/Form.Upload";
+import FormUpload from "../component/Form/Form.Upload";
 
 class Upload extends Component {
   renderUploadForm() {

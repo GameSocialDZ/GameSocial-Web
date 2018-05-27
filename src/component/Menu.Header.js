@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import {Icon, Dropdown, Input, tagOptions, Button, Menu} from 'semantic-ui-react';
 
-import ModalUpload from './Modal.Upload';
-import ModalRegister from './Modal.Register';
+import ModalUpload from './Modal/Modal.Upload';
+import ModalRegister from './Modal/Modal.Register';
 
 import {signOut } from "../actions/action.auth";
 import {getUser} from "../actions/action.user";
@@ -34,7 +34,7 @@ class MenuHeader extends Component {
     const { activeItem } = this.state;
     const { currentUser } = this.props;
     return (
-      <Menu>
+      <Menu fixed={'top'}>
         <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
           <Link to="/">
             <img style={{width: '50px'}} src="https://www.showwp.com/wp-content/uploads/2016/02/fox-gradient.png"/>

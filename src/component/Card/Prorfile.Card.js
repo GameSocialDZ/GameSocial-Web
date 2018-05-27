@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 
 import {Grid, Image, Button, Segment} from 'semantic-ui-react';
 
-import ModalEditProfile from './Modal.EditProfile';
-import ModalLinkAccounts from './Modal.LinkAccounts';
+import ModalEditProfile from '../Modal/Modal.EditProfile';
+import ModalLinkAccounts from '../Modal/Modal.LinkAccounts';
 
 export class ProfileCard extends Component {
   constructor(props) {
@@ -20,9 +20,10 @@ export class ProfileCard extends Component {
         <Grid columns={3} stackable>
           <Grid.Row>
             <Grid.Column>
-              <Image
-                src={profile.avatar.url}
-                alt="Placeholder"/>
+                <Image
+                  style={{maxWidth: '250px'}}
+                  src={profile.avatar.url}
+                  alt="Placeholder"/>
             </Grid.Column>
             <Grid.Column>
               <p>{profile.name}</p>

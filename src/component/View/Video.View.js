@@ -5,7 +5,7 @@ import { Player } from 'video-react';
 
 import {Grid, Button} from 'semantic-ui-react';
 
-import {deleteUpload} from "../actions/action.upload";
+import {deleteUpload} from "../../actions/action.upload";
 
 class VideoView extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class VideoView extends Component {
             <Grid.Column width={4}>
               <p>Likes</p>
               <p>Views</p>
-              <button>Favorite</button>
+              <Button>Favorite</Button>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -45,7 +45,7 @@ class VideoView extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <h1>Publisher</h1>
-              <button>Follow</button>
+              <Button>Follow</Button>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>

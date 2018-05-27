@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'semantic-ui-react';
 
-//import HomeCarousel from './Home.Carousel';
-import HomeSlider from './Home.Slider';
+import HomeSlider from './Slider/Home.Slider';
 
 //import { getFeaturedVideos } from '../actions/action.featured';
 
@@ -31,8 +30,6 @@ class HomeHero extends Component {
     return (
       <section id='hero'>
         <Container textAlign='center'>
-          {/*<HomeCarousel*/}
-            {/*featured={this.state.featured}/>*/}
           <HomeSlider
             featured={this.state.featured}/>
           {/*{hasFeatured && <Carousel featured={this.props.featured} />}*/}

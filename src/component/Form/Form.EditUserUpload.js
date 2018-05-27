@@ -4,10 +4,10 @@ import {reduxForm, Field, reset} from 'redux-form';
 
 import { Button, Form, Grid, Segment } from 'semantic-ui-react'
 
-import CommonInput from "./Common.Input";
+import CommonInput from "../Common/Common.Input";
 
-import {updateUserUpload} from '../actions/action.user';
-import {updateUpload} from '../actions/action.upload';
+import {updateUserUpload} from '../../actions/action.user';
+import {updateUpload} from '../../actions/action.upload';
 
 class FormEditUserUpload extends Component{
   constructor(props){

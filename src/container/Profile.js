@@ -3,15 +3,14 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import _ from 'lodash';
 
-import {Grid, Header} from 'semantic-ui-react';
+import {Grid, Header, Container} from 'semantic-ui-react';
 
 import {getUser} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
 
-import ImageCard from "../component/Image.Card";
-import VideoCard from "../component/Video.Card";
-import ProfileCard from "../component/Prorfile.Card";
-import ProfileModal from "../trash/Modal.Popup";
+import ImageCard from "../component/Card/Image.Card";
+import VideoCard from "../component/Card/Video.Card";
+import ProfileCard from "../component/Card/Prorfile.Card";
 
 export class Profile extends Component {
   constructor(props) {
@@ -21,10 +20,6 @@ export class Profile extends Component {
       modalType: null
     }
   }
-
-  // componentWillMount() {
-  //   this.props.getUser(this.props.currentUser.uid)
-  // }
 
   renderProfile(profile) {
     return(
@@ -67,21 +62,24 @@ export class Profile extends Component {
     }
 
     return (
-      <div>
+      <div style={{marginTop: '68.5px'}}>
         <div>
           {this.renderProfile(profile)}
         </div>
-        <Grid stackable columns={3} divided>
+        <Container>
+        <Grid stackable columns={3}>
           <Grid.Row>
             {this.renderUserImages(images)}
           </Grid.Row>
         </Grid>
-        <Grid stackable columns={3} divided>
+        </Container>
+        <Container>
+        <Grid stackable columns={3}>
           <Grid.Row>
             {this.renderUserVideos(videos)}
           </Grid.Row>
         </Grid>
-        <ProfileModal/>
+        </Container>
       </div>
     );
   }

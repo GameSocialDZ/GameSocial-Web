@@ -2,24 +2,28 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field, reset} from 'redux-form';
 
-import {Form, Grid, Button} from 'semantic-ui-react';
+import {Grid, Form, Button} from 'semantic-ui-react';
 
-import CommonInput from "./Common.Input";
+import {getAuth} from "../../actions/action.auth";
 
-import {loginEmailPassword} from '../actions/action.auth';
+import CommonInput from "../Common/Common.Input";
 
-class FormLogin extends Component{
+import {registerEmailPassword} from '../../actions/action.auth';
+
+class FormRegister extends Component{
   constructor(props){
     super(props);
     this.state = {
       username: '',
-      password: ''
+      email: '',
+      password: '',
+      confirmPassword: ''
     };
   }
 
   onSubmit(values) {
-    this.props.loginEmailPassword(values);
-    this.props.dispatch(reset('login'));
+    this.props.registerEmailPassword(values);
+    this.props.dispatch(reset('register'));
   }
 
   handleChange = (e) => {
@@ -30,24 +34,35 @@ class FormLogin extends Component{
 
   render(){
     return(
-      <Grid className="container-fluid">
-        <Grid.Row className="row">
-          <Grid.Column className="col-sm-6 col-sm-offset-3 m-auto">
+      <Grid>
+        <Grid.Row>
+          <Grid.Column>
             <Form size='large' onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
               <Field
+                label="Username"
+                name="username"
+                component={CommonInput}
+                type="text" required
+                onChange={this.handleChange}/>
+              <Field
                 label="Email"
-                name="loginEmail"
+                name="email"
                 component={CommonInput}
                 type="text" required
                 onChange={this.handleChange}/>
               <Field
                 label="Password"
-                name="loginPassword"
+                name="password"
+                component={CommonInput}
+                type="password" required
+                onChange={this.handleChange}/>
+              <Field
+                label="Confirm Password"
+                name="confirmPassword"
                 component={CommonInput}
                 type="password" required
                 onChange={this.handleChange}/>
               <Button
-                className="btn btn-primary col-sm-12"
                 type="submit" disabled={this.props.pristine || this.props.submitting}>
                 Submit</Button>
             </Form>
@@ -59,13 +74,11 @@ class FormLogin extends Component{
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+
 });
 
-
-FormLogin = connect(mapStateToProps,
-  {loginEmailPassword})(FormLogin);
+FormRegister = connect(mapStateToProps, {registerEmailPassword, getAuth})(FormRegister);
 
 export default reduxForm({
-  form: 'login',
-})(FormLogin);
+  form: 'register',
+})(FormRegister);

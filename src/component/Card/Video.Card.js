@@ -5,9 +5,9 @@ import {Player} from 'video-react';
 
 import {Button, Card} from 'semantic-ui-react';
 
-import FormEditUserUpload from './Form.EditUserUpload';
+import FormEditUserUpload from '../Form/Form.EditUserUpload';
 
-import {getView} from "../actions/action.view";
+import {getView} from "../../actions/action.view";
 
 class VideoCard extends Component {
   constructor(props) {
