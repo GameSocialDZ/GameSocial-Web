@@ -171,7 +171,7 @@ export const updateUpload = (data) => dispatch => {
 
   const updates = {};
   updates[`uploads/${data.type}s/${data.uploadId}/content/title`] = data.editTitle;
-  updates[`uploads/${data.type}s/${data.uploadId}/content/caption`] = data.editCaption;
+  updates[`uploads/${data.type}s/${data.uploadId}/content/caption`] = data.editCaption ;
 
   return database.ref().update(updates)
     .then(dispatch(uploadUpdateSuccess()))

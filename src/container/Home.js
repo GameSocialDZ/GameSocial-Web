@@ -36,7 +36,8 @@ class Home extends Component {
   renderImageUploads(images) {
     return _.map(images, (image) => {
       return (
-        <div key={image.id}>
+        <div
+          key={image.id}>
           <ImageCard
             image={image}
             history={this.props.history}/>
@@ -45,10 +46,12 @@ class Home extends Component {
     });
   }
 
+
   renderVideoUploads(videos) {
     return _.map(videos, (video) => {
       return (
-        <div key={video.id}>
+        <div
+          key={video.id}>
           <VideoCard
             video={video}
             history={this.props.history}/>
@@ -67,9 +70,10 @@ class Home extends Component {
     }
 
     return (
-      <div style={{marginTop: '68.5px'}}>
+      <div style={{marginTop: '5rem'}}>
         <HomeHero/>
-        <Container>
+        <Container
+          style={{marginBottom: '1rem'}}>
           <ContentSlider
             content={this.renderImageUploads(images)}>
           </ContentSlider>

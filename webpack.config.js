@@ -20,9 +20,12 @@ module.exports = {
   watch: true,
   entry: SRC_DIR + '/index.js',
   output: {
-    filename: '[name].bundle.js',
+    filename: 'bundle.js',
     path: PUBLIC_DIR,
     publicPath: "/"
+  },
+  devServer: {
+    historyApiFallback: true
   },
   module: {
     rules: [
@@ -85,8 +88,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: "./index.html"
+      template: 'src/index.html',
+      filename: "index.html"
     })
   ],
 };

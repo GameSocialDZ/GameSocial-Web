@@ -28,7 +28,9 @@ class HomeHero extends Component {
     // let hasFeatured = !!(this.props.featured && this.props.featured.list && this.props.featured.list.length > 0 );
     //let hasFeatured = !!(this.state.featured && this.state.featured.list && this.state.featured.list.length > 0 );
     return (
-      <section id='hero'>
+      <section
+        id='hero'
+        style={{marginBottom: '1rem'}}>
         <Container textAlign='center'>
           <HomeSlider
             featured={this.state.featured}/>

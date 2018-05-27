@@ -8,7 +8,7 @@ import Home from "./container/Home";
 import Profile from './container/Profile';
 import View from './container/View';
 
-import MenuHeader from './component/Menu.Header';
+import MenuHeader from './component/Menu/Menu.Header';
 
 ReactDOM.render(
   <Provider store={store}>

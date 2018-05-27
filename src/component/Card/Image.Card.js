@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+
 import {getView} from "../../actions/action.view";
 
 import {Image, Card, Button, Container} from 'semantic-ui-react';
@@ -41,11 +42,10 @@ class ImageCard extends Component {
   render() {
     const {currentUser, history, image} = this.props;
     return (
-      <Card fluid>
-        <Container>
-        <Image wrapped alt="upload"
-          src={image.url}/>
-        </Container>
+      <Card fluid
+        // style={{padding: '0 .5rem 0'}}
+        >
+        <Image alt="upload" src={image.url}/>
             {
             this.state.editing === true ? (
               <Card.Content>
@@ -68,7 +68,7 @@ class ImageCard extends Component {
             <Button type="button" onClick={this.getViewState.bind(this)}>
               <Link className="" to="/view">View</Link>
             </Button>
-            <Button type="button">comment</Button>
+            {/*<Button type="button">comment</Button>*/}
             {
               (history.location.pathname === '/profile' && currentUser !==null) &&
               <Button

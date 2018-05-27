@@ -20,12 +20,15 @@ export class ProfileCard extends Component {
         <Grid columns={3} stackable padded>
           <Grid.Row>
             <Grid.Column style={{width: '250px', height: '250px'}}>
+              <Segment textAlign={'center'}>
               <Image
-                style={{borderRadius: '9rem', width: '200px', height: '200px'}}
+                style={{borderRadius: '9rem', width: '200px', height: '200px', display: 'inline-block'}}
                 src={profile.avatar.url}
                 alt="Placeholder"/>
+              </Segment>
             </Grid.Column>
             <Grid.Column>
+              <Segment>
               <Segment>
               <p>{profile.name}</p>
               <p>@{profile.username}</p>
@@ -38,11 +41,14 @@ export class ProfileCard extends Component {
                 <ModalLinkAccounts/>
                 <ModalEditProfile/>
               </Button.Group>
+              </Segment>
             </Grid.Column>
             <Grid.Column>
-              <Segment><span>Points</span></Segment>
-              <Segment><span>Followers</span></Segment>
-              <Segment><span>Following</span></Segment>
+              <Segment>
+                <Segment><span>Points</span></Segment>
+                <Segment><span>Followers</span></Segment>
+                <Segment><span>Following</span></Segment>
+              </Segment>
             </Grid.Column>
           </Grid.Row>
         </Grid>

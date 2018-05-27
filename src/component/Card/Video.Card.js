@@ -43,7 +43,9 @@ class VideoCard extends Component {
   render() {
     const {currentUser, history, video} = this.props;
     return (
-      <Card fluid>
+      <Card fluid
+        // style={{padding: '0 .5rem 0'}}
+      >
         <Player
           className="card-img-top"
           alt="upload" aspectRatio='16:9'
@@ -73,7 +75,7 @@ class VideoCard extends Component {
             <Button type="button" onClick={this.getViewState.bind(this)}>
               <Link to="/view">View</Link>
             </Button>
-            <Button type="button" >comment</Button>
+            {/*<Button type="button" >comment</Button>*/}
             {
               (history.location.pathname === '/profile' && currentUser !== null) &&
               <Button

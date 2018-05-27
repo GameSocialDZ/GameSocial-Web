@@ -19,7 +19,7 @@ class ModalRegister extends Component {
   //   this.props.getUserOnce(this.props.currentUser.uid)
   // }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (e, { name }) => this.setState({ activeMenu: name });
 
   renderRegisterMenu(activeItem) {
     return (
@@ -38,7 +38,7 @@ class ModalRegister extends Component {
       <Modal.Content image>
         <Modal.Description>
           {
-            this.state.activeItem === 'Login' ?
+            activeItem === 'Login' ?
               (
                 <FormLogin/>
               ):(
