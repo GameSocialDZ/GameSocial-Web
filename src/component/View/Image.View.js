@@ -34,12 +34,12 @@ class ImageView extends Component {
         <Grid>
           <Grid.Row>
             <Grid.Column width={10}>
-              <h1>Title</h1>
-              <p>Caption</p>
-              <span>Tags</span><span style={{float: 'right'}}>Time Stamp</span>
+              <h1>{image.content.title}</h1>
+              <p>{image.content.caption}</p>
+              <span>Tags</span><span style={{float: 'right'}}>{image.content.createdAt}</span>
             </Grid.Column>
             <Grid.Column width={6}>
-              <h1>Publisher</h1>
+              <h1>{image.publisher.username}</h1>
               <Button>Follow</Button>
             </Grid.Column>
           </Grid.Row>
