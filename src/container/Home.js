@@ -58,6 +58,8 @@ class Home extends Component {
   }
 
   render() {
+
+
     const {videos, images, uploads} = this.props;
 
     if(uploads.loading){

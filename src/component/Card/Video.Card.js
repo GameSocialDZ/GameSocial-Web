@@ -43,7 +43,7 @@ class VideoCard extends Component {
   render() {
     const {currentUser, history, video} = this.props;
     return (
-      <Card>
+      <Card fluid>
         <Player
           className="card-img-top"
           alt="upload" aspectRatio='16:9'

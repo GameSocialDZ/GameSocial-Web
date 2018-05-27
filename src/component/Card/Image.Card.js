@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getView} from "../../actions/action.view";
 
-import {Image, Card, Button} from 'semantic-ui-react';
+import {Image, Card, Button, Container} from 'semantic-ui-react';
 
 import FormEditUserUpload from '../Form/Form.EditUserUpload';
 
@@ -41,10 +41,12 @@ class ImageCard extends Component {
   render() {
     const {currentUser, history, image} = this.props;
     return (
-      <Card>
-        <Image alt="upload"
+      <Card fluid>
+        <Container>
+        <Image wrapped alt="upload"
           src={image.url}/>
-          {
+        </Container>
+            {
             this.state.editing === true ? (
               <Card.Content>
                 <FormEditUserUpload

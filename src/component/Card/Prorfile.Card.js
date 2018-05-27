@@ -17,21 +17,23 @@ export class ProfileCard extends Component {
     const {profile} = this.props;
     return (
       <div>
-        <Grid columns={3} stackable>
+        <Grid columns={3} stackable padded>
           <Grid.Row>
-            <Grid.Column>
-                <Image
-                  style={{maxWidth: '250px'}}
-                  src={profile.avatar.url}
-                  alt="Placeholder"/>
+            <Grid.Column style={{width: '250px', height: '250px'}}>
+              <Image
+                style={{borderRadius: '9rem', width: '200px', height: '200px'}}
+                src={profile.avatar.url}
+                alt="Placeholder"/>
             </Grid.Column>
             <Grid.Column>
+              <Segment>
               <p>{profile.name}</p>
               <p>@{profile.username}</p>
               <p>{profile.bio}</p>
               <div>
                 <a type='email'>{profile.email}</a>
               </div>
+              </Segment>
               <Button.Group>
                 <ModalLinkAccounts/>
                 <ModalEditProfile/>

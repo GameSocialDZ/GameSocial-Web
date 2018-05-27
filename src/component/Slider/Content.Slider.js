@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Slider from 'react-slick';
 import _ from 'lodash';
 
-import { Container, Image, Grid } from 'semantic-ui-react';
+import { Container, Image, Grid, Card } from 'semantic-ui-react';
 
 //import {FacebookLogin, TwitterLogin} from '../actions/action.user';
 
