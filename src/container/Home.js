@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
-import {Grid, Container} from 'semantic-ui-react';
+import {Grid, Segment, Container} from 'semantic-ui-react';
 
 import {getUploads} from "../actions/action.upload";
 
@@ -34,7 +34,6 @@ class Home extends Component {
       )
     });
   }
-
 
   renderVideoUploads(videos) {
     return _.map(videos, (video) => {

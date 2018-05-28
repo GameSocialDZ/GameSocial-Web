@@ -42,7 +42,8 @@ class ImageCard extends Component {
   render() {
     const {currentUser, history, image} = this.props;
     return (
-      <Card fluid     >
+      <Segment>
+      <Card fluid>
         <Image alt="upload" src={image.url}/>
             {
             this.state.editing === true ? (
@@ -78,6 +79,7 @@ class ImageCard extends Component {
             }
             </Button.Group>
       </Card>
+      </Segment>
     );
   };
 }

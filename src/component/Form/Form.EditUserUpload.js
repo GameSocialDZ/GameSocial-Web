@@ -25,7 +25,6 @@ class FormEditUserUpload extends Component{
   }
 
   onSubmit(values) {
-    // Add publisher, type, uploadId
     values.userId = this.props.publisher.id;
     values.type = this.state.type;
     values.uploadId = this.props.uploadId;

@@ -10,6 +10,7 @@ import FormDropzone from './Form.Dropzone';
 import {CloudinaryConfig} from "../../cloudinary";
 import axios from "axios/index";
 
+import {updatePublisherUploads} from "../../actions/action.upload";
 import {updateUserProfile} from '../../actions/action.user';
 
 class FormEditProfile extends Component{
@@ -37,6 +38,10 @@ class FormEditProfile extends Component{
     console.log(file);
     console.log(values);
     this.props.updateUserProfile(userId, values, file);
+
+    // TODO: Fucntion to update each image and video publisher info
+    this.props.updatePublisherUploads(userId, values, file);
+
     this.props.dispatch(reset('editProfile'));
   }
 
@@ -171,7 +176,7 @@ const mapStateToProps = state => ({
   userId: state.auth.currentUser.uid
 });
 
-FormEditProfile = connect(mapStateToProps,{updateUserProfile})(FormEditProfile);
+FormEditProfile = connect(mapStateToProps,{updateUserProfile, updatePublisherUploads})(FormEditProfile);
 
 export default reduxForm({
   form: 'editProfile',

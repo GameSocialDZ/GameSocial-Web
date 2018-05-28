@@ -40,7 +40,8 @@ export const uploadError = error => ({
 export const getUploads = () => dispatch => {
   dispatch(uploadRequest());
   return database.ref('uploads/').on('value', data => {
-    dispatch(uploadGetSuccess(data.val()));})
+    dispatch(uploadGetSuccess(data.val()));
+  })
 };
 
 export const upload = (data, file) => dispatch => {
@@ -176,6 +177,18 @@ export const updateUpload = (data) => dispatch => {
   return database.ref().update(updates)
     .then(dispatch(uploadUpdateSuccess()))
     .catch(error => dispatch(uploadError(error)));
+};
+
+export const updatePublisherUploads = (userId, data, file) => dispatch => {
+  dispatch(uploadRequest());
+
+  const updates = {};
+  //updates[]
+
+  return database.ref().child(`/uploads/images/publisher/${userId}`).on('value', data => {
+      console.log(data.val());
+    })
+
 };
 
 export const deleteUpload = (uploadId, type) => dispatch => {

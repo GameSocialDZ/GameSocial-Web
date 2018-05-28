@@ -44,6 +44,7 @@ class VideoCard extends Component {
   render() {
     const {currentUser, history, video} = this.props;
     return (
+      <Segment>
       <Card fluid>
         <Player
           className="card-img-top"
@@ -86,6 +87,7 @@ class VideoCard extends Component {
             }
           </Button.Group>
       </Card>
+      </Segment>
     );
   };
 }
