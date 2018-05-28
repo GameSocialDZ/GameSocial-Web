@@ -15,11 +15,7 @@ class ModalRegister extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   this.props.getUserOnce(this.props.currentUser.uid)
-  // }
-
-  handleItemClick = (e, { name }) => this.setState({ activeMenu: name });
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   renderRegisterMenu(activeItem) {
     return (

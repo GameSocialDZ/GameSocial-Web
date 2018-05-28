@@ -11,17 +11,6 @@ import ImageCard from '../component/Card/Image.Card';
 import VideoCard from '../component/Card/Video.Card';
 import HomeHero from '../component/Home.Hero';
 
-//import {createLoadingSelector} from '../selectors/select.loading';
-
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  lazyLoad: true,
-  slidesToShow: 1,
-  slidesToScroll: 1
-};
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -61,11 +50,12 @@ class Home extends Component {
   }
 
   render() {
-
-
     const {videos, images, uploads} = this.props;
+    if(_.isEmpty(uploads) || _.isEmpty(videos)) {
+      return <h1>No Content</h1>;
+    }
 
-    if(uploads.loading){
+    if (this.props.uploads.loading) {
       return <h1>Loading...</h1>
     }
 
@@ -88,15 +78,11 @@ class Home extends Component {
   }
 }
 
-//TODO: Get loading selector working
-//const loadingSelector = createLoadingSelector(['UPLOADS']);
-
 const mapStateToProps = state => ({
   uploads: state.uploads,
   images: state.uploads.data.images,
   videos: state.uploads.data.videos,
   auth: state.auth
-  //loading: loadingSelector(state)
 });
 
 export default connect(mapStateToProps,

@@ -55,9 +55,9 @@ class MenuHeader extends Component {
     const { activeItem } = this.state;
     const { currentUser } = this.props;
 
-    if(!_.isEmpty(currentUser) && this.props.user.loading){
-      return <h1>Loading...</h1>
-    }
+    // if(!_.isEmpty(currentUser) && this.props.user.loading){
+    //   return <h1>Loading...</h1>
+    // }
 
     return (
       <Menu fixed={'top'}>
@@ -85,17 +85,16 @@ class MenuHeader extends Component {
                   <ModalUpload/>
                 </Menu.Item>
                   {
-                    this.props.user.loading &&
-                    <Menu.Item>
-                      <Dropdown text='Dropdown' loading />
-                    </Menu.Item>
-                  }
-                  {
-                    !_.isEmpty(this.props.user.data) &&
+                    this.props.user.loading || _.isEmpty(this.props.user.data) ? (
+                      <Menu.Item>
+                        <Dropdown text='Dropdown' loading />
+                      </Menu.Item>
+                    ):(
                       <Menu.Item>
                         {this.renderProfileDropdown()}
                       </Menu.Item>
-                    }
+                    )
+                  }
               </Menu.Menu>
             )
           }

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import {getView} from "../../actions/action.view";
 
-import {Image, Card, Button, Container} from 'semantic-ui-react';
+import {Image, Card, Button, Container, Segment} from 'semantic-ui-react';
 
 import FormEditUserUpload from '../Form/Form.EditUserUpload';
 
@@ -42,9 +42,7 @@ class ImageCard extends Component {
   render() {
     const {currentUser, history, image} = this.props;
     return (
-      <Card fluid
-        // style={{padding: '0 .5rem 0'}}
-        >
+      <Card fluid     >
         <Image alt="upload" src={image.url}/>
             {
             this.state.editing === true ? (
@@ -58,6 +56,10 @@ class ImageCard extends Component {
               </Card.Content>
             ):(
               <Card.Content>
+                <Image
+                  style={{borderRadius: '9rem'}}
+                  floated='right' size='mini' src={image.publisher.avatar.url}/>
+                <Card.Meta textAlign='right'>{image.publisher.username}</Card.Meta>
                 <Card.Header>{image.content.title}</Card.Header>
                 <Card.Meta><span className='date'>{image.content.createdAt}</span></Card.Meta>
                 <Card.Description>{image.content.caption}</Card.Description>
@@ -68,7 +70,6 @@ class ImageCard extends Component {
             <Button type="button" onClick={this.getViewState.bind(this)}>
               <Link className="" to="/view">View</Link>
             </Button>
-            {/*<Button type="button">comment</Button>*/}
             {
               (history.location.pathname === '/profile' && currentUser !==null) &&
               <Button

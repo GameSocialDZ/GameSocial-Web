@@ -41,7 +41,7 @@ class FormEditProfile extends Component{
   }
 
   onFileSelect(file) { // = (e) => {
-    const unsignedUploadPreset = CloudinaryConfig.cloud_name;
+    const unsignedUploadPreset = CloudinaryConfig.avatarPreset;
     const thisComponent = this;
     const fileSelected = file[0]; //e.target.files[0];
 

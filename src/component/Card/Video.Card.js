@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Player} from 'video-react';
+import _ from 'lodash';
 
-import {Button, Card} from 'semantic-ui-react';
+import {Button, Card, Image, Segment} from 'semantic-ui-react';
 
 import FormEditUserUpload from '../Form/Form.EditUserUpload';
 
@@ -43,9 +44,7 @@ class VideoCard extends Component {
   render() {
     const {currentUser, history, video} = this.props;
     return (
-      <Card fluid
-        // style={{padding: '0 .5rem 0'}}
-      >
+      <Card fluid>
         <Player
           className="card-img-top"
           alt="upload" aspectRatio='16:9'
@@ -65,6 +64,10 @@ class VideoCard extends Component {
               </Card.Content>
             ):(
               <Card.Content>
+                <Image
+                  style={{borderRadius: '9rem'}}
+                  floated='right' size='mini' src={video.publisher.avatar.url}/>
+                <Card.Meta textAlign='right'>{video.publisher.username}</Card.Meta>
                 <Card.Header>{video.content.title}</Card.Header>
                 <Card.Meta><span className='date'>{video.content.createdAt}</span></Card.Meta>
                 <Card.Description>{video.content.caption}</Card.Description>
@@ -75,7 +78,6 @@ class VideoCard extends Component {
             <Button type="button" onClick={this.getViewState.bind(this)}>
               <Link to="/view">View</Link>
             </Button>
-            {/*<Button type="button" >comment</Button>*/}
             {
               (history.location.pathname === '/profile' && currentUser !== null) &&
               <Button
@@ -89,7 +91,7 @@ class VideoCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.cuurentUser
+  currentUser: state.auth.cuurentUser,
 });
 
 export default connect(mapStateToProps, {getView})(VideoCard);
