@@ -1,6 +1,7 @@
 //import {normalizeResponseErrors} from '../utils';
 //import {SubmissionError} from "redux-form";
 import  {database} from "../firebase";
+import _ from 'lodash';
 //import {VideoObject} from "./models";
 
 // GET Action
@@ -179,16 +180,73 @@ export const updateUpload = (data) => dispatch => {
     .catch(error => dispatch(uploadError(error)));
 };
 
-export const updatePublisherUploads = (userId, data, file) => dispatch => {
-  dispatch(uploadRequest());
+// Values = {editBio, editName}
+export const updatePublisherUploads = (userId, values, file) => dispatch => {
+  database.ref(`/uploads`).child('/images').once('value', data => {
+    const imageArray = data.val();
+    _.forEach(imageArray, item => {
+      const publisherRef = database.ref(`/uploads/images/${item.id}/publisher`);
+      if(item.publisher.id === userId) {
+        publisherRef.child('/avatar/createdAt').set(file.created_at);
+        publisherRef.child('/avatar/etag').set(file.etag);
+        publisherRef.child('/avatar/format').set(file.format);
+        publisherRef.child('/avatar/width').set(file.width);
+        publisherRef.child('/avatar/height').set(file.height);
+        publisherRef.child('/avatar/url').set(file.url);
+        publisherRef.child('/bio').set(values.editBio);
+        publisherRef.child('/name').set(values.editName);
+      }
+    });
+  });
 
-  const updates = {};
-  //updates[]
+  database.ref(`/uploads`).child('/videos').once('value', data => {
+    const videoArray = data.val();
+    _.forEach(videoArray, item => {
+      const publisherRef = database.ref(`/uploads/videos/${item.id}/publisher`);
+      if(item.publisher.id === userId) {
+        publisherRef.child('/avatar/createdAt').set(file.created_at);
+        publisherRef.child('/avatar/etag').set(file.etag);
+        publisherRef.child('/avatar/format').set(file.format);
+        publisherRef.child('/avatar/width').set(file.width);
+        publisherRef.child('/avatar/height').set(file.height);
+        publisherRef.child('/avatar/url').set(file.url);
+        publisherRef.child('/bio').set(values.editBio);
+        publisherRef.child('/name').set(values.editName);
+      }
+    });
+  });
 
-  return database.ref().child(`/uploads/images/publisher/${userId}`).on('value', data => {
-      console.log(data.val());
-    })
+  database.ref(`/users/${userId}`).child('/images').once('value', data => {
+    const imageArray = data.val();
+    _.forEach(imageArray, item => {
+      const publisherRef = database.ref(`/users/${userId}/images/${item.id}/publisher`);
+      if(item.publisher.id === userId) {
+        publisherRef.child('/avatar/createdAt').set(file.created_at);
+        publisherRef.child('/avatar/etag').set(file.etag);
+        publisherRef.child('/avatar/format').set(file.format);
+        publisherRef.child('/avatar/width').set(file.width);
+        publisherRef.child('/avatar/height').set(file.height);
+        publisherRef.child('/avatar/url').set(file.url);
+        publisherRef.child('/bio').set(values.editBio);
+        publisherRef.child('/name').set(values.editName);
+      }
+    });
+  });
 
+  database.ref(`/users/${userId}`).child('/videos').once('value', data => {
+    const videoArray = data.val();
+    _.forEach(videoArray, item => {
+      const publisherRef = database.ref(`/users/${userId}/videos/${item.id}/publisher`);
+      publisherRef.child('/avatar/createdAt').set(file.created_at);
+      publisherRef.child('/avatar/etag').set(file.etag);
+      publisherRef.child('/avatar/format').set(file.format);
+      publisherRef.child('/avatar/width').set(file.width);
+      publisherRef.child('/avatar/height').set(file.height);
+      publisherRef.child('/avatar/url').set(file.url);
+      publisherRef.child('/bio').set(values.editBio);
+      publisherRef.child('/name').set(values.editName);
+    });
+  });
 };
 
 export const deleteUpload = (uploadId, type) => dispatch => {
