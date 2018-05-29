@@ -66,20 +66,20 @@ export const updateUserUpload = (data) => dispatch => {
     .catch(error => dispatch(userError(error)));
 };
 
-export const addUserFollowing = (userId) => dispatch => {
-  database.ref(`users/${userId}/following`).push(userId);
+export const addUserFollowing = (authId ,publisherId) => dispatch => {
+  return database.ref(`users/${authId}/following`).child(publisherId).set(publisherId);
 };
 
-export const addUserFollower = (userId) => dispatch => {
-  database.ref(`users/${userId}/followers`).push(userId);
+export const addUserFollower = (authId, publisherId) => dispatch => {
+  return database.ref(`users/${publisherId}/followers`).child(authId).set(authId);
 };
 
-export const removeUserFollowing = (userId) => dispatch => {
-  database.ref(`users/${userId}/following/${userId}`).remove();
+export const removeUserFollowing = (authId, publisherId) => dispatch => {
+  return database.ref(`users/${authId}/following/${publisherId}`).remove();
 };
 
-export const removeUserFollower = (userId) => dispatch => {
-  database.ref(`users/${userId}/followers/${userId}`).remove();
+export const removeUserFollower = (authId, publisherId) => dispatch => {
+  return database.ref(`users/${publisherId}/followers/${authId}`).remove();
 };
 
 // export const getUserUploads = (id) => dispatch => {

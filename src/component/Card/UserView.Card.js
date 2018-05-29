@@ -6,8 +6,10 @@ import _ from 'lodash';
 import {Image, Card, Button} from 'semantic-ui-react';
 
 import {deleteUpload} from "../../actions/action.upload";
-import {getUserOnce, addUserFollower, addUserFollowing,
-  removeUserFollower, removeUserFollowing} from "../../actions/action.user";
+import {
+  getUserOnce, addUserFollower, addUserFollowing,
+  removeUserFollower, removeUserFollowing, getUser
+} from "../../actions/action.user";
 
 class UserViewCard extends Component {
   constructor(props) {
@@ -19,15 +21,17 @@ class UserViewCard extends Component {
   unFollow() {
     console.log('click success');
     const {auth, publisher} = this.props;
-    this.props.removeUserFollower(publisher.id);
-    this.props.removeUserFollowing(auth.uid);
+    this.props.removeUserFollower(auth.uid, publisher.id);
+    this.props.removeUserFollowing(auth.uid, publisher.id);
+    this.props.getUserOnce(auth.uid);
   };
 
   Follow() {
     console.log('click success');
     const {auth, publisher} = this.props;
-    this.props.addUserFollower(publisher.id);
-    this.props.addUserFollowing(auth.uid);
+    this.props.addUserFollower(auth.uid, publisher.id);
+    this.props.addUserFollowing(auth.uid, publisher.id);
+    this.props.getUserOnce(auth.uid);
   };
 
   getProfile(publisher) {

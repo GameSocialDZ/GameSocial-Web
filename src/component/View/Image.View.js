@@ -15,6 +15,8 @@ class ImageView extends Component {
     }
   }
 
+
+
   render() {
     const {image} = this.props;
     return (
