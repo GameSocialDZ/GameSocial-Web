@@ -52,23 +52,31 @@ export class Profile extends Component {
 
   renderUserFollowers(followers) {
     return _.map(followers, (follower) => {
-      return (
-        <Grid.Column key={follower.id}>
-          <UserViewCard
-            publisher={follower}/>
-        </Grid.Column>
-      )
+      if(follower.id === 'default') {
+        return <span key={follower.id}/>;
+      } else {
+        return (
+          <Grid.Column key={follower.id}>
+            <UserViewCard
+              publisher={follower}/>
+          </Grid.Column>
+        )
+      }
     });
   }
 
   renderUserFollowing(following) {
     return _.map(following, (followee) => {
-      return (
-        <Grid.Column key={followee.id}>
-          <UserViewCard
-            publisher={followee}/>
-        </Grid.Column>
-      )
+      if(followee.id === 'default') {
+        return <span key={followee.id}/>;
+      } else {
+        return (
+          <Grid.Column key={followee.id}>
+            <UserViewCard
+              publisher={followee}/>
+          </Grid.Column>
+        )
+      }
     });
   }
 

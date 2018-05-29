@@ -6,7 +6,13 @@ class NewUserObject {
       username: username,
       email: user.email,
       name: "",
-      avatar: "https://res.cloudinary.com/diygdnbei/image/upload/v1519444005/zumnvvbqi0fo1zthkal7.png",
+      avatar: {
+        createdAt: new Date().getTime().toString(),
+        etag: '5e61216492e523567e13b5aa188ea1aa',
+        url: "https://res.cloudinary.com/diygdnbei/image/upload/v1519444005/zumnvvbqi0fo1zthkal7.png",
+        height: 1080,
+        width: 1080
+      },
       bio: "",
       guild: "",
       dob: dob
@@ -23,8 +29,8 @@ class NewUserObject {
     this.notifications = [];
     this.videos = [];
     this.images = [];
-    this.following = {default: 'default'};
-    this.followers = {default: 'default'};
+    this.following = [{id: 'default'}];
+    this.followers = [{id: 'default'}];
     this.guild = "";
   }
 }

@@ -186,7 +186,10 @@ export const updatePublisherUploads = (userId, values, file) => dispatch => {
     const imageArray = data.val();
     _.forEach(imageArray, item => {
       const publisherRef = database.ref(`/uploads/images/${item.id}/publisher`);
-      if(item.publisher.id === userId) {
+      if(item.id === 'default') {
+        return null;
+      }
+      else if(item.publisher.id === userId) {
         publisherRef.child('/avatar/createdAt').set(file.created_at);
         publisherRef.child('/avatar/etag').set(file.etag);
         publisherRef.child('/avatar/format').set(file.format);
@@ -201,9 +204,13 @@ export const updatePublisherUploads = (userId, values, file) => dispatch => {
 
   database.ref(`/uploads`).child('/videos').once('value', data => {
     const videoArray = data.val();
+    console.log(videoArray);
     _.forEach(videoArray, item => {
       const publisherRef = database.ref(`/uploads/videos/${item.id}/publisher`);
-      if(item.publisher.id === userId) {
+      if(item.id === 'default') {
+        return null;
+      }
+      else if(item.publisher.id === userId) {
         publisherRef.child('/avatar/createdAt').set(file.created_at);
         publisherRef.child('/avatar/etag').set(file.etag);
         publisherRef.child('/avatar/format').set(file.format);
@@ -218,9 +225,9 @@ export const updatePublisherUploads = (userId, values, file) => dispatch => {
 
   database.ref(`/users/${userId}`).child('/images').once('value', data => {
     const imageArray = data.val();
+    console.log(imageArray);
     _.forEach(imageArray, item => {
       const publisherRef = database.ref(`/users/${userId}/images/${item.id}/publisher`);
-      if(item.publisher.id === userId) {
         publisherRef.child('/avatar/createdAt').set(file.created_at);
         publisherRef.child('/avatar/etag').set(file.etag);
         publisherRef.child('/avatar/format').set(file.format);
@@ -229,7 +236,6 @@ export const updatePublisherUploads = (userId, values, file) => dispatch => {
         publisherRef.child('/avatar/url').set(file.url);
         publisherRef.child('/bio').set(values.editBio);
         publisherRef.child('/name').set(values.editName);
-      }
     });
   });
 
@@ -237,14 +243,14 @@ export const updatePublisherUploads = (userId, values, file) => dispatch => {
     const videoArray = data.val();
     _.forEach(videoArray, item => {
       const publisherRef = database.ref(`/users/${userId}/videos/${item.id}/publisher`);
-      publisherRef.child('/avatar/createdAt').set(file.created_at);
-      publisherRef.child('/avatar/etag').set(file.etag);
-      publisherRef.child('/avatar/format').set(file.format);
-      publisherRef.child('/avatar/width').set(file.width);
-      publisherRef.child('/avatar/height').set(file.height);
-      publisherRef.child('/avatar/url').set(file.url);
-      publisherRef.child('/bio').set(values.editBio);
-      publisherRef.child('/name').set(values.editName);
+        publisherRef.child('/avatar/createdAt').set(file.created_at);
+        publisherRef.child('/avatar/etag').set(file.etag);
+        publisherRef.child('/avatar/format').set(file.format);
+        publisherRef.child('/avatar/width').set(file.width);
+        publisherRef.child('/avatar/height').set(file.height);
+        publisherRef.child('/avatar/url').set(file.url);
+        publisherRef.child('/bio').set(values.editBio);
+        publisherRef.child('/name').set(values.editName);
     });
   });
 };

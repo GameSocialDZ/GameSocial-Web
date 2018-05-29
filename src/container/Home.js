@@ -15,7 +15,14 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
     }
+  }
+  componentDidMount() {
+    this.setState({
+      images: this.props.images
+    });
+
   }
 
   componentWillMount() {
@@ -24,36 +31,55 @@ class Home extends Component {
 
   renderImageUploads(images) {
     return _.map(images, (image) => {
-      return (
-        <div
-          key={image.id}>
-          <ImageCard
-            image={image}
-            history={this.props.history}/>
-        </div>
-      )
+      if (image.id === 'default') {
+        return null;
+      }
+      return  _.size(this.props.images) < 4 ?
+        (
+          <Grid.Column
+            key={image.id}>
+            <ImageCard
+              image={image}
+              history={this.props.history}/>
+          </Grid.Column>
+        ):(
+          <div
+            key={image.id}>
+            <ImageCard
+              image={image}
+              history={this.props.history}/>
+          </div>
+        )
     });
   }
 
   renderVideoUploads(videos) {
     return _.map(videos, (video) => {
-      return (
-        <div
+      if (video.id === 'default') {
+        return null;
+      }
+
+      return _.size(this.props.videos) < 4 ?
+      (
+        <Grid.Column
           key={video.id}>
-          <VideoCard
-            video={video}
-            history={this.props.history}/>
-        </div>
-      )
+            <VideoCard
+              video={video}
+              history={this.props.history}/>
+          </Grid.Column>
+        ):(
+          <div
+            key={video.id}>
+            <VideoCard
+              video={video}
+              history={this.props.history}/>
+          </div>
+        )
     });
   }
 
   render() {
     const {videos, images, uploads} = this.props;
-    if(_.isEmpty(uploads) || _.isEmpty(videos)) {
-      return <h1>No Content</h1>;
-    }
-
     if (this.props.uploads.loading) {
       return <h1>Loading...</h1>
     }
@@ -63,14 +89,36 @@ class Home extends Component {
         <HomeHero/>
         <Container
           style={{marginBottom: '1rem'}}>
-          <ContentSlider
-            content={this.renderImageUploads(images)}>
-          </ContentSlider>
+          {
+            _.size(this.props.images) > 3 &&
+            <ContentSlider
+              content={this.renderImageUploads(images)}>
+            </ContentSlider>
+          }
+          {
+            _.size(this.props.images) <= 3 &&
+            <Grid stackable columns={3}>
+              <Grid.Row>
+              {this.renderImageUploads(images)}
+              </Grid.Row>
+            </Grid>
+          }
         </Container>
         <Container>
-          <ContentSlider
-            content={this.renderVideoUploads(videos)}>
-          </ContentSlider>
+          {
+            _.size(this.props.videos) > 3 &&
+            <ContentSlider
+              content={this.renderVideoUploads(videos)}>
+            </ContentSlider>
+          }
+          {
+            _.size(this.props.videos) <= 3 &&
+            <Grid stackable columns={3}>
+              <Grid.Row>
+              {this.renderVideoUploads(videos)}
+              </Grid.Row>
+            </Grid>
+          }
         </Container>
       </div>
     );

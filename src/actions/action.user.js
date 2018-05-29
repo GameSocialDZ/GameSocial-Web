@@ -70,7 +70,7 @@ export const addUserFollowing = (userId ,publisher) => dispatch => {
   const followingRef = database.ref(`users/${userId}/following`);
   followingRef.child(`${publisher.id}/id`).set(publisher.id);
   followingRef.child(`${publisher.id}/username`).set(publisher.username);
-  followingRef.child(`${publisher.id}/avatar`).set(publisher.avatar.url);
+  followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
   followingRef.child(`${publisher.id}/bio`).set(publisher.bio);
 };
 
@@ -78,7 +78,7 @@ export const addUserFollower = (user, publisherId) => dispatch => {
   const followersRef = database.ref(`users/${publisherId}/followers`);
   followersRef.child(`${user.id}/id`).set(user.id);
   followersRef.child(`${user.id}/username`).set(user.username);
-  followersRef.child(`${user.id}/avatar`).set(user.avatar.url);
+  followersRef.child(`${user.id}/avatar/url`).set(user.avatar.url);
   followersRef.child(`${user.id}/bio`).set(user.bio);
 };
 

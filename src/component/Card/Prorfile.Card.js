@@ -15,7 +15,6 @@ export class ProfileCard extends Component {
 
   render() {
     const {user} = this.props;
-    const profile = user.profile;
     return (
       <div>
         <Grid columns={3} stackable padded>
@@ -24,18 +23,18 @@ export class ProfileCard extends Component {
               <Segment textAlign={'center'}>
               <Image
                 style={{borderRadius: '9rem', width: '200px', height: '200px', display: 'inline-block'}}
-                src={profile.avatar.url}
+                src={user.profile.avatar.url}
                 alt="Placeholder"/>
               </Segment>
             </Grid.Column>
             <Grid.Column>
               <Segment>
               <Segment>
-              <p>{profile.name}</p>
-              <p>@{profile.username}</p>
-              <p>{profile.bio}</p>
+              <p>{user.profile.name}</p>
+              <p>@{user.profile.username}</p>
+              <p>{user.profile.bio}</p>
               <div>
-                <a type='email'>{profile.email}</a>
+                <a type='email'>{user.profile.email}</a>
               </div>
               </Segment>
               <Button.Group>
