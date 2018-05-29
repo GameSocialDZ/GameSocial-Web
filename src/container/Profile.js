@@ -12,6 +12,7 @@ import ImageCard from "../component/Card/Image.Card";
 import VideoCard from "../component/Card/Video.Card";
 import ProfileCard from "../component/Card/Prorfile.Card";
 import MenuProfile from "../component/Menu/Menu.Profile";
+import UserViewCard from '../component/Card/UserView.Card';
 
 export class Profile extends Component {
   constructor(props) {
@@ -49,6 +50,29 @@ export class Profile extends Component {
     });
   }
 
+  renderUserFollowers(followers) {
+    return _.map(followers, (follower) => {
+      return (
+        <Grid.Column key={follower.id}>
+          <UserViewCard
+            publisher={follower}/>
+        </Grid.Column>
+      )
+    });
+  }
+
+  renderUserFollowing(following) {
+    return _.map(following, (followee) => {
+      return (
+        <Grid.Column key={followee.id}>
+          <UserViewCard
+            publisher={followee}/>
+        </Grid.Column>
+      )
+    });
+  }
+
+
   getActiveMenu(state){
     this.setState({
       activeMenu: state
@@ -56,7 +80,7 @@ export class Profile extends Component {
   }
 
   render() {
-    const {images, videos, user, auth, currentUser} = this.props;
+    const {images, videos, user, auth, currentUser, following, followers} = this.props;
 
     if (user.loading || auth.loading) {
       return <Header as={'h1'}>Loading...</Header>
@@ -98,7 +122,31 @@ export class Profile extends Component {
             </Container>
           )
         }
-          </div>
+        {
+          this.state.activeMenu === 'followers' &&
+          (
+            <Container>
+              <Grid stackable columns={3}>
+                <Grid.Row>
+                  {this.renderUserFollowers(followers)}
+                </Grid.Row>
+              </Grid>
+            </Container>
+          )
+        }
+        {
+          this.state.activeMenu === 'following' &&
+          (
+            <Container>
+              <Grid stackable columns={3}>
+                <Grid.Row>
+                  {this.renderUserFollowing(following)}
+                </Grid.Row>
+              </Grid>
+            </Container>
+          )
+        }
+        </div>
     );
   }
 }
@@ -110,6 +158,8 @@ const mapStateToProps = state => ({
   currentUser: state.auth.currentUser,
   images: state.user.data.images,
   videos: state.user.data.videos,
+  following: state.user.data.following,
+  followers: state.user.data.followers
 });
 
 export default connect(mapStateToProps,

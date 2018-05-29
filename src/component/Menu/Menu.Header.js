@@ -30,10 +30,10 @@ class MenuHeader extends Component {
   };
 
   renderProfileDropdown = () => {
-    const profile = this.props.user.data.profile;
+    const currentUser = this.props.currentUser;
     const trigger = (
       <span>
-        <Image avatar src={profile.avatar.url} /> {profile.username}
+        <Image avatar src={currentUser.photoURL} /> {currentUser.displayName}
       </span>
     );
 
@@ -54,10 +54,6 @@ class MenuHeader extends Component {
   render() {
     const { activeItem } = this.state;
     const { currentUser } = this.props;
-
-    // if(!_.isEmpty(currentUser) && this.props.user.loading){
-    //   return <h1>Loading...</h1>
-    // }
 
     return (
       <Menu fixed={'top'}>
@@ -85,7 +81,7 @@ class MenuHeader extends Component {
                   <ModalUpload/>
                 </Menu.Item>
                   {
-                    this.props.user.loading || _.isEmpty(this.props.user.data) ? (
+                    this.props.auth.loading ? (
                       <Menu.Item>
                         <Dropdown text='Dropdown' loading />
                       </Menu.Item>
@@ -105,7 +101,7 @@ class MenuHeader extends Component {
 
 const mapStateToProps = state => ({
   currentUser: state.auth.currentUser,
-  user: state.user
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {signOut})(MenuHeader);

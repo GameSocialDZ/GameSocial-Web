@@ -28,13 +28,14 @@ class UserViewCard extends Component {
 
   Follow() {
     console.log('click success');
-    const {auth, publisher} = this.props;
-    this.props.addUserFollower(auth.uid, publisher.id);
-    this.props.addUserFollowing(auth.uid, publisher.id);
+    const {user, publisher, auth} = this.props;
+    this.props.addUserFollower(user.profile, publisher.id);
+    this.props.addUserFollowing(user.profile.id, publisher);
     this.props.getUserOnce(auth.uid);
   };
 
-  getProfile(publisher) {
+  getProfile() {
+
 
   }
 
@@ -53,7 +54,7 @@ class UserViewCard extends Component {
         <Card.Content extra>
           <div className='ui two buttons'>
             {
-              _.includes(user.following, publisher.id) ? (
+              user.following[publisher.id] ? (
                 <Button
                   onClick={this.unFollow.bind(this)}
                   basic color='green'>Unfollow</Button>
@@ -64,7 +65,7 @@ class UserViewCard extends Component {
               )
             }
             <Button
-              onClick={this.getProfile(publisher.id)}
+              onClick={this.getProfile()}
               basic color='blue'>Profile</Button>
           </div>
         </Card.Content>

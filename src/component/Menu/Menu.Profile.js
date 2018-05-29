@@ -20,6 +20,7 @@ class MenuProfile extends Component {
         <Menu.Item name='images' active={activeMenu === 'images'} onClick={this.handleItemClick} />
         <Menu.Item name='videos' active={activeMenu === 'videos'} onClick={this.handleItemClick} />
         <Menu.Item name='followers' active={activeMenu === 'followers'} onClick={this.handleItemClick} />
+        <Menu.Item name='following' active={activeMenu === 'following'} onClick={this.handleItemClick} />
       </Menu>
     )
   }

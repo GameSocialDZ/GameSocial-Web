@@ -1,4 +1,4 @@
-import {database} from "../firebase";
+import {database, auth} from "../firebase";
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const userRequest = () => ({
@@ -66,12 +66,20 @@ export const updateUserUpload = (data) => dispatch => {
     .catch(error => dispatch(userError(error)));
 };
 
-export const addUserFollowing = (authId ,publisherId) => dispatch => {
-  return database.ref(`users/${authId}/following`).child(publisherId).set(publisherId);
+export const addUserFollowing = (userId ,publisher) => dispatch => {
+  const followingRef = database.ref(`users/${userId}/following`);
+  followingRef.child(`${publisher.id}/id`).set(publisher.id);
+  followingRef.child(`${publisher.id}/username`).set(publisher.username);
+  followingRef.child(`${publisher.id}/avatar`).set(publisher.avatar.url);
+  followingRef.child(`${publisher.id}/bio`).set(publisher.bio);
 };
 
-export const addUserFollower = (authId, publisherId) => dispatch => {
-  return database.ref(`users/${publisherId}/followers`).child(authId).set(authId);
+export const addUserFollower = (user, publisherId) => dispatch => {
+  const followersRef = database.ref(`users/${publisherId}/followers`);
+  followersRef.child(`${user.id}/id`).set(user.id);
+  followersRef.child(`${user.id}/username`).set(user.username);
+  followersRef.child(`${user.id}/avatar`).set(user.avatar.url);
+  followersRef.child(`${user.id}/bio`).set(user.bio);
 };
 
 export const removeUserFollowing = (authId, publisherId) => dispatch => {

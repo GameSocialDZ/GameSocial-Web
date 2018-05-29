@@ -36,7 +36,8 @@ export const registerEmailPassword = (user) => dispatch => {
   return auth.createUserWithEmailAndPassword(user.email, user.password)
     .then(auth => {
       // TODO: Make any further validations (Check if existing identifier and passwords match)
-      auth.updateProfile({displayName: user.username})
+      auth.updateProfile({displayName: user.username,
+        photoURL: "https://res.cloudinary.com/diygdnbei/image/upload/v1519444005/zumnvvbqi0fo1zthkal7.png"})
         .catch(error => console.log(error.message));
 
       const username = user.username;
@@ -61,7 +62,11 @@ export const loginEmailPassword = (user) => dispatch => {
       return auth.signInWithEmailAndPassword(user.loginEmail, user.loginPassword)
         .then(auth => {
           console.log(auth);
-          // Add Authentication to state
+
+          database.ref(`/users/${auth.uid}/profile/avatar/url`).once('value', data =>{
+            auth.updateProfile({photoURL: data.val()});
+          });
+
           dispatch(authGetSuccess(auth));
           return dispatch(getUserOnce(auth.uid))
             .catch(error => dispatch(userError(error)))
