@@ -66,6 +66,21 @@ export const updateUserUpload = (data) => dispatch => {
     .catch(error => dispatch(userError(error)));
 };
 
+export const addUserFollowing = (userId) => dispatch => {
+  return database.ref(`users/${userId}/following`).push(userId);
+};
+
+export const addUserFollower = (userId) => dispatch => {
+  return database.ref(`users/${userId}/follower`).push(userId);
+};
+
+export const removeUserFollowing = (userId) => dispatch => {
+  return database.ref(`users/${userId}/following`).remove(userId);
+};
+
+export const removeUserFollower = (userId) => dispatch => {
+  return database.ref(`users/${userId}/follower`).remove(userId);
+};
 
 // export const getUserUploads = (id) => dispatch => {
 //   dispatch(uploadRequest());

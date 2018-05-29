@@ -23,8 +23,8 @@ class NewUserObject {
     this.notifications = [];
     this.videos = [];
     this.images = [];
-    this.following =[];
-    this.followers =[];
+    this.following = '';
+    this.followers = '';
     this.guild = "";
   }
 }

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-//import _ from 'lodash';
+import _ from 'lodash';
 
-import {Image, Grid, Button} from 'semantic-ui-react';
+import {Image, Grid, Button, Segment} from 'semantic-ui-react';
+import UserViewCard from '../Card/UserView.Card';
 
 import {deleteUpload} from "../../actions/action.upload";
 
@@ -17,7 +19,7 @@ class ImageView extends Component {
     const {image} = this.props;
     return (
       <div>
-        <Grid>
+        <Grid stackable>
           <Grid.Row className="row">
             <Grid.Column width={12}>
               <Image
@@ -25,27 +27,33 @@ class ImageView extends Component {
                 src={image.url}/>
             </Grid.Column>
             <Grid.Column width={4}>
-              <p>Likes</p>
-              <p>Views</p>
-              <Button>Favorite</Button>
+              <Segment>
+                <p>Likes</p>
+                <p>Views</p>
+                <Button>Favorite</Button>
+              </Segment>
             </Grid.Column>
           </Grid.Row>
         </Grid>
         <Grid>
           <Grid.Row>
             <Grid.Column width={10}>
+              <Segment>
               <h1>{image.content.title}</h1>
               <p>{image.content.caption}</p>
               <span>Tags</span><span style={{float: 'right'}}>{image.content.createdAt}</span>
+              </Segment>
             </Grid.Column>
             <Grid.Column width={6}>
-              <h1>{image.publisher.username}</h1>
-              <Button>Follow</Button>
+              <UserViewCard
+                publisher={image.publisher}/>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={16}>
+              <Segment>
               <h1>Comments</h1>
+              </Segment>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -54,4 +62,8 @@ class ImageView extends Component {
   }
 }
 
-export default connect(null, {deleteUpload})(ImageView);
+const mapStateToProps = state => ({
+  view: state.view.data
+});
+
+export default connect(mapStateToProps, {deleteUpload})(ImageView);

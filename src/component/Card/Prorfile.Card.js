@@ -14,7 +14,8 @@ export class ProfileCard extends Component {
   }
 
   render() {
-    const {profile} = this.props;
+    const {user} = this.props;
+    const profile = user.profile;
     return (
       <div>
         <Grid columns={3} stackable padded>
@@ -45,9 +46,9 @@ export class ProfileCard extends Component {
             </Grid.Column>
             <Grid.Column>
               <Segment>
-                <Segment><span>Points</span></Segment>
-                <Segment><span>Followers</span></Segment>
-                <Segment><span>Following</span></Segment>
+                <Segment><span>Points: {user.points}</span></Segment>
+                <Segment><span>Followers: {user.followers.length}</span></Segment>
+                <Segment><span>Following: {user.following.length}</span></Segment>
               </Segment>
             </Grid.Column>
           </Grid.Row>

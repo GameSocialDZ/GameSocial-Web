@@ -56,7 +56,7 @@ export class Profile extends Component {
   }
 
   render() {
-    const {profile, images, videos, user, auth, currentUser} = this.props;
+    const {images, videos, user, auth, currentUser} = this.props;
 
     if (user.loading || auth.loading) {
       return <Header as={'h1'}>Loading...</Header>
@@ -70,7 +70,7 @@ export class Profile extends Component {
       <div style={{marginTop: '5rem'}}>
         <div>
           <ProfileCard
-            profile={profile}/>
+            user={user.data}/>
         </div>
         <MenuProfile
           getActiveMenu={(state) => this.getActiveMenu(state)}/>

@@ -29,7 +29,7 @@ class View extends Component {
       return history.goBack();
     }
     return (
-      <div style={{marginTop: '68.5px'}}>
+      <div style={{marginTop: '5rem'}}>
         {view.data.config.type === 'image' ? (
           <div className="">
             <ImageView
