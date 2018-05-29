@@ -67,19 +67,19 @@ export const updateUserUpload = (data) => dispatch => {
 };
 
 export const addUserFollowing = (userId) => dispatch => {
-  return database.ref(`users/${userId}/following`).push(userId);
+  database.ref(`users/${userId}/following`).push(userId);
 };
 
 export const addUserFollower = (userId) => dispatch => {
-  return database.ref(`users/${userId}/follower`).push(userId);
+  database.ref(`users/${userId}/followers`).push(userId);
 };
 
 export const removeUserFollowing = (userId) => dispatch => {
-  return database.ref(`users/${userId}/following`).remove(userId);
+  database.ref(`users/${userId}/following/${userId}`).remove();
 };
 
 export const removeUserFollower = (userId) => dispatch => {
-  return database.ref(`users/${userId}/follower`).remove(userId);
+  database.ref(`users/${userId}/followers/${userId}`).remove();
 };
 
 // export const getUserUploads = (id) => dispatch => {
