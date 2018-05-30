@@ -19,11 +19,18 @@ export class Profile extends Component {
     super(props);
     this.state = {
       activeMenu: 'images'
+
     }
   }
 
   componentWillMount() {
-    this.props.getUser(this.props.currentUser.uid);
+    if(!this.props.user.isOtherUser) {
+      this.props.getUser(this.props.currentUser.uid);
+    }
+
+    // if(this.props.user.isOtherUser) {
+    //   this.props.getOtherUser(this.props.user.data.id)
+    // }
   }
 
   renderUserImages(images) {
@@ -96,7 +103,8 @@ export class Profile extends Component {
       return <Header as={'h1'}>Loading...</Header>
     }
 
-    if (_.isEmpty(currentUser) || auth.error){
+
+    if ((_.isEmpty(currentUser) || auth.error)){
       return <Redirect to="/" />
     }
 
@@ -107,6 +115,10 @@ export class Profile extends Component {
             user={user.data}/>
         </div>
         <MenuProfile
+          images={images}
+          videos={videos}
+          followers={followers}
+          following={following}
           getActiveMenu={(state) => this.getActiveMenu(state)}/>
         {
           this.state.activeMenu === 'images' &&

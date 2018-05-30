@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
@@ -8,7 +8,8 @@ import {Image, Card, Button} from 'semantic-ui-react';
 import {deleteUpload} from "../../actions/action.upload";
 import {
   getUserOnce, addUserFollower, addUserFollowing,
-  removeUserFollower, removeUserFollowing, getUser
+  removeUserFollower, removeUserFollowing, getUser,
+  getOtherUser
 } from "../../actions/action.user";
 
 class UserViewCard extends Component {
@@ -34,9 +35,9 @@ class UserViewCard extends Component {
     this.props.getUserOnce(auth.uid);
   };
 
-  getProfile() {
-
-
+  getOtherUserProfile() {
+    console.log('click success');
+    this.props.getOtherUser(this.props.publisher.id);
   }
 
   render() {
@@ -70,14 +71,15 @@ class UserViewCard extends Component {
               </div>
             }
             <Button
-              onClick={this.getProfile()}
-              basic color='blue'>Profile</Button>
+              onClick={this.getOtherUserProfile.bind(this)}
+              basic color='blue'><Link to='/profile'>Profile</Link></Button>
           </div>
         </Card.Content>
       </Card>
     );
   }
 }
+
 
 const mapStateToProps = state => ({
   view: state.view.data,
@@ -87,4 +89,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps,
   {deleteUpload, getUserOnce, addUserFollowing, addUserFollower,
-  removeUserFollowing, removeUserFollower})(UserViewCard);
+  removeUserFollowing, removeUserFollower, getOtherUser})(UserViewCard);

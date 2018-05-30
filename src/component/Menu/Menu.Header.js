@@ -8,6 +8,7 @@ import ModalUpload from '../Modal/Modal.Upload';
 import ModalRegister from '../Modal/Modal.Register';
 
 import {signOut } from "../../actions/action.auth";
+import {getUserOnce} from '../../actions/action.user';
 
 class MenuHeader extends Component {
   constructor(props) {
@@ -29,6 +30,10 @@ class MenuHeader extends Component {
     )
   };
 
+  getProfile() {
+    this.props.getUserOnce(this.props.currentUser.uid);
+  }
+
   renderProfileDropdown = () => {
     const currentUser = this.props.currentUser;
     const trigger = (
@@ -40,7 +45,8 @@ class MenuHeader extends Component {
     return(
       <Dropdown trigger={trigger}>
         <Dropdown.Menu>
-          <Dropdown.Item><Link to='/profile'>Profile</Link></Dropdown.Item>
+          <Dropdown.Item
+            onClick={this.getProfile.bind(this)}><Link to='/profile'>Profile</Link></Dropdown.Item>
           <Dropdown.Divider/>
           <Dropdown.Item
             text='Sign Out'
@@ -104,4 +110,5 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, {signOut})(MenuHeader);
+export default connect(mapStateToProps,
+  {signOut, getUserOnce})(MenuHeader);
