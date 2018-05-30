@@ -1,4 +1,5 @@
 import {database, auth} from "../firebase";
+import _ from 'lodash';
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const userRequest = () => ({
@@ -87,6 +88,32 @@ export const removeUserFollowing = (authId, publisherId) => dispatch => {
 
 export const removeUserFollower = (authId, publisherId) => dispatch => {
   return database.ref(`users/${publisherId}/followers/${authId}`).remove();
+};
+
+export const updateUserFollowersProfile = (user, auth, values, file) => {
+  _.forEach(user.followers, follower =>{
+    const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.id}`);
+    userFollowersRef.update({
+      avatar: {
+        url: file.secure_url
+      },
+      bio: values.bio,
+      username: auth.displayName
+    })
+  })
+};
+
+export const updateUserFollowingProfile = (user, auth, values, file) => {
+  _.forEach(user.following, followee =>{
+    const userFollowersRef = database.ref(`users/${followee.id}/following/${auth.id}`);
+    userFollowersRef.update({
+      avatar: {
+        url: file.secure_url
+      },
+      bio: values.bio,
+      username: auth.displayName
+    })
+  })
 };
 
 // export const getUserUploads = (id) => dispatch => {

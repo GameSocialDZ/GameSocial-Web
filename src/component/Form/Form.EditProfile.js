@@ -11,7 +11,9 @@ import {CloudinaryConfig} from "../../cloudinary";
 import axios from "axios/index";
 
 import {updatePublisherUploads} from "../../actions/action.upload";
-import {updateUserProfile} from '../../actions/action.user';
+import {updateUserProfile,
+  updateUserFollowersProfile,
+  updateUserFollowingProfile} from '../../actions/action.user';
 
 class FormEditProfile extends Component{
   constructor(props){
@@ -32,24 +34,29 @@ class FormEditProfile extends Component{
   }
 
   onSubmit(values, auth, file) {
+    const {user} = this.props;
     if(_.isEmpty(file)){
       return alert('File not selected or still uploading!');
     }
     console.log(file);
     console.log(values);
 
+    // Update 1
     this.props.updateUserProfile(auth, values, file);
-
-    // TODO: Fucntion to update each image and video publisher info
+    // Update 2
     this.props.updatePublisherUploads(auth, values, file);
+    // Update 3
+    this.props.updateUserFollowingProfile(user, auth, values, file);
+    // Update 4
+    this.props.updateUserFollowingProfile(user, auth, values, file);
 
     this.props.dispatch(reset('editProfile'));
   }
 
-  onFileSelect(file) { // = (e) => {
+  onFileSelect(file) {
     const unsignedUploadPreset = CloudinaryConfig.avatarPreset;
     const thisComponent = this;
-    const fileSelected = file[0]; //e.target.files[0];
+    const fileSelected = file[0];
 
     //TODO: Remove dubug
     console.log(fileSelected);
@@ -177,7 +184,9 @@ const mapStateToProps = state => ({
   auth: state.auth.currentUser
 });
 
-FormEditProfile = connect(mapStateToProps,{updateUserProfile, updatePublisherUploads})(FormEditProfile);
+FormEditProfile = connect(mapStateToProps,
+  {updateUserProfile, updatePublisherUploads,
+    updateUserFollowersProfile, updateUserFollowingProfile})(FormEditProfile);
 
 export default reduxForm({
   form: 'editProfile',
