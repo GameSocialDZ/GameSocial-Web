@@ -24,12 +24,13 @@ class FormEditUserUpload extends Component{
     this.setState({title, caption, type});
   }
 
-  onSubmit(values) {
-    values.userId = this.props.publisher.id;
+  onSubmit(auth, values) {
     values.type = this.state.type;
     values.uploadId = this.props.uploadId;
 
-    this.props.updateUserUpload(values);
+    // Update 1
+    this.props.updateUserUpload(auth, values);
+    // Update 2
     this.props.updateUpload(values);
 
     this.props.dispatch(reset('editUserUpload'));
@@ -43,7 +44,7 @@ class FormEditUserUpload extends Component{
   };
 
   render(){
-    const {caption, title} = this.props;
+    const {caption, title, auth} = this.props;
     return(
       <div >
         <Form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>

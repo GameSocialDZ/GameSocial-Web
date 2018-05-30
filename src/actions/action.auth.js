@@ -86,18 +86,15 @@ export const getAuth = () => dispatch => {
   });
 };
 
-export const updateAuth = (data) => dispatch => {
+export const updateAuth = (file) => dispatch => {
   dispatch(authRequest());
-  return auth.currentUser().updateAuth({
-    displayName: data.username,
-    photoURL: data.avatar
+  return auth.currentUser.updateProfile({
+    photoURL: file.secure_url
   }).then(() => {
       dispatch(authUpdateSucess());
-      //TODO: Notify the user there profile was successfully updated
       console.log('Successfully Updated')
     }).catch(error => {
       dispatch(authError(error));
-      //TODO: report to the user reason for unsuccessful update
       console.log(error);
     });
 };

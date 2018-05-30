@@ -10,6 +10,7 @@ import FormDropzone from './Form.Dropzone';
 import {CloudinaryConfig} from "../../cloudinary";
 import axios from "axios/index";
 
+import {updateAuth} from '../../actions/action.auth';
 import {updatePublisherUploads} from "../../actions/action.upload";
 import {updateUserProfile,
   updateUserFollowersProfile,
@@ -42,12 +43,14 @@ class FormEditProfile extends Component{
     console.log(values);
 
     // Update 1
-    this.props.updateUserProfile(auth, values, file);
+    this.props.updateAuth(file);
     // Update 2
-    this.props.updatePublisherUploads(auth, values, file);
+    this.props.updateUserProfile(auth, values, file);
     // Update 3
-    this.props.updateUserFollowingProfile(user, auth, values, file);
+    this.props.updatePublisherUploads(auth, values, file);
     // Update 4
+    this.props.updateUserFollowingProfile(user, auth, values, file);
+    // Update 5
     this.props.updateUserFollowingProfile(user, auth, values, file);
 
     this.props.dispatch(reset('editProfile'));
@@ -181,11 +184,12 @@ class FormEditProfile extends Component{
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth.currentUser
+  auth: state.auth.currentUser,
+  user: state.user.data
 });
 
 FormEditProfile = connect(mapStateToProps,
-  {updateUserProfile, updatePublisherUploads,
+  {updateAuth, updateUserProfile, updatePublisherUploads,
     updateUserFollowersProfile, updateUserFollowingProfile})(FormEditProfile);
 
 export default reduxForm({

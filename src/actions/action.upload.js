@@ -180,7 +180,6 @@ export const updateUpload = (data) => dispatch => {
     .catch(error => dispatch(uploadError(error)));
 };
 
-// Values = {editBio, editName}
 export const updatePublisherUploads = (auth, values, file) => dispatch => {
   database.ref(`/uploads`).child('/images').once('value', data => {
     const imageArray = data.val();
@@ -195,7 +194,7 @@ export const updatePublisherUploads = (auth, values, file) => dispatch => {
         publisherRef.child('/avatar/format').set(file.format);
         publisherRef.child('/avatar/width').set(file.width);
         publisherRef.child('/avatar/height').set(file.height);
-        publisherRef.child('/avatar/url').set(file.url);
+        publisherRef.child('/avatar/url').set(file.secure_url);
         publisherRef.child('/bio').set(values.editBio);
         publisherRef.child('/name').set(values.editName);
       }
@@ -216,7 +215,7 @@ export const updatePublisherUploads = (auth, values, file) => dispatch => {
         publisherRef.child('/avatar/format').set(file.format);
         publisherRef.child('/avatar/width').set(file.width);
         publisherRef.child('/avatar/height').set(file.height);
-        publisherRef.child('/avatar/url').set(file.url);
+        publisherRef.child('/avatar/url').set(file.secure_url);
         publisherRef.child('/bio').set(values.editBio);
         publisherRef.child('/name').set(values.editName);
       }
@@ -233,7 +232,7 @@ export const updatePublisherUploads = (auth, values, file) => dispatch => {
         publisherRef.child('/avatar/format').set(file.format);
         publisherRef.child('/avatar/width').set(file.width);
         publisherRef.child('/avatar/height').set(file.height);
-        publisherRef.child('/avatar/url').set(file.url);
+        publisherRef.child('/avatar/url').set(file.secure_url);
         publisherRef.child('/bio').set(values.editBio);
         publisherRef.child('/name').set(values.editName);
     });
@@ -248,7 +247,7 @@ export const updatePublisherUploads = (auth, values, file) => dispatch => {
         publisherRef.child('/avatar/format').set(file.format);
         publisherRef.child('/avatar/width').set(file.width);
         publisherRef.child('/avatar/height').set(file.height);
-        publisherRef.child('/avatar/url').set(file.url);
+        publisherRef.child('/avatar/url').set(file.secure_url);
         publisherRef.child('/bio').set(values.editBio);
         publisherRef.child('/name').set(values.editName);
     });

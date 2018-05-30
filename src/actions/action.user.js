@@ -1,4 +1,4 @@
-import {database, auth} from "../firebase";
+import {database} from "../firebase";
 import _ from 'lodash';
 
 export const USER_REQUEST = 'USER_REQUEST';
@@ -54,12 +54,11 @@ export const updateUserProfile = (auth, data, file) => dispatch => {
     .catch(error => dispatch(userError(error)))
 };
 
-export const updateUserUpload = (data) => dispatch => {
+export const updateUserUpload = (auth, data) => dispatch => {
   dispatch(userRequest());
-
   const updates = {};
-  updates[`users/${data.userId}/${data.type}s/${data.uploadId}/content/title`] = data.editTitle;
-  updates[`users/${data.userId}/${data.type}s/${data.uploadId}/content/caption`] = data.editCaption;
+  updates[`users/${auth.uid}/${data.type}s/${data.uploadId}/content/title`] = data.editTitle;
+  updates[`users/${auth.uid}/${data.type}s/${data.uploadId}/content/caption`] = data.editCaption;
 
   return database.ref().update(updates)
     .then(dispatch(userUpdateSuccess()))
@@ -91,6 +90,7 @@ export const removeUserFollower = (authId, publisherId) => dispatch => {
 };
 
 export const updateUserFollowersProfile = (user, auth, values, file) => {
+  if(follower.id === 'default'){return null}
   _.forEach(user.followers, follower =>{
     const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.id}`);
     userFollowersRef.update({
@@ -105,6 +105,7 @@ export const updateUserFollowersProfile = (user, auth, values, file) => {
 
 export const updateUserFollowingProfile = (user, auth, values, file) => {
   _.forEach(user.following, followee =>{
+    if(followee.id === 'default'){return null}
     const userFollowersRef = database.ref(`users/${followee.id}/following/${auth.id}`);
     userFollowersRef.update({
       avatar: {
