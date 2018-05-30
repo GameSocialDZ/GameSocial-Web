@@ -53,6 +53,18 @@ class VideoObject{
   }
 }
 
+class UpdateUserProfileObject{
+  constructor(user, profile, avatar){
+    this.avatar = {
+      url: avatar.secure_url
+    };
+    this.bio = profile.bio;
+    this.id = user.id;
+    this.name = profile.name;
+    this.username = user.username;
+  }
+}
+
 class ImageObject{
   constructor(image){
     this.id = image.id;
@@ -119,4 +131,4 @@ class ImageObject{
 //   }
 // }
 
-module.exports = {NewUserObject, VideoObject, ImageObject};
+module.exports = {NewUserObject, VideoObject, ImageObject, UpdateUserProfileObject};

@@ -5,6 +5,7 @@ import _ from 'lodash';
 import {Grid, Segment, Container} from 'semantic-ui-react';
 
 import {getUploads} from "../actions/action.upload";
+import {getUserOnce, getUser} from '../actions/action.user';
 
 import ContentSlider from '../component/Slider/Content.Slider';
 import ImageCard from '../component/Card/Image.Card';
@@ -15,14 +16,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
     }
-  }
-  componentDidMount() {
-    this.setState({
-      images: this.props.images
-    });
-
   }
 
   componentWillMount() {
@@ -39,6 +33,7 @@ class Home extends Component {
           <Grid.Column
             key={image.id}>
             <ImageCard
+              publisher={publisher}
               image={image}
               history={this.props.history}/>
           </Grid.Column>
@@ -58,7 +53,6 @@ class Home extends Component {
       if (video.id === 'default') {
         return null;
       }
-
       return _.size(this.props.videos) < 4 ?
       (
         <Grid.Column
@@ -133,4 +127,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getUploads})(Home);
+  {getUploads, getUser, getUserOnce})(Home);

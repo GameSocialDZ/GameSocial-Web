@@ -181,7 +181,7 @@ export const updateUpload = (data) => dispatch => {
 };
 
 // Values = {editBio, editName}
-export const updatePublisherUploads = (userId, values, file) => dispatch => {
+export const updatePublisherUploads = (auth, values, file) => dispatch => {
   database.ref(`/uploads`).child('/images').once('value', data => {
     const imageArray = data.val();
     _.forEach(imageArray, item => {
@@ -189,7 +189,7 @@ export const updatePublisherUploads = (userId, values, file) => dispatch => {
       if(item.id === 'default') {
         return null;
       }
-      else if(item.publisher.id === userId) {
+      else if(item.publisher.id === auth.uid) {
         publisherRef.child('/avatar/createdAt').set(file.created_at);
         publisherRef.child('/avatar/etag').set(file.etag);
         publisherRef.child('/avatar/format').set(file.format);
@@ -210,7 +210,7 @@ export const updatePublisherUploads = (userId, values, file) => dispatch => {
       if(item.id === 'default') {
         return null;
       }
-      else if(item.publisher.id === userId) {
+      else if(item.publisher.id === auth.uid) {
         publisherRef.child('/avatar/createdAt').set(file.created_at);
         publisherRef.child('/avatar/etag').set(file.etag);
         publisherRef.child('/avatar/format').set(file.format);
@@ -223,11 +223,11 @@ export const updatePublisherUploads = (userId, values, file) => dispatch => {
     });
   });
 
-  database.ref(`/users/${userId}`).child('/images').once('value', data => {
+  database.ref(`/users/${auth.uid}`).child('/images').once('value', data => {
     const imageArray = data.val();
     console.log(imageArray);
     _.forEach(imageArray, item => {
-      const publisherRef = database.ref(`/users/${userId}/images/${item.id}/publisher`);
+      const publisherRef = database.ref(`/users/${auth.uid}/images/${item.id}/publisher`);
         publisherRef.child('/avatar/createdAt').set(file.created_at);
         publisherRef.child('/avatar/etag').set(file.etag);
         publisherRef.child('/avatar/format').set(file.format);
@@ -239,10 +239,10 @@ export const updatePublisherUploads = (userId, values, file) => dispatch => {
     });
   });
 
-  database.ref(`/users/${userId}`).child('/videos').once('value', data => {
+  database.ref(`/users/${auth.uid}`).child('/videos').once('value', data => {
     const videoArray = data.val();
     _.forEach(videoArray, item => {
-      const publisherRef = database.ref(`/users/${userId}/videos/${item.id}/publisher`);
+      const publisherRef = database.ref(`/users/${auth.uid}/videos/${item.id}/publisher`);
         publisherRef.child('/avatar/createdAt').set(file.created_at);
         publisherRef.child('/avatar/etag').set(file.etag);
         publisherRef.child('/avatar/format').set(file.format);

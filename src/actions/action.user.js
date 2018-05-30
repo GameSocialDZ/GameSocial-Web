@@ -36,9 +36,9 @@ export const getUserOnce = userId => dispatch => {
   }).catch(error => dispatch(userError(error)));
 };
 
-export const updateUserProfile = (userId, data, file) => dispatch => {
+export const updateUserProfile = (auth, data, file) => dispatch => {
   dispatch(userRequest());
-  return database.ref(`users/${userId}/profile`).update({
+  return database.ref(`users/${auth.uid}/profile`).update({
     name: data.editName,
     bio: data.editBio,
     avatar: {
@@ -48,8 +48,7 @@ export const updateUserProfile = (userId, data, file) => dispatch => {
       width: file.width,
       format: file.format,
       createdAt: file.created_at
-    }
-  })
+    }})
     .then(dispatch(userUpdateSuccess()))
     .catch(error => dispatch(userError(error)))
 };

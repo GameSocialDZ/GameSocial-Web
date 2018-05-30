@@ -31,16 +31,17 @@ class FormEditProfile extends Component{
     };
   }
 
-  onSubmit(values, userId, file) {
+  onSubmit(values, auth, file) {
     if(_.isEmpty(file)){
       return alert('File not selected or still uploading!');
     }
     console.log(file);
     console.log(values);
-    this.props.updateUserProfile(userId, values, file);
+
+    this.props.updateUserProfile(auth, values, file);
 
     // TODO: Fucntion to update each image and video publisher info
-    this.props.updatePublisherUploads(userId, values, file);
+    this.props.updatePublisherUploads(auth, values, file);
 
     this.props.dispatch(reset('editProfile'));
   }
@@ -139,10 +140,10 @@ class FormEditProfile extends Component{
 
   render(){
     const {fileSelected} = this.state;
-    const {userId} = this.props;
+    const {auth} = this.props;
     return(
       <div>
-        <Form size='large' onSubmit={this.props.handleSubmit(values => this.onSubmit(values, userId, fileSelected))}>
+        <Form size='large' onSubmit={this.props.handleSubmit(values => this.onSubmit(values, auth, fileSelected))}>
           <Field
             label="Edit Name"
             name="editName"
@@ -173,7 +174,7 @@ class FormEditProfile extends Component{
 }
 
 const mapStateToProps = state => ({
-  userId: state.auth.currentUser.uid
+  auth: state.auth.currentUser
 });
 
 FormEditProfile = connect(mapStateToProps,{updateUserProfile, updatePublisherUploads})(FormEditProfile);

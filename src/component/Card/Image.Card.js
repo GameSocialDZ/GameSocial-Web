@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {getView} from "../../actions/action.view";
+import {getUser, getUserOnce} from '../../actions/action.user';
 
 import {Image, Card, Button, Container, Segment} from 'semantic-ui-react';
 
@@ -12,8 +13,13 @@ class ImageCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editing: false
+      editing: false,
+      user: null
     }
+  }
+
+  componentWillMount(){
+    this.props.getUserOnce(this.props.image.publisher.id);
   }
 
   onSubmit() {
@@ -41,6 +47,7 @@ class ImageCard extends Component {
 
   render() {
     const {currentUser, history, image} = this.props;
+    const {user} = this.state;
     return (
       <Segment>
       <Card fluid>
@@ -85,7 +92,8 @@ class ImageCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+  currentUser: state.auth.currentUser,
+  user: state.user.data
 });
 
-export default connect(mapStateToProps, {getView})(ImageCard);
+export default connect(mapStateToProps, {getView, getUser, getUserOnce})(ImageCard);

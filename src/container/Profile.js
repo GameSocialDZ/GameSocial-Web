@@ -58,6 +58,7 @@ export class Profile extends Component {
         return (
           <Grid.Column key={follower.id}>
             <UserViewCard
+              activeMenu={this.state.activeMenu}
               publisher={follower}/>
           </Grid.Column>
         )
@@ -73,6 +74,7 @@ export class Profile extends Component {
         return (
           <Grid.Column key={followee.id}>
             <UserViewCard
+              activeMenu={this.state.activeMenu}
               publisher={followee}/>
           </Grid.Column>
         )

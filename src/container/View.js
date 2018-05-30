@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import {deleteUpload} from "../actions/action.upload";
 import {deleteView} from "../actions/action.view";
+import {getUser} from '../actions/action.user';
 
 import ImageView from '../component/View/Image.View';
 import VideoView from '../component/View/Video.View';
@@ -12,6 +13,12 @@ class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
+    }
+  }
+
+  componentWillMount() {
+    if (!_.isEmpty(this.props.auth)) {
+      this.props.getUser(this.props.auth.uid)
     }
   }
 
@@ -49,8 +56,9 @@ class View extends Component {
 //TODO: Get loading selector working
 
 const mapStateToProps = state => ({
-  auth: state.auth,
+  auth: state.auth.currentUser,
   view: state.view
 });
 
-export default connect(mapStateToProps, {deleteUpload, deleteView})(View);
+export default connect(mapStateToProps,
+  {getUser, deleteUpload, deleteView})(View);

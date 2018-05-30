@@ -15,8 +15,6 @@ class ImageView extends Component {
     }
   }
 
-
-
   render() {
     const {image} = this.props;
     return (
@@ -49,7 +47,7 @@ class ImageView extends Component {
             <Grid.Column width={6}>
               <UserViewCard
                 publisher={image.publisher}/>
-            </Grid.Column>
+              </Grid.Column>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={16}>

@@ -54,15 +54,20 @@ class UserViewCard extends Component {
         <Card.Content extra>
           <div className='ui two buttons'>
             {
-              user.following[publisher.id] ? (
-                <Button
-                  onClick={this.unFollow.bind(this)}
-                  basic color='green'>Unfollow</Button>
-              ):(
-                <Button
-                  onClick={this.Follow.bind(this)}
-                  basic color='green'>Follow</Button>
-              )
+              !_.isEmpty(auth) &&
+              <div>
+                {
+                  user.following[publisher.id] ? (
+                    <Button
+                      onClick={this.unFollow.bind(this)}
+                      basic color='green'>Unfollow</Button>
+                  ) : (
+                    <Button
+                      onClick={this.Follow.bind(this)}
+                      basic color='green'>Follow</Button>
+                  )
+                }
+              </div>
             }
             <Button
               onClick={this.getProfile()}
