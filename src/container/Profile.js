@@ -19,18 +19,7 @@ export class Profile extends Component {
     super(props);
     this.state = {
       activeMenu: 'images'
-
     }
-  }
-
-  componentWillMount() {
-    if(!this.props.user.isOtherUser) {
-      this.props.getUser(this.props.currentUser.uid);
-    }
-
-    // if(this.props.user.isOtherUser) {
-    //   this.props.getOtherUser(this.props.user.data.id)
-    // }
   }
 
   renderUserImages(images) {
@@ -89,7 +78,6 @@ export class Profile extends Component {
     });
   }
 
-
   getActiveMenu(state){
     this.setState({
       activeMenu: state
@@ -99,13 +87,12 @@ export class Profile extends Component {
   render() {
     const {images, videos, user, auth, currentUser, following, followers} = this.props;
 
-    if (user.loading || auth.loading) {
+    if (user.loading) {
       return <Header as={'h1'}>Loading...</Header>
     }
 
-
-    if ((_.isEmpty(currentUser) || auth.error)){
-      return <Redirect to="/" />
+    if (auth.error) {
+      return <Redirect to="/"/>
     }
 
     return (
@@ -126,7 +113,7 @@ export class Profile extends Component {
             <Container>
               <Grid stackable columns={3}>
                 <Grid.Row>
-                  {this.renderUserImages(images)}
+                  {this.renderUserImages(user.images)}
                 </Grid.Row>
               </Grid>
             </Container>
@@ -176,7 +163,6 @@ export class Profile extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   user: state.user,
-  profile: state.user.data.profile,
   currentUser: state.auth.currentUser,
   images: state.user.data.images,
   videos: state.user.data.videos,

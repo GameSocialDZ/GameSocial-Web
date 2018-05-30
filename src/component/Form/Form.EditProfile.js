@@ -33,7 +33,6 @@ class FormEditProfile extends Component{
   }
 
   onSubmit(values, auth, file) {
-    const {user} = this.props;
     if(_.isEmpty(file)){
       return alert('File not selected or still uploading!');
     }
@@ -47,7 +46,7 @@ class FormEditProfile extends Component{
     // Update 3
     this.props.updatePublisherUploads(auth, values, file);
     // Update 4
-    this.props.updateUserFollowersAndFollowing(user, auth, values, file);
+    this.props.updateUserFollowersAndFollowing(auth, values, file);
 
     this.props.dispatch(reset('editProfile'));
   }

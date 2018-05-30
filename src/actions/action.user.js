@@ -38,7 +38,7 @@ export const getUser = userId => dispatch => {
 
 export const getOtherUser = (userId)  => dispatch => {
   dispatch(userRequest());
-  return database.ref(`users/${userId}/`).on('value', (data) => {
+  return database.ref(`users/${userId}/`).once('value', (data) => {
     dispatch(userOtherGetSuccess(data.val()));
   });
 };
@@ -103,30 +103,36 @@ export const removeUserFollower = (authId, publisherId) => dispatch => {
 };
 
 // TODO: Switch to database snapshot and use auth ID
-export const updateUserFollowersAndFollowing = (user, auth, values, file) => {
-  _.forEach(user.followers, follower => {
-    if(follower.id === 'default'){return null}
-    const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.uid}`);
-    userFollowersRef.update({
-      avatar: {
-        url: file.secure_url
-      },
-      bio: values.editBio,
-      name: values.editName,
-      username: auth.displayName
-    })
+export const updateUserFollowersAndFollowing = (auth, values, file) => {
+  database.ref(`/users/${auth.uid}/followers/`).once('value', data => {
+    const followersArray = data.val();
+    _.forEach(followersArray, follower => {
+      if(follower.id === 'default'){return null}
+      const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.uid}`);
+      userFollowersRef.update({
+        avatar: {
+          url: file.secure_url
+        },
+        bio: values.editBio,
+        name: values.editName,
+        username: auth.displayName
+      })
+    });
   });
 
-  _.forEach(user.following, followee => {
-    if(followee.id === 'default'){return null}
-    const userFollowingRef = database.ref(`users/${followee.id}/following/${auth.uid}`);
-    userFollowingRef.update({
-      avatar: {
-        url: file.secure_url
-      },
-      bio: values.editBio,
-      name: values.editName,
-      username: auth.displayName
+  database.ref(`/users/${auth.uid}/following`).once('value', data => {
+    const followingArray = data.val();
+    _.forEach(followingArray, followee => {
+      if(followee.id === 'default'){return null}
+      const userFollowingRef = database.ref(`users/${followee.id}/following/${auth.uid}`);
+      userFollowingRef.update({
+        avatar: {
+          url: file.secure_url
+        },
+        bio: values.editBio,
+        name: values.editName,
+        username: auth.displayName
+      })
     })
   })
 };
