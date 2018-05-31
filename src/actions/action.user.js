@@ -1,5 +1,6 @@
 import {database} from "../firebase";
 import _ from 'lodash';
+import {otherUserUpdateSuccess} from './action.otherUser';
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const userRequest = () => ({
@@ -71,7 +72,7 @@ export const addUserFollowing = (authId ,publisher) => dispatch => {
   followingRef.child(`${publisher.id}/username`).set(publisher.username);
   followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
   // followingRef.child(`${publisher.id}/bio`).set(publisher.bio);
-  dispatch(userUpdateSuccess());
+  // dispatch(userUpdateSuccess());
 };
 
 export const addUserFollower = (auth, publisherId) => dispatch => {
@@ -80,21 +81,21 @@ export const addUserFollower = (auth, publisherId) => dispatch => {
   followersRef.child(`${auth.uid}/username`).set(auth.displayName);
   followersRef.child(`${auth.uid}/avatar/url`).set(auth.photoURL);
   // followersRef.child(`${user.id}/bio`).set(user.bio);
-  dispatch(userUpdateSuccess());
+  // dispatch(otherUserUpdateSuccess());
 };
 
 export const removeUserFollowing = (authId, publisherId) => dispatch => {
   database.ref(`users/${authId}/following/${publisherId}`).remove();
-  dispatch(userUpdateSuccess());
+  // dispatch(userUpdateSuccess());
 };
 
 export const removeUserFollower = (authId, publisherId) => dispatch => {
   database.ref(`users/${publisherId}/followers/${authId}`).remove();
-  dispatch(userUpdateSuccess());
+  // dispatch(otherUserUpdateSuccess());
 };
 
 export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch => {
-  database.ref(`/users/${auth.uid}/followers/`).once('value', data => {
+  database.ref(`/users/${auth.uid}/followers/`).on('value', data => {
     const followersArray = data.val();
     _.forEach(followersArray, follower => {
       if (follower.id === 'default') {
@@ -112,7 +113,7 @@ export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch 
     });
   });
 
-  database.ref(`/users/${auth.uid}/following`).once('value', data => {
+  database.ref(`/users/${auth.uid}/following`).on('value', data => {
     const followingArray = data.val();
     _.forEach(followingArray, followee => {
       if(followee.id === 'default'){return null}

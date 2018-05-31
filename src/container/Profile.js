@@ -7,14 +7,9 @@ import {Grid, Header, Container} from 'semantic-ui-react';
 
 import {getUser} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
+import {getOtherUser} from "../actions/action.otherUser";
 
 import ProfileDetail from "../component/ProfileDetails";
-
-// import ImageCard from "../component/Card/Image.Card";
-// import VideoCard from "../component/Card/Video.Card";
-// import ProfileCard from "../component/Card/Prorfile.Card";
-// import MenuProfile from "../component/Menu/Menu.Profile";
-// import UserCard from '../component/Card/User.Card';
 
 export class Profile extends Component {
   constructor(props) {
@@ -23,10 +18,14 @@ export class Profile extends Component {
     }
   }
 
+  // componentWillMount() {
+  //   if(!_.isEmpty(this.props.otherUserData)) {
+  //     this.props.getOtherUser(this.props.otherUserData.id);
+  //   }
+  // }
+
   render() {
-    const {images, videos, user, following, auth, followers, otherUser, otherUserData} = this.props;
-
-
+    const {images, videos, user, following, followers, otherUser, otherUserData} = this.props;
 
     if (user.loading) {
       return <Header as={'h1'}>Loading...</Header>
@@ -76,4 +75,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getAuth, getUser})(Profile);
+  {getAuth, getUser, getOtherUser})(Profile);

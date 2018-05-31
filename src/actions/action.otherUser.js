@@ -16,9 +16,15 @@ export const otherUserGetSuccess = (data) => ({
 });
 
 export const OTHER_USER_DELETE_SUCCESS = 'OTHER_USER_DELETE_SUCCESS';
-export const otherUserDelete = () => ({
+export const otherUserDeleteSuccess = () => ({
   type: OTHER_USER_DELETE_SUCCESS
 });
+
+export const OTHER_USER_UPDATE_SUCCESS = 'OTHER_USER_UPDATE_SUCCESS';
+export const otherUserUpdateSuccess = () => ({
+  type: OTHER_USER_UPDATE_SUCCESS
+});
+
 
 export const OTHER_USER_ERROR = 'OTHER_USER_ERROR';
 export const otherUserError = error => ({
@@ -35,5 +41,5 @@ export const getOtherUser = (userId) => dispatch => {
 
 export const deleteOtherUser = () => dispatch => {
   dispatch(otherUserRequest());
-  dispatch(otherUserDelete());
+  dispatch(otherUserDeleteSuccess());
 };

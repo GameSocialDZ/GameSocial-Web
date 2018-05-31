@@ -9,6 +9,7 @@ import ModalRegister from '../Modal/Modal.Register';
 
 import {signOut } from "../../actions/action.auth";
 import {getUser} from '../../actions/action.user';
+import {deleteOtherUser} from "../../actions/action.otherUser";
 
 class MenuHeader extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class MenuHeader extends Component {
   };
 
   getProfile() {
+    this.props.deleteOtherUser();
     this.props.getUser(this.props.currentUser.uid);
   }
 
@@ -111,4 +113,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {signOut, getUser})(MenuHeader);
+  {signOut, getUser, deleteOtherUser})(MenuHeader);

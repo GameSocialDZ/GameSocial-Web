@@ -156,16 +156,5 @@ export class ProfileDetail extends Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   auth: state.auth,
-//   user: state.user,
-//   currentUser: state.auth.currentUser,
-//   images: state.user.data.images,
-//   videos: state.user.data.videos,
-//   following: state.user.data.following,
-//   followers: state.user.data.followers,
-//   otherUser: state.otherUser.data
-// });
-
 export default connect(null,
   {getAuth, getUser})(ProfileDetail);

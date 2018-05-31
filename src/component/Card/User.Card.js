@@ -35,7 +35,7 @@ class UserCard extends Component {
   getOtherUserProfile = () => {
     console.log('click success');
     const {publisher, getOtherUser} = this.props;
-    // getOtherUser(publisher.id);
+    getOtherUser(publisher.id);
   };
 
   render() {
