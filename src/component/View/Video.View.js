@@ -7,7 +7,7 @@ import {Grid, Button, Segment} from 'semantic-ui-react';
 
 import {deleteUpload} from "../../actions/action.upload";
 
-import UserViewCard from '../Card/UserView.Card';
+import UserCard from '../Card/User.Card';
 
 class VideoView extends Component {
   constructor(props) {
@@ -50,7 +50,7 @@ class VideoView extends Component {
               </Segment>
             </Grid.Column>
             <Grid.Column width={6}>
-              <UserViewCard
+              <UserCard
                 publisher={video.publisher}/>
             </Grid.Column>
           </Grid.Row>

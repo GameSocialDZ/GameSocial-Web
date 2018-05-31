@@ -10,7 +10,7 @@ import FormDropzone from './Form.Dropzone';
 import {CloudinaryConfig} from "../../cloudinary";
 import axios from "axios/index";
 
-import {updateAuth} from '../../actions/action.auth';
+import {updateAuth, setAuthData} from '../../actions/action.auth';
 import {updatePublisherUploads} from "../../actions/action.upload";
 import {updateUserProfile, updateUserFollowersAndFollowing} from '../../actions/action.user';
 
@@ -185,7 +185,8 @@ const mapStateToProps = state => ({
 
 FormEditProfile = connect(mapStateToProps,
   {updateAuth, updateUserProfile, updatePublisherUploads,
-    updateUserFollowersAndFollowing})(FormEditProfile);
+    updateUserFollowersAndFollowing, setAuthData})
+(FormEditProfile);
 
 export default reduxForm({
   form: 'editProfile',

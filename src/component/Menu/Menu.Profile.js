@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
+import _ from 'lodash';
 
 class MenuProfile extends Component {
   constructor(props) {

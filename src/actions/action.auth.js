@@ -1,7 +1,7 @@
 import {auth, database} from "../firebase";
 import * as firebase from "firebase";
 import {NewUserObject} from "./models";
-import {getUserOnce} from "./action.user";
+import {getUser} from "./action.user";
 import {userError} from './action.user';
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
@@ -15,8 +15,14 @@ export const authGetSuccess = (currentUser) => ({
   currentUser
 });
 
+export const AUTH_POST_SUCCESS = 'AUTH_POST_SUCCESS';
+export const authPostSuccess = (data) => ({
+  type: AUTH_POST_SUCCESS,
+  data
+});
+
 export const AUTH_UPDATE_SUCCESS = 'AUTH_UPDATE_SUCCESS';
-export const authUpdateSucess = () => ({
+export const authUpdateSuccess = () => ({
   type: AUTH_UPDATE_SUCCESS,
 });
 
@@ -63,12 +69,17 @@ export const loginEmailPassword = (user) => dispatch => {
         .then(auth => {
           console.log(auth);
 
-          database.ref(`/users/${auth.uid}/profile/avatar/url`).once('value', data =>{
+          const AuthUserRef = database.ref(`/users/${auth.uid}`);
+          AuthUserRef.child(`/profile/avatar/url`).once('value', data =>{
             auth.updateProfile({photoURL: data.val()});
           });
 
+          AuthUserRef.once('value', data => {
+            dispatch(authPostSuccess(data.val()));
+          });
+
           dispatch(authGetSuccess(auth));
-          return dispatch(getUserOnce(auth.uid))
+          return dispatch(getUser(auth.uid))
             .catch(error => dispatch(userError(error)))
         })
         .catch(error => {
@@ -86,12 +97,19 @@ export const getAuth = () => dispatch => {
   });
 };
 
+export const setAuthData = (auth) => dispatch => {
+  dispatch(authRequest());
+  return database.ref(`/users/${auth.uid}/`).once('value', data =>{
+    dispatch(authPostSuccess(data.val()));
+  })
+};
+
 export const updateAuth = (file) => dispatch => {
   dispatch(authRequest());
-  return auth.currentUser.updateProfile({
+  auth.currentUser.updateProfile({
     photoURL: file.secure_url
   }).then(() => {
-      dispatch(authUpdateSucess());
+      dispatch(authUpdateSuccess());
       console.log('Successfully Updated')
     }).catch(error => {
       dispatch(authError(error));
@@ -105,7 +123,7 @@ export const signOut = () => dispatch => {
     dispatch(authDeleteSuccess());
     console.log('Sign Out Successful');
   }).catch(error =>{
-    dispatch(authError());
+    dispatch(authError(error));
   });
 };
 

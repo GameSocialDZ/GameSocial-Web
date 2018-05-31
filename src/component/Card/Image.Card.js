@@ -18,10 +18,6 @@ class ImageCard extends Component {
     }
   }
 
-  componentWillMount(){
-    this.props.getUserOnce(this.props.image.publisher.id);
-  }
-
   onSubmit() {
     this.setState({
       editing: false
@@ -47,7 +43,6 @@ class ImageCard extends Component {
 
   render() {
     const {currentUser, history, image} = this.props;
-    const {user} = this.state;
     return (
       <Segment>
       <Card fluid>
@@ -96,4 +91,6 @@ const mapStateToProps = state => ({
   user: state.user.data
 });
 
-export default connect(mapStateToProps, {getView, getUser, getUserOnce})(ImageCard);
+export default connect(mapStateToProps,
+  {getView, getUser, getUserOnce})
+(ImageCard);

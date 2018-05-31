@@ -7,15 +7,15 @@ import CommonBox from "./Common.Box";
 import FormRegister from "../component/Form/Form.Register";
 import FormLogin from "../component/Form/Form.Login";
 
-import {getUserOnce} from '../actions/action.user';
+import {getUser} from '../actions/action.user';
 
 //import {Tab} from 'semantic-ui-react';
 
 class Register extends Component {
   componentWillUnmount() {
-    const {currentUser, getUserOnce} = this.props;
+    const {currentUser, getUser} = this.props;
     if(!_.isEmpty(currentUser)){
-      getUserOnce(currentUser.uid);
+      getUser(currentUser.uid);
     }
   }
 
@@ -57,4 +57,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {getUserOnce})(Register);
+export default connect(mapStateToProps, {getUser})(Register);

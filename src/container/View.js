@@ -5,6 +5,7 @@ import _ from 'lodash';
 import {deleteUpload} from "../actions/action.upload";
 import {deleteView} from "../actions/action.view";
 import {getUser} from '../actions/action.user';
+import {getOtherUser} from "../actions/action.otherUser";
 
 import ImageView from '../component/View/Image.View';
 import VideoView from '../component/View/Video.View';
@@ -16,10 +17,8 @@ class View extends Component {
     }
   }
 
-  componentWillMount() {
-    if (!_.isEmpty(this.props.auth)) {
-      this.props.getUser(this.props.auth.uid)
-    }
+  componentDidMount() {
+    this.props.getOtherUser(this.props.view.data.publisher.id);
   }
 
   componentWillUnmount() {
@@ -61,4 +60,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getUser, deleteUpload, deleteView})(View);
+  {getUser, deleteUpload, deleteView, getOtherUser})(View);

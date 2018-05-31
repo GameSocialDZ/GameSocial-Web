@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import {Image, Grid, Button, Segment} from 'semantic-ui-react';
-import UserViewCard from '../Card/UserView.Card';
+
+import UserCard from '../Card/User.Card';
 
 import {deleteUpload} from "../../actions/action.upload";
 
@@ -45,7 +46,7 @@ class ImageView extends Component {
               </Segment>
             </Grid.Column>
             <Grid.Column width={6}>
-              <UserViewCard
+              <UserCard
                 publisher={image.publisher}/>
               </Grid.Column>
           </Grid.Row>

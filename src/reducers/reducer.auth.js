@@ -1,11 +1,12 @@
 import {
-  AUTH_REQUEST, AUTH_GET_SUCCESS, AUTH_UPDATE_SUCCESS, AUTH_DELETE_SUCCESS, AUTH_ERROR
+  AUTH_REQUEST, AUTH_GET_SUCCESS, AUTH_UPDATE_SUCCESS, AUTH_DELETE_SUCCESS, AUTH_ERROR, AUTH_POST_SUCCESS
 } from '../actions/action.auth';
 
 const initialState = {
   loading: false,
   currentUser: [],
-  error: null
+  error: null,
+  data: []
 };
 
 export default function reducer(state = initialState, action) {
@@ -20,6 +21,12 @@ export default function reducer(state = initialState, action) {
         currentUser: action.currentUser,
         error: null,
         loading: false,
+      });
+    case AUTH_POST_SUCCESS:
+      return Object.assign({}, state, {
+        data: action.data,
+        loading: false,
+        error: null
       });
     case AUTH_UPDATE_SUCCESS:
       return Object.assign({}, state, {

@@ -33,7 +33,6 @@ class Home extends Component {
           <Grid.Column
             key={image.id}>
             <ImageCard
-              publisher={publisher}
               image={image}
               history={this.props.history}/>
           </Grid.Column>
