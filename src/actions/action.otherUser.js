@@ -45,6 +45,5 @@ export const getOtherUser = (userId) => dispatch => {
   });
 };
 export const deleteOtherUser = () => dispatch => {
-  dispatch(otherUserRequest());
   dispatch(otherUserDeleteSuccess());
 };

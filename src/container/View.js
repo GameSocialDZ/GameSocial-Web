@@ -14,27 +14,34 @@ class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      view: [],
       user: [],
-      otherUser: [],
-      view: []
+      // otherUser: []
     }
   }
 
+  /*** I have commented out otherUser for view page as I am unsure if I will use
+   * this is also commented out on ProfileDetails and UserCard***/
+
+  // Set the initial state
   componentWillMount() {
     this.setState({
       user: this.props.user,
-      otherUser: this.props.otherUser,
-      view: this.props.view
+      view: this.props.view,
+      // otherUser: this.props.otherUser
     })
   }
 
   componentDidMount() {
+    // Get the otherUser on view page for faster transition to potential otherUser profile page
     this.props.getOtherUser(this.state.view.data.publisher.id);
+    // Get and listen for User data if logged in (This also updates user following for User.Card)
     if(!_.isEmpty(this.props.user.data)) {
       this.props.getUser(this.state.user.data.id);
     }
   }
 
+  // Clear Redux state when component unmounts
   componentWillUnmount() {
     this.props.deleteView();
   }
@@ -44,7 +51,7 @@ class View extends Component {
     const {history} = this.props;
 
     if (view.loading) {
-      return <h1>Loading...</h1>
+      return <h1 style={{marginTop: '5rem'}}>Loading...</h1>
     }
     else if (_.isEmpty(view.data)){
       return history.goBack();
@@ -54,15 +61,15 @@ class View extends Component {
         {view.data.config.type === 'image' ? (
           <div className="">
             <ImageView
-              otherUser={otherUser.data}
+              // otherUser={otherUser.data}
               user={user}
               image={view.data}/>
           </div>
         ):(
           <div className="">
             <VideoView
-              otherUser={otherUser.data}
-              // user={user}
+              // otherUser={otherUser.data}
+              user={user}
               video={view.data}/>
           </div>)
         }
@@ -77,7 +84,7 @@ const mapStateToProps = state => ({
   user: state.user,
   auth: state.auth,
   view: state.view,
-  otherUser: state.user2
+  // otherUser: state.user2
 });
 
 export default connect(mapStateToProps,

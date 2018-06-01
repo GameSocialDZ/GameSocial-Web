@@ -20,10 +20,12 @@ class Home extends Component {
     }
   }
 
+  // Get the uploads for home page
   componentDidMount() {
     this.props.getUploads();
   }
 
+  // Set all uploads within components state
   componentWillMount() {
     this.setState({
       uploads: this.props.uploads
@@ -82,7 +84,7 @@ class Home extends Component {
     const {uploads} = this.props;
 
     if (this.props.uploads.loading) {
-      return <h1>Loading...</h1>
+      return <h1 style={{marginTop: '5rem'}}>Loading...</h1>
     }
 
     return (

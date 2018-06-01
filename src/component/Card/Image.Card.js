@@ -13,22 +13,24 @@ class ImageCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editing: false,
-      user: null
+      editing: false
     }
   }
 
+  // Close form on submit
   onSubmit() {
     this.setState({
       editing: false
     })
   }
 
+  // On click set the redux view state with upload details
   getViewState() {
     const {getView, image} = this.props;
     getView(image);
   };
 
+  // Edit form button switching
   setFormState(editing) {
     if (editing){
       this.setState({
@@ -47,7 +49,8 @@ class ImageCard extends Component {
       <Segment>
       <Card fluid>
         <Image alt="upload" src={image.url}/>
-            {
+          {
+            // Render card details if not editing
             this.state.editing === true ? (
               <Card.Content>
                 <FormEditUserUpload
@@ -74,6 +77,7 @@ class ImageCard extends Component {
               <Link className="" to="/view">View</Link>
             </Button>
             {
+              // Disable Edit button if on profile page and unAuthorized (not logged in)
               (history.location.pathname === '/profile' && currentUser !==null) &&
               <Button
                 type="button"

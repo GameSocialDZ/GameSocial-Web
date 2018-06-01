@@ -17,7 +17,7 @@ class VideoView extends Component {
   }
 
   render() {
-    const {video} = this.props;
+    const {video, user, otherUser} = this.props;
     return (
       <div>
         <Grid>
@@ -51,6 +51,8 @@ class VideoView extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <UserCard
+                // otherUser={otherUser}
+                user={user}
                 publisher={video.publisher}/>
             </Grid.Column>
           </Grid.Row>

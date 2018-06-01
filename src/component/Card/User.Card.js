@@ -15,28 +15,27 @@ class UserCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      following: this.props.user.data.following
+      // Initialize the auth user's followers
+      following: []
     }
   }
 
-  // redux Action displays otherUser get success but not user get success on Unfollow or follow.
-  // I think auth is transitioning causing the getUser function on the profile page to skip
+  // set initial user following state if logged in
+  componentWillMount() {
+    if(!_.isEmpty(this.props.auth.currentUser))
+    this.setState({
+      following: this.props.user.data.following
+    })
+  }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if(nextProps.user.data.following !== this.state.following) {
-  //     this.setState({
-  //       following: nextProps.user.data.following
-  //     })
-  //   }
-  // }
-
-  // Not good practice to async or side effect call data from this function unless you set initial state
-  // componentWillMount() {
-  //   if(!_.isEmpty(this.props.auth.currentUser)) {
-  //     this.props.getUser(this.props.auth.currentUser.uid)
-  //   }
-  // }
-
+  // Update this components state with the new auth user's followers
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.user.data.following !== this.state.following) {
+      this.setState({
+        following: nextProps.user.data.following
+      })
+    }
+  }
 
   /**Publisher each follower & following from user
    ** profile page and the owner of upload on view page.**/
@@ -46,6 +45,7 @@ class UserCard extends Component {
     const {user, auth, publisher} = this.props;
     this.props.removeUserFollower(auth.currentUser.uid, publisher.id);
     this.props.removeUserFollowing(user.data.id, publisher.id);
+    // Gets the user once and switches the unfollow/follow buttons
     this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
@@ -54,17 +54,26 @@ class UserCard extends Component {
     const {user, auth, publisher} = this.props;
     this.props.addUserFollower(user.data, publisher.id);
     this.props.addUserFollowing(auth.currentUser.uid, publisher);
+    // Gets the user once and switches the unfollow/follow buttons
     this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
   getOtherUserProfile = () => {
     console.log('click success');
-    const {publisher} = this.props;
-    this.props.getOtherUserOnce(publisher.id);
+    const {publisher, auth} = this.props;
+    // if not logged in populate anyone as otherUser
+    // if logged in only populate otherUser if auth id and publisher id don't match
+    if(_.isEmpty(auth.currentUser)){
+      this.props.getOtherUserOnce(publisher.id);
+    } else{
+      if(auth.currentUser.uid !== publisher.id) {
+        this.props.getOtherUserOnce(publisher.id);
+      }
+    }
   };
 
   render() {
-    const {publisher, auth, user} = this.props;
+    const {publisher, auth, otherUser} = this.props;
     return (
       <Card>
         <Card.Content>
@@ -78,15 +87,18 @@ class UserCard extends Component {
         <Card.Content extra>
           <div className='ui two buttons'>
             {
+              // If followers is updating return loading button
               this.props.user.loading ? (
                 <Button loading/>
                 ):(
                   <div>
                     {
+                      // if unAuthorized (not logged in) don't show follow or unfollow button
                       !_.isEmpty(auth.currentUser) &&
                       <div>
                         {
-                          this.props.user.data.following[publisher.id] ? (
+                          // Check auth user's following list to render unfollow or follow button
+                          this.state.following[publisher.id] ? (
                             <Button
                               onClick={this.unFollow}
                               basic color='green'>Unfollow</Button>

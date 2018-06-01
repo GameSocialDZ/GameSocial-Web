@@ -47,7 +47,7 @@ class ImageView extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <UserCard
-                otherUser={otherUser}
+                // otherUser={otherUser}
                 user={user}
                 publisher={image.publisher}/>
               </Grid.Column>
@@ -64,9 +64,5 @@ class ImageView extends Component {
     );
   }
 }
-
-// const mapStateToProps = state => ({
-//   view: state.view.data
-// });
 
 export default connect(null, {deleteUpload})(ImageView);

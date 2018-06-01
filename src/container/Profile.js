@@ -16,11 +16,20 @@ export class Profile extends Component {
     super(props);
     this.state = {
       isOtherUser: true,
-      user: [],
-      otherUser: []
+      user: this.props.user,
+      otherUser: this.props.otherUser
     }
   }
 
+  // Set the initial State
+  componentWillMount() {
+    this.setState({
+      user: this.props.user,
+      otherUser: this.props.otherUser
+    })
+  }
+
+  // Decide if we are on our or otherUser profile before render
   componentWillReceiveProps(nextProps) {
     if(_.isEmpty(nextProps.otherUser.data)){
       this.setState({
@@ -30,11 +39,11 @@ export class Profile extends Component {
       this.setState({
         isOtherUser: true
       })
-    } else if ((nextProps.otherUser.data.id !== nextProps.user.data.id)){
+    } else if (nextProps.otherUser.data.id !== this.props.auth.currentUser.uid){ //nextProps.user.data.id){
       this.setState({
         isOtherUser: true
       })
-    }else if((nextProps.otherUser.data.id === nextProps.user.data.id)) {
+    }else if(nextProps.otherUser.data.id === this.props.auth.currentUser.uid){ //nextProps.user.data.id) {
       if(!_.isEmpty(nextProps.user)){
         this.setState({
           isOtherUser: false
@@ -43,29 +52,31 @@ export class Profile extends Component {
     }
   }
 
+  // Get otherUser w/ .on call as we only get user once on UserCard profile button click
   componentDidMount() {
+    //TODO: Get otherUser on profile page for updates
     this.props.getOtherUser(this.state.otherUser.data.id);
-    if(!_.isEmpty(this.props.auth.currentUser)) {
+    if(!_.isEmpty(this.props.user.currentUser)) {
       this.props.getUser(this.state.user.data.id);
     }
   }
 
-  componentWillMount() {
-    this.setState({
-      user: this.props.user,
-      otherUser: this.props.otherUser
-    })
+  // Remove otherUser if exist from profile on page switch
+  componentWillUnmount() {
+    if(!_.isEmpty(this.props.otherUser.data)){
+      this.props.deleteOtherUser();
+    }
   }
 
   render() {
     const {user, otherUser} = this.props;
 
     if (user.loading) {
-      return <Header as={'h1'}>Loading...</Header>
+      return <Header style={{marginTop: '5rem'}} as={'h1'}>Loading...</Header>
     }
 
     if (otherUser.loading) {
-      return <Header as={'h1'}>Loading...</Header>
+      return <Header style={{marginTop: '5rem'}} as={'h1'}>Loading...</Header>
     }
 
     return (
