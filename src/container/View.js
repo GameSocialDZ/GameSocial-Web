@@ -40,7 +40,7 @@ class View extends Component {
   }
 
   render() {
-    const {view, user} = this.props;
+    const {view, user, otherUser} = this.props;
     const {history} = this.props;
 
     if (view.loading) {
@@ -54,13 +54,15 @@ class View extends Component {
         {view.data.config.type === 'image' ? (
           <div className="">
             <ImageView
-              user={user.data}
+              otherUser={otherUser.data}
+              user={user}
               image={view.data}/>
           </div>
         ):(
           <div className="">
             <VideoView
-              user={user.data}
+              otherUser={otherUser.data}
+              user={user}
               video={view.data}/>
           </div>)
         }

@@ -15,21 +15,47 @@ class UserCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      following: []
     }
   }
 
-  unFollow = () => {
-    console.log('click success');
-    const {user, publisher, auth} = this.props;
-    this.props.removeUserFollower(auth.uid, publisher.id);
-    this.props.removeUserFollowing(auth.uid, publisher.id);
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.user.data.following) {
+      this.setState({
+        following: nextProps.user.data.following
+      })
+    }
+  }
+
+  componentWillUpdate() {
+    if(this.state.followers !== this.props.user.data.followers) {
+      this.setState({
+        followers: this.props.user.data.followers
+      })
+    }
+  }
+
+  componentDidMount() {
+    if(!_.isEmpty(this.props.auth.currentUser)) {
+      this.props.getUser(this.props.auth.currentUser.uid)
+    }
+  }
+
+  /**Publisher each follower & following from user
+   ** profile page and the owner of upload on view page.**/
+
+  unFollow = () =>{
+    console.log('click unfollow success');
+    const {user, auth, publisher} = this.props;
+    this.props.removeUserFollower(auth.currentUser.uid, publisher.id);
+    this.props.removeUserFollowing(user.data.id, publisher.id);
   };
 
   Follow = () => {
-    console.log('click success');
-    const {publisher, user, auth} = this.props;
-    this.props.addUserFollower(user, publisher.id);
-    this.props.addUserFollowing(auth.uid, publisher);
+    console.log('click follow success');
+    const {user, auth, publisher} = this.props;
+    this.props.addUserFollower(user.data, publisher.id);
+    this.props.addUserFollowing(auth.currentUser.uid, publisher);
   };
 
   getOtherUserProfile = () => {
@@ -53,26 +79,20 @@ class UserCard extends Component {
         <Card.Content extra>
           <div className='ui two buttons'>
             {
-              auth.loading ? (<Button loading/>):(
-                <div>
-                  {
-                    !_.isEmpty(auth.currentUser) &&
-                    <div>
-                      {
-                        user.following[publisher.id] ? (
-                          <Button
-                            onClick={this.unFollow}
-                            basic color='green'>Unfollow</Button>
-                        ) : (
-                          <Button
-                            onClick={this.Follow}
-                            basic color='green'>Follow</Button>
-                        )
-                      }
-                    </div>
-                  }
-                </div>
-              )
+              !_.isEmpty(auth.currentUser) &&
+              <div>
+                {
+                  this.state.following[publisher.id] ? (
+                    <Button
+                      onClick={this.unFollow}
+                      basic color='green'>Unfollow</Button>
+                  ) : (
+                    <Button
+                      onClick={this.Follow}
+                      basic color='green'>Follow</Button>
+                  )
+                }
+              </div>
             }
             <Button
               onClick={this.getOtherUserProfile}
@@ -87,6 +107,8 @@ class UserCard extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  user: state.user,
+  otherUser: state.user2
 });
 
 export default connect(mapStateToProps,

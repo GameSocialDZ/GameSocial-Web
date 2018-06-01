@@ -54,9 +54,10 @@ export class ProfileDetail extends Component {
         return (
           <Grid.Column key={follower.id}>
             <UserCard
-              user={this.props.user.data}
+              user={this.props.user}
               activeMenu={this.state.activeMenu}
-              publisher={follower}/>
+              publisher={follower}
+            />
           </Grid.Column>
         )
       }
@@ -71,9 +72,10 @@ export class ProfileDetail extends Component {
         return (
           <Grid.Column key={followee.id}>
             <UserCard
-              user={this.props.user.data}
+              user={this.props.user}
               activeMenu={this.state.activeMenu}
-              publisher={followee}/>
+              publisher={followee}
+            />
           </Grid.Column>
         )
       }

@@ -20,6 +20,12 @@ export default function reducer(state = initialState, action) {
         error: null,
         loading: false
       });
+    case(UPLOAD_GET_SUCCESS):
+      return Object.assign({}, state, {
+        data: action.data,
+        error: null,
+        loading: false
+      });
     case(UPLOAD_DELETE_SUCCESS):
       return Object.assign({}, state, {
         error: null,

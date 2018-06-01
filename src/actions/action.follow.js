@@ -8,9 +8,10 @@ export const followRequest = () => ({
 });
 
 export const FOLLOW_GET_SUCCESS = 'FOLLOW_GET_SUCCESS';
-export const followGetSuccess = (data) => ({
+export const followGetSuccess = (followers, following) => ({
   type: FOLLOW_GET_SUCCESS,
-  data
+  followers,
+  following
 });
 
 export const FOLLOW_UPDATE_SUCCESS = 'FOLLOW_UPDATE_SUCCESS';
@@ -63,7 +64,6 @@ export const addUserFollowing = (userId ,publisher) => dispatch => {
   followingRef.child(`${publisher.id}/username`).set(publisher.username);
   followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
   // followingRef.child(`${publisher.id}/bio`).set(publisher.bio);
-  // dispatch(userUpdateSuccess());
 };
 
 export const addUserFollower = (user, publisherId) => dispatch => {
@@ -116,4 +116,9 @@ export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch 
       })
     })
   });
+};
+
+export const deleteFollow = () => dispatch => {
+  dispatch(followRequest());
+  dispatch(followDeleteSuccess());
 };

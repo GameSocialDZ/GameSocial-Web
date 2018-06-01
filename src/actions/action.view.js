@@ -14,7 +14,7 @@ export const viewGetSuccess = (data) => ({
 });
 
 export const VIEW_DELETE_SUCCESS = 'VIEW_DELETE_SUCCESS';
-export const viewDelete = () => ({
+export const viewDeleteSuccess = () => ({
   type: VIEW_DELETE_SUCCESS
 });
 
@@ -31,5 +31,5 @@ export const getView = data => dispatch => {
 
 export const deleteView = () => dispatch => {
   dispatch(viewRequest());
-  dispatch(viewDelete());
+  dispatch(viewDeleteSuccess());
 };
