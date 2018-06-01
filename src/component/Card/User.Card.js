@@ -28,9 +28,9 @@ class UserCard extends Component {
   }
 
   componentWillUpdate() {
-    if(this.state.followers !== this.props.user.data.followers) {
+    if(this.state.following !== this.props.user.data.following) {
       this.setState({
-        followers: this.props.user.data.followers
+        followers: this.props.user.data.following
       })
     }
   }
