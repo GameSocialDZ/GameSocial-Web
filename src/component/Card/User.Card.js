@@ -15,22 +15,17 @@ class UserCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      following: []
+      following: this.props.user.data.following
     }
   }
+
+  // redux Action displays otherUser get success but not user get success on Unfollow or follow.
+  // I think auth is transitioning causing the getUser function on the profile page to skip
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.user.data.following) {
+    if(nextProps.user.data.following !== this.props.user.data.following) {
       this.setState({
         following: nextProps.user.data.following
-      })
-    }
-  }
-
-  componentWillUpdate() {
-    if(this.state.following !== this.props.user.data.following) {
-      this.setState({
-        followers: this.props.user.data.following
       })
     }
   }
@@ -40,6 +35,7 @@ class UserCard extends Component {
       this.props.getUser(this.props.auth.currentUser.uid)
     }
   }
+
 
   /**Publisher each follower & following from user
    ** profile page and the owner of upload on view page.**/

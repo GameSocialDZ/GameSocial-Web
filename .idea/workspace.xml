@@ -3,17 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e98909f4-0cc8-4af6-909d-66d8db28a3f1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/actions/action.follow.js" afterPath="$PROJECT_DIR$/src/actions/action.follow.js" />
       <change beforePath="$PROJECT_DIR$/src/actions/action.user.js" afterPath="$PROJECT_DIR$/src/actions/action.user.js" />
-      <change beforePath="$PROJECT_DIR$/src/actions/action.view.js" afterPath="$PROJECT_DIR$/src/actions/action.view.js" />
       <change beforePath="$PROJECT_DIR$/src/component/Card/User.Card.js" afterPath="$PROJECT_DIR$/src/component/Card/User.Card.js" />
       <change beforePath="$PROJECT_DIR$/src/component/ProfileDetails.js" afterPath="$PROJECT_DIR$/src/component/ProfileDetails.js" />
-      <change beforePath="$PROJECT_DIR$/src/component/View/Image.View.js" afterPath="$PROJECT_DIR$/src/component/View/Image.View.js" />
       <change beforePath="$PROJECT_DIR$/src/container/View.js" afterPath="$PROJECT_DIR$/src/container/View.js" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/index.js" afterPath="$PROJECT_DIR$/src/reducers/index.js" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/reducer.follow.js" afterPath="$PROJECT_DIR$/src/reducers/reducer.follow.js" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/reducer.upload.js" afterPath="$PROJECT_DIR$/src/reducers/reducer.upload.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,8 +23,18 @@
       <file leaf-file-name="action.user.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/actions/action.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-153">
-              <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+            <state relative-caret-position="34">
+              <caret line="2" column="56" lean-forward="false" selection-start-line="2" selection-start-column="47" selection-end-line="2" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="action.otherUser.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/actions/action.otherUser.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="319">
+              <caret line="34" column="29" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -40,7 +43,7 @@
       <file leaf-file-name="Profile.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/container/Profile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
+            <state relative-caret-position="393">
               <caret line="80" column="52" lean-forward="false" selection-start-line="80" selection-start-column="52" selection-end-line="80" selection-end-column="52" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
@@ -53,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/src/container/View.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
-              <caret line="56" column="40" lean-forward="false" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+              <caret line="56" column="40" lean-forward="true" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -72,8 +75,8 @@
       <file leaf-file-name="ProfileDetails.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/component/ProfileDetails.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="74" column="35" lean-forward="false" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="35" />
+            <state relative-caret-position="172">
+              <caret line="57" column="14" lean-forward="true" selection-start-line="57" selection-start-column="14" selection-end-line="57" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -82,8 +85,8 @@
       <file leaf-file-name="User.Card.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/component/Card/User.Card.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="30" column="48" lean-forward="false" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
+            <state relative-caret-position="340">
+              <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -121,6 +124,8 @@
       <find>authPostSuccess</find>
       <find>auth</find>
       <find>deleteOtherUser</find>
+      <find>userupdate</find>
+      <find>otheruser</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -175,10 +180,10 @@
         <option value="$PROJECT_DIR$/src/reducers/index.js" />
         <option value="$PROJECT_DIR$/src/reducers/reducer.follow.js" />
         <option value="$PROJECT_DIR$/src/component/View/Image.View.js" />
-        <option value="$PROJECT_DIR$/src/actions/action.user.js" />
         <option value="$PROJECT_DIR$/src/container/Profile.js" />
         <option value="$PROJECT_DIR$/src/component/ProfileDetails.js" />
         <option value="$PROJECT_DIR$/src/container/View.js" />
+        <option value="$PROJECT_DIR$/src/actions/action.user.js" />
         <option value="$PROJECT_DIR$/src/component/Card/User.Card.js" />
       </list>
     </option>
@@ -202,9 +207,9 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="794" />
+    <option name="x" value="539" />
     <option name="y" value="46" />
-    <option name="width" value="1111" />
+    <option name="width" value="1366" />
     <option name="height" value="997" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -396,7 +401,7 @@
       <workItem from="1527375058428" duration="49937000" />
       <workItem from="1527494961683" duration="83162000" />
       <workItem from="1527653611666" duration="9362000" />
-      <workItem from="1527725189662" duration="75049000" />
+      <workItem from="1527725189662" duration="76706000" />
     </task>
     <task id="LOCAL-00001" summary="Added Loading to upload render">
       <created>1526147273799</created>
@@ -713,11 +718,25 @@
       <option name="project" value="LOCAL" />
       <updated>1527826645413</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Added Life Cycle for followers">
+      <created>1527836550375</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1527836550375</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Added Life Cycle for followers">
+      <created>1527836717005</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1527836717005</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="744594000" />
+    <option name="totallyTimeSpent" value="746251000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -729,17 +748,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="794" y="46" width="1111" height="997" extended-state="0" />
+    <frame x="539" y="46" width="1366" height="997" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30169174" sideWeight="0.62298024" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24336618" sideWeight="0.62298024" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32784432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2160804" sideWeight="0.50361943" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31355932" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20702179" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32687652" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30169174" sideWeight="0.37701976" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24336618" sideWeight="0.37701976" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24914286" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32566586" sideWeight="0.49638057" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -760,7 +779,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Edited and fixed profile layout" />
     <MESSAGE value="Added react-slider as well and fixed profile page." />
     <MESSAGE value="Fixed cards responsiveness and equal height" />
     <MESSAGE value="Webpack and semantic ui react switch" />
@@ -785,7 +803,8 @@
     <MESSAGE value="Added Other User reducer and changed loading data on previous components" />
     <MESSAGE value="Added Loading to upload render" />
     <MESSAGE value="Added Life Cycle to container pages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Life Cycle to container pages" />
+    <MESSAGE value="Added Life Cycle for followers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Life Cycle for followers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1046,14 +1065,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/action.otherUser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="34" column="29" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/reducers/reducer.upload.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1120,22 +1131,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/action.user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-153">
-          <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/component/ProfileDetails.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="74" column="35" lean-forward="false" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/component/View/Image.View.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
@@ -1144,17 +1139,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/component/ProfileDetails.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="57" column="14" lean-forward="true" selection-start-line="57" selection-start-column="14" selection-end-line="57" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/container/View.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
-          <caret line="56" column="40" lean-forward="false" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+          <caret line="56" column="40" lean-forward="true" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/action.user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="56" lean-forward="false" selection-start-line="2" selection-start-column="47" selection-end-line="2" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/action.otherUser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="34" column="29" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/container/Profile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
+        <state relative-caret-position="393">
           <caret line="80" column="52" lean-forward="false" selection-start-line="80" selection-start-column="52" selection-end-line="80" selection-end-column="52" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
@@ -1164,8 +1183,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/component/Card/User.Card.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="30" column="48" lean-forward="false" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
+        <state relative-caret-position="340">
+          <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

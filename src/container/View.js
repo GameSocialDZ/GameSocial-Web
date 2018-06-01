@@ -55,14 +55,14 @@ class View extends Component {
           <div className="">
             <ImageView
               otherUser={otherUser.data}
-              user={user}
+              // user={user}
               image={view.data}/>
           </div>
         ):(
           <div className="">
             <VideoView
               otherUser={otherUser.data}
-              user={user}
+              // user={user}
               video={view.data}/>
           </div>)
         }

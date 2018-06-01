@@ -70,7 +70,7 @@ export const addUserFollowing = (userId ,publisher) => dispatch => {
   followingRef.child(`${publisher.id}/username`).set(publisher.username);
   followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
   // followingRef.child(`${publisher.id}/bio`).set(publisher.bio);
-  dispatch(userUpdateSuccess());
+  // dispatch(userUpdateSuccess());
 };
 
 export const addUserFollower = (user, publisherId) => dispatch => {
