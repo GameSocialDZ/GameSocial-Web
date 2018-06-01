@@ -22,19 +22,20 @@ class UserCard extends Component {
   // redux Action displays otherUser get success but not user get success on Unfollow or follow.
   // I think auth is transitioning causing the getUser function on the profile page to skip
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.user.data.following !== this.props.user.data.following) {
-      this.setState({
-        following: nextProps.user.data.following
-      })
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if(nextProps.user.data.following !== this.state.following) {
+  //     this.setState({
+  //       following: nextProps.user.data.following
+  //     })
+  //   }
+  // }
 
-  componentDidMount() {
-    if(!_.isEmpty(this.props.auth.currentUser)) {
-      this.props.getUser(this.props.auth.currentUser.uid)
-    }
-  }
+  // Not good practice to async or side effect call data from this function unless you set initial state
+  // componentWillMount() {
+  //   if(!_.isEmpty(this.props.auth.currentUser)) {
+  //     this.props.getUser(this.props.auth.currentUser.uid)
+  //   }
+  // }
 
 
   /**Publisher each follower & following from user
@@ -45,6 +46,7 @@ class UserCard extends Component {
     const {user, auth, publisher} = this.props;
     this.props.removeUserFollower(auth.currentUser.uid, publisher.id);
     this.props.removeUserFollowing(user.data.id, publisher.id);
+    this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
   Follow = () => {
@@ -52,6 +54,7 @@ class UserCard extends Component {
     const {user, auth, publisher} = this.props;
     this.props.addUserFollower(user.data, publisher.id);
     this.props.addUserFollowing(auth.currentUser.uid, publisher);
+    this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
   getOtherUserProfile = () => {
@@ -75,20 +78,28 @@ class UserCard extends Component {
         <Card.Content extra>
           <div className='ui two buttons'>
             {
-              !_.isEmpty(auth.currentUser) &&
-              <div>
-                {
-                  this.state.following[publisher.id] ? (
-                    <Button
-                      onClick={this.unFollow}
-                      basic color='green'>Unfollow</Button>
-                  ) : (
-                    <Button
-                      onClick={this.Follow}
-                      basic color='green'>Follow</Button>
-                  )
-                }
-              </div>
+              this.props.user.loading ? (
+                <Button loading/>
+                ):(
+                  <div>
+                    {
+                      !_.isEmpty(auth.currentUser) &&
+                      <div>
+                        {
+                          this.props.user.data.following[publisher.id] ? (
+                            <Button
+                              onClick={this.unFollow}
+                              basic color='green'>Unfollow</Button>
+                          ):(
+                            <Button
+                              onClick={this.Follow}
+                              basic color='green'>Follow</Button>
+                          )
+                        }
+                        </div>
+                    }
+                    </div>
+              )
             }
             <Button
               onClick={this.getOtherUserProfile}
@@ -102,9 +113,7 @@ class UserCard extends Component {
 
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  user: state.user,
-  otherUser: state.user2
+  auth: state.auth
 });
 
 export default connect(mapStateToProps,

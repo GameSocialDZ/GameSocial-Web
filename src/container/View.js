@@ -55,7 +55,7 @@ class View extends Component {
           <div className="">
             <ImageView
               otherUser={otherUser.data}
-              // user={user}
+              user={user}
               image={view.data}/>
           </div>
         ):(
