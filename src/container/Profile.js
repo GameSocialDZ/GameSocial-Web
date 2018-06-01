@@ -7,7 +7,7 @@ import {Grid, Header, Container} from 'semantic-ui-react';
 
 import {getUser} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
-import {getOtherUser} from "../actions/action.otherUser";
+import {getOtherUser, deleteOtherUser} from "../actions/action.otherUser";
 
 import ProfileDetail from "../component/ProfileDetails";
 
@@ -15,17 +15,50 @@ export class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isOtherUser: true,
+      user: [],
+      otherUser: []
     }
   }
 
-  // componentWillMount() {
-  //   if(!_.isEmpty(this.props.otherUserData)) {
-  //     this.props.getOtherUser(this.props.otherUserData.id);
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if(_.isEmpty(nextProps.otherUser.data)){
+      this.setState({
+        isOtherUser: false
+      })
+    } else if(_.isEmpty(nextProps.user.data)){
+      this.setState({
+        isOtherUser: true
+      })
+    } else if ((nextProps.otherUser.data.id !== nextProps.user.data.id)){
+      this.setState({
+        isOtherUser: true
+      })
+    }else if((nextProps.otherUser.data.id === nextProps.user.data.id)) {
+      if(!_.isEmpty(nextProps.user)){
+        this.setState({
+          isOtherUser: false
+        })
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.props.getOtherUser(this.state.otherUser.data.id);
+    if(!_.isEmpty(this.props.auth.currentUser)) {
+      this.props.getUser(this.state.user.data.id);
+    }
+  }
+
+  componentWillMount() {
+    this.setState({
+      user: this.props.user,
+      otherUser: this.props.otherUser
+    })
+  }
 
   render() {
-    const {images, videos, user, following, followers, otherUser, otherUserData} = this.props;
+    const {user, otherUser} = this.props;
 
     if (user.loading) {
       return <Header as={'h1'}>Loading...</Header>
@@ -38,24 +71,24 @@ export class Profile extends Component {
     return (
       <div style={{marginTop: '5rem'}}>
         {
-          this.props.otherUser.isOtherUser &&
+          this.state.isOtherUser &&
             <ProfileDetail
               history={this.props.history}
               user={otherUser}
-              images={otherUserData.images}
-              videos={otherUserData.videos}
-              following={otherUserData.following}
-              followers={otherUserData.followers}/>
+              images={otherUser.data.images}
+              videos={otherUser.data.videos}
+              following={otherUser.data.following}
+              followers={otherUser.data.followers}/>
         }
         {
-          !this.props.otherUser.isOtherUser &&
+          !this.state.isOtherUser &&
             <ProfileDetail
               history={this.props.history}
               user={user}
-              images={images}
-              videos={videos}
-              following={following}
-              followers={followers}/>
+              images={user.data.images}
+              videos={user.data.videos}
+              following={user.data.following}
+              followers={user.data.followers}/>
         }
         </div>
     );
@@ -65,14 +98,8 @@ export class Profile extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   user: state.user,
-  currentUser: state.auth.currentUser,
-  images: state.user.data.images,
-  videos: state.user.data.videos,
-  following: state.user.data.following,
-  followers: state.user.data.followers,
-  otherUser: state.other_user,
-  otherUserData: state.other_user.data
+  otherUser: state.user2,
 });
 
 export default connect(mapStateToProps,
-  {getAuth, getUser, getOtherUser})(Profile);
+  {getAuth, getUser, getOtherUser, deleteOtherUser})(Profile);

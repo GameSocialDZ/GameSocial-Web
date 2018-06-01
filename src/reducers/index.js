@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   uploads: uploadReducer,
   view: viewReducer,
-  other_user: otherUserReducer
+  user2: otherUserReducer
 });
 
 export default rootReducer;

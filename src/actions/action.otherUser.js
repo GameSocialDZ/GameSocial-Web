@@ -32,13 +32,18 @@ export const otherUserError = error => ({
   error
 });
 
+export const getOtherUserOnce = (userId) => dispatch => {
+  dispatch(otherUserRequest);
+  database.ref(`users/${userId}`).once('value', data => {
+    return dispatch(otherUserGetSuccess(data.val()));
+  });
+};
 export const getOtherUser = (userId) => dispatch => {
   dispatch(otherUserRequest);
   database.ref(`users/${userId}`).on('value', data => {
     return dispatch(otherUserGetSuccess(data.val()));
   });
 };
-
 export const deleteOtherUser = () => dispatch => {
   dispatch(otherUserRequest());
   dispatch(otherUserDeleteSuccess());

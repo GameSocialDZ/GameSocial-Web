@@ -26,7 +26,7 @@ export const userError = error => ({
 
 export const getUser = userId => dispatch => {
   dispatch(userRequest());
-  return database.ref(`users/${userId}/`).on('value', (data) => {
+  return database.ref(`users/${userId}/`).once('value', (data) => {
     dispatch(userGetSuccess(data.val()));
   });
 };
@@ -51,7 +51,6 @@ export const updateUserProfile = (auth, data, file) => dispatch => {
       format: file.format,
       createdAt: file.created_at
     }})
-    .then(dispatch(userUpdateSuccess()))
     .catch(error => dispatch(userError(error)))
 };
 
@@ -62,12 +61,11 @@ export const updateUserUpload = (auth, data) => dispatch => {
   updates[`users/${auth.uid}/${data.type}s/${data.uploadId}/content/caption`] = data.editCaption;
 
   return database.ref().update(updates)
-    .then(dispatch(userUpdateSuccess()))
     .catch(error => dispatch(userError(error)));
 };
 
-export const addUserFollowing = (authId ,publisher) => dispatch => {
-  const followingRef = database.ref(`users/${authId}/following`);
+export const addUserFollowing = (userId ,publisher) => dispatch => {
+  const followingRef = database.ref(`users/${userId}/following`);
   followingRef.child(`${publisher.id}/id`).set(publisher.id);
   followingRef.child(`${publisher.id}/username`).set(publisher.username);
   followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
@@ -75,23 +73,20 @@ export const addUserFollowing = (authId ,publisher) => dispatch => {
   // dispatch(userUpdateSuccess());
 };
 
-export const addUserFollower = (auth, publisherId) => dispatch => {
+export const addUserFollower = (user, publisherId) => dispatch => {
   const followersRef = database.ref(`users/${publisherId}/followers`);
-  followersRef.child(`${auth.uid}/id`).set(auth.uid);
-  followersRef.child(`${auth.uid}/username`).set(auth.displayName);
-  followersRef.child(`${auth.uid}/avatar/url`).set(auth.photoURL);
+  followersRef.child(`${user.id}/id`).set(user.id);
+  followersRef.child(`${user.id}/username`).set(user.username);
+  followersRef.child(`${user.id}/avatar/url`).set(user.avatar.url);
   // followersRef.child(`${user.id}/bio`).set(user.bio);
-  // dispatch(otherUserUpdateSuccess());
 };
 
-export const removeUserFollowing = (authId, publisherId) => dispatch => {
-  database.ref(`users/${authId}/following/${publisherId}`).remove();
-  // dispatch(userUpdateSuccess());
+export const removeUserFollowing = (userId, publisherId) => dispatch => {
+  database.ref(`users/${userId}/following/${publisherId}`).remove();
 };
 
-export const removeUserFollower = (authId, publisherId) => dispatch => {
-  database.ref(`users/${publisherId}/followers/${authId}`).remove();
-  // dispatch(otherUserUpdateSuccess());
+export const removeUserFollower = (userId, publisherId) => dispatch => {
+  database.ref(`users/${publisherId}/followers/${userId}`).remove();
 };
 
 export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch => {
@@ -128,5 +123,4 @@ export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch 
       })
     })
   });
-  dispatch(userUpdateSuccess())
 };

@@ -107,7 +107,6 @@ export const upload = (data, file) => dispatch => {
     updates[`users/${data.publisher.id}/videos/${postId}`] = upload;
 
     return database.ref().update(updates)
-      .then(dispatch(uploadPostSuccess()))
       .catch(dispatch(error => dispatch(uploadError(error))));
   }
   else if (file.resource_type === 'image'){
@@ -163,7 +162,6 @@ export const upload = (data, file) => dispatch => {
     updates[`users/${data.publisher.id}/images/${postId}`] = upload;
 
     return database.ref().update(updates)
-      .then(dispatch(uploadPostSuccess()))
       .catch(dispatch(error => dispatch(uploadError(error))));
   }
 };
@@ -176,7 +174,6 @@ export const updateUpload = (data) => dispatch => {
   updates[`uploads/${data.type}s/${data.uploadId}/content/caption`] = data.editCaption ;
 
   return database.ref().update(updates)
-    .then(dispatch(uploadUpdateSuccess()))
     .catch(error => dispatch(uploadError(error)));
 };
 

@@ -15,12 +15,6 @@ export const authGetSuccess = (currentUser) => ({
   currentUser
 });
 
-export const AUTH_POST_SUCCESS = 'AUTH_POST_SUCCESS';
-export const authPostSuccess = (data) => ({
-  type: AUTH_POST_SUCCESS,
-  data
-});
-
 export const AUTH_UPDATE_SUCCESS = 'AUTH_UPDATE_SUCCESS';
 export const authUpdateSuccess = () => ({
   type: AUTH_UPDATE_SUCCESS,
@@ -74,10 +68,6 @@ export const loginEmailPassword = (user) => dispatch => {
             auth.updateProfile({photoURL: data.val()});
           });
 
-          AuthUserRef.once('value', data => {
-            dispatch(authPostSuccess(data.val()));
-          });
-
           dispatch(authGetSuccess(auth));
           return dispatch(getUser(auth.uid))
             .catch(error => dispatch(userError(error)))
@@ -97,19 +87,11 @@ export const getAuth = () => dispatch => {
   });
 };
 
-export const setAuthData = (auth) => dispatch => {
-  dispatch(authRequest());
-  return database.ref(`/users/${auth.uid}/`).once('value', data =>{
-    dispatch(authPostSuccess(data.val()));
-  })
-};
-
 export const updateAuth = (file) => dispatch => {
   dispatch(authRequest());
   auth.currentUser.updateProfile({
     photoURL: file.secure_url
   }).then(() => {
-      dispatch(authUpdateSuccess());
       console.log('Successfully Updated')
     }).catch(error => {
       dispatch(authError(error));

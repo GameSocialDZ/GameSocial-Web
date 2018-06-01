@@ -14,11 +14,25 @@ class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: [],
+      otherUser: [],
+      view: []
     }
   }
 
+  componentWillMount() {
+    this.setState({
+      user: this.props.user,
+      otherUser: this.props.otherUser,
+      view: this.props.view
+    })
+  }
+
   componentDidMount() {
-    this.props.getOtherUser(this.props.view.data.publisher.id);
+    this.props.getOtherUser(this.state.view.data.publisher.id);
+    if(!_.isEmpty(this.props.user.data)) {
+      this.props.getUser(this.state.user.data.id);
+    }
   }
 
   componentWillUnmount() {
@@ -26,7 +40,8 @@ class View extends Component {
   }
 
   render() {
-    const {view, history} = this.props;
+    const {view, user} = this.props;
+    const {history} = this.props;
 
     if (view.loading) {
       return <h1>Loading...</h1>
@@ -39,11 +54,13 @@ class View extends Component {
         {view.data.config.type === 'image' ? (
           <div className="">
             <ImageView
+              user={user.data}
               image={view.data}/>
           </div>
         ):(
           <div className="">
             <VideoView
+              user={user.data}
               video={view.data}/>
           </div>)
         }
@@ -55,8 +72,10 @@ class View extends Component {
 //TODO: Get loading selector working
 
 const mapStateToProps = state => ({
-  auth: state.auth.currentUser,
-  view: state.view
+  user: state.user,
+  auth: state.auth,
+  view: state.view,
+  otherUser: state.user2
 });
 
 export default connect(mapStateToProps,

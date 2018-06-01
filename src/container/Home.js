@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import {Grid, Segment, Container} from 'semantic-ui-react';
 
-import {getUploads} from "../actions/action.upload";
+import {getUploads, getUploadsOnce} from "../actions/action.upload";
 import {getUserOnce, getUser} from '../actions/action.user';
 
 import ContentSlider from '../component/Slider/Content.Slider';
@@ -16,11 +16,18 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      uploads: []
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getUploads();
+  }
+
+  componentWillMount() {
+    this.setState({
+      uploads: this.props.uploads
+    })
   }
 
   renderImageUploads(images) {
@@ -28,7 +35,7 @@ class Home extends Component {
       if (image.id === 'default') {
         return null;
       }
-      return  _.size(this.props.images) < 4 ?
+      return  _.size(images) < 4 ?
         (
           <Grid.Column
             key={image.id}>
@@ -52,7 +59,7 @@ class Home extends Component {
       if (video.id === 'default') {
         return null;
       }
-      return _.size(this.props.videos) < 4 ?
+      return _.size(videos) < 4 ?
       (
         <Grid.Column
           key={video.id}>
@@ -72,7 +79,8 @@ class Home extends Component {
   }
 
   render() {
-    const {videos, images, uploads} = this.props;
+    const {uploads} = this.props;
+
     if (this.props.uploads.loading) {
       return <h1>Loading...</h1>
     }
@@ -83,32 +91,32 @@ class Home extends Component {
         <Container
           style={{marginBottom: '1rem'}}>
           {
-            _.size(this.props.images) > 3 &&
+            _.size(uploads.data.images) > 3 &&
             <ContentSlider
-              content={this.renderImageUploads(images)}>
+              content={this.renderImageUploads(uploads.data.images)}>
             </ContentSlider>
           }
           {
-            _.size(this.props.images) <= 3 &&
+            _.size(uploads.data.images) <= 3 &&
             <Grid stackable columns={3}>
               <Grid.Row>
-              {this.renderImageUploads(images)}
+              {this.renderImageUploads(uploads.data.images)}
               </Grid.Row>
             </Grid>
           }
         </Container>
         <Container>
           {
-            _.size(this.props.videos) > 3 &&
+            _.size(uploads.data.videos) > 3 &&
             <ContentSlider
-              content={this.renderVideoUploads(videos)}>
+              content={this.renderVideoUploads(uploads.data.videos)}>
             </ContentSlider>
           }
           {
-            _.size(this.props.videos) <= 3 &&
+            _.size(uploads.data.videos) <= 3 &&
             <Grid stackable columns={3}>
               <Grid.Row>
-              {this.renderVideoUploads(videos)}
+              {this.renderVideoUploads(uploads.data.videos)}
               </Grid.Row>
             </Grid>
           }
@@ -120,10 +128,8 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   uploads: state.uploads,
-  images: state.uploads.data.images,
-  videos: state.uploads.data.videos,
   auth: state.auth
 });
 
 export default connect(mapStateToProps,
-  {getUploads, getUser, getUserOnce})(Home);
+  {getUploads, getUser, getUserOnce, getUploadsOnce})(Home);

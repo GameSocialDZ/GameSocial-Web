@@ -9,7 +9,7 @@ import {deleteUpload} from "../../actions/action.upload";
 import {getUserOnce, addUserFollower, addUserFollowing,
   removeUserFollower, removeUserFollowing, getUser
 } from "../../actions/action.user";
-import {getOtherUser} from "../../actions/action.otherUser";
+import {getOtherUserOnce} from "../../actions/action.otherUser";
 
 class UserCard extends Component {
   constructor(props) {
@@ -20,26 +20,26 @@ class UserCard extends Component {
 
   unFollow = () => {
     console.log('click success');
-    const {auth, publisher} = this.props;
+    const {user, publisher, auth} = this.props;
     this.props.removeUserFollower(auth.uid, publisher.id);
     this.props.removeUserFollowing(auth.uid, publisher.id);
   };
 
   Follow = () => {
     console.log('click success');
-    const {publisher, auth} = this.props;
-    this.props.addUserFollower(auth, publisher.id);
+    const {publisher, user, auth} = this.props;
+    this.props.addUserFollower(user, publisher.id);
     this.props.addUserFollowing(auth.uid, publisher);
   };
 
   getOtherUserProfile = () => {
     console.log('click success');
-    const {publisher, getOtherUser} = this.props;
-    getOtherUser(publisher.id);
+    const {publisher} = this.props;
+    this.props.getOtherUserOnce(publisher.id);
   };
 
   render() {
-    const {publisher, auth, user, authLoading} = this.props;
+    const {publisher, auth, user} = this.props;
     return (
       <Card>
         <Card.Content>
@@ -53,10 +53,10 @@ class UserCard extends Component {
         <Card.Content extra>
           <div className='ui two buttons'>
             {
-              authLoading ? (<Button loading/>):(
+              auth.loading ? (<Button loading/>):(
                 <div>
                   {
-                    !_.isEmpty(auth) &&
+                    !_.isEmpty(auth.currentUser) &&
                     <div>
                       {
                         user.following[publisher.id] ? (
@@ -86,13 +86,10 @@ class UserCard extends Component {
 
 
 const mapStateToProps = state => ({
-  view: state.view.data,
-  user: state.user.data,
-  authLoading: state.auth.loading,
-  auth: state.auth.currentUser,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps,
   {deleteUpload, getUserOnce, getUser, addUserFollowing, addUserFollower,
-  removeUserFollowing, removeUserFollower, getOtherUser})
+  removeUserFollowing, removeUserFollower, getOtherUserOnce})
 (UserCard);

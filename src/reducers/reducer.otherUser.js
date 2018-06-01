@@ -7,7 +7,8 @@ import {
 const initialState = {
   loading: false,
   error: null,
-  data: []
+  data: [],
+  isOtherUser: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -15,34 +16,29 @@ export default function reducer(state = initialState, action) {
     case (OTHER_USER_REQUEST):
       return Object.assign({}, state, {
         loading: true,
-        error: null,
-        isOtherUser: false
+        error: null
       });
     case(OTHER_USER_GET_SUCCESS):
       return Object.assign({}, state, {
         data: action.data,
         error: null,
-        loading: false,
-        isOtherUser: true
+        loading: false
       });
     case(OTHER_USER_UPDATE_SUCCESS):
       return Object.assign({}, state, {
         error: null,
-        loading: false,
-        isOtherUser: true,
+        loading: false
       });
     case(OTHER_USER_DELETE_SUCCESS):
       return Object.assign({}, state, {
         data: [],
         error: null,
-        loading: false,
-        isOtherUser: false
+        loading: false
       });
     case(OTHER_USER_ERROR):
       return Object.assign({}, state, {
         error: action.error,
-        loading: false,
-        isOtherUser: false
+        loading: false
       });
     default:
       return state;

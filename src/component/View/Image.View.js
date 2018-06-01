@@ -17,7 +17,7 @@ class ImageView extends Component {
   }
 
   render() {
-    const {image} = this.props;
+    const {image, user} = this.props;
     return (
       <div>
         <Grid stackable>
@@ -47,6 +47,7 @@ class ImageView extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <UserCard
+                user={user}
                 publisher={image.publisher}/>
               </Grid.Column>
           </Grid.Row>
@@ -63,8 +64,8 @@ class ImageView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  view: state.view.data
-});
+// const mapStateToProps = state => ({
+//   view: state.view.data
+// });
 
-export default connect(mapStateToProps, {deleteUpload})(ImageView);
+export default connect(null, {deleteUpload})(ImageView);
