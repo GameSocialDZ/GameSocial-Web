@@ -1,3 +1,18 @@
+class UserObject {
+  constructor(user) {
+    this.id = user.id;
+    this.isAdmin = user.isAdmin;
+    this.profile = user.profile;
+    // this.likes = user.likes;
+    // this.dislikes = user.dislikes;
+    // this.favorite = user.favorite;
+    this.followers = user.followers;
+    this.following = user.following;
+    this.points = user.points;
+    // this.comments = user.comments;
+  }
+}
+
 class NewUserObject {
   constructor(user, dob = '', username) {
     this.id = user.uid;
@@ -131,4 +146,4 @@ class ImageObject{
 //   }
 // }
 
-module.exports = {NewUserObject, VideoObject, ImageObject, UpdateUserProfileObject};
+module.exports = {NewUserObject, VideoObject, ImageObject, UserObject};

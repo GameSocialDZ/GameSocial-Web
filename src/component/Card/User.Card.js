@@ -9,7 +9,6 @@ import {deleteUpload} from "../../actions/action.upload";
 import {getUserOnce, addUserFollower, addUserFollowing,
   removeUserFollower, removeUserFollowing, getUser
 } from "../../actions/action.user";
-import {getOtherUserOnce} from "../../actions/action.otherUser";
 
 class UserCard extends Component {
   constructor(props) {
@@ -58,22 +57,20 @@ class UserCard extends Component {
     this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
-  getOtherUserProfile = () => {
+  getUserProfile = () => {
     console.log('click success');
     const {publisher, auth} = this.props;
-    // if not logged in populate anyone as otherUser
-    // if logged in only populate otherUser if auth id and publisher id don't match
     if(_.isEmpty(auth.currentUser)){
-      this.props.getOtherUserOnce(publisher.id);
+
     } else{
       if(auth.currentUser.uid !== publisher.id) {
-        this.props.getOtherUserOnce(publisher.id);
+
       }
     }
   };
 
   render() {
-    const {publisher, auth, otherUser} = this.props;
+    const {publisher, auth} = this.props;
     return (
       <Card>
         <Card.Content>
@@ -114,8 +111,8 @@ class UserCard extends Component {
               )
             }
             <Button
-              onClick={this.getOtherUserProfile}
-              basic color='blue'><Link to='/profile'>Profile</Link></Button>
+              onClick={this.getUserProfile}
+              basic color='blue'><Link to={`/profile/${publisher.id}`}>Profile</Link></Button>
           </div>
         </Card.Content>
       </Card>
@@ -130,5 +127,5 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps,
   {deleteUpload, getUserOnce, getUser, addUserFollowing, addUserFollower,
-  removeUserFollowing, removeUserFollower, getOtherUserOnce})
+  removeUserFollowing, removeUserFollower})
 (UserCard);

@@ -8,8 +8,7 @@ import ModalUpload from '../Modal/Modal.Upload';
 import ModalRegister from '../Modal/Modal.Register';
 
 import {signOut } from "../../actions/action.auth";
-import {getUser} from '../../actions/action.user';
-import {deleteOtherUser} from "../../actions/action.otherUser";
+import {getUser, getUserOnce} from '../../actions/action.user';
 
 class MenuHeader extends Component {
   constructor(props) {
@@ -32,8 +31,7 @@ class MenuHeader extends Component {
   };
 
   getProfile() {
-    this.props.deleteOtherUser();
-    this.props.getUser(this.props.currentUser.uid);
+    this.props.getUserOnce(this.props.currentUser.uid);
   }
 
   renderProfileDropdown = () => {
@@ -113,4 +111,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {signOut, getUser, deleteOtherUser})(MenuHeader);
+  {signOut, getUser, getUserOnce})(MenuHeader);

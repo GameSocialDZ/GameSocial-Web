@@ -1,6 +1,5 @@
 import {database} from "../firebase";
 import _ from 'lodash';
-import {otherUserUpdateSuccess} from './action.otherUser';
 
 export const FOLLOW_REQUEST = 'USER_REQUEST';
 export const followRequest = () => ({

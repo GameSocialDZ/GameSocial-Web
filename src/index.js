@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route, browserHistory} from 'react-router-dom';
 
 import store from './store';
 import Home from "./container/Home";
@@ -12,13 +12,13 @@ import MenuHeader from './component/Menu/Menu.Header';
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename='/' history={browserHistory}>
       <div>
         <MenuHeader/>
         <Switch>
-          <Route path="/profile" component={Profile}/>
-          <Route path="/view" component={View}/>
-          <Route path="/" component={Home} exact={true}/>
+          <Route exact path="/profile/:userId" component={Profile}/>
+          <Route exact path="/view" component={View}/>
+          <Route exact path="/" component={Home}/>
         </Switch>
       </div>
     </BrowserRouter>

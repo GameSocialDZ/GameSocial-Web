@@ -1,6 +1,7 @@
 import {database} from "../firebase";
 import _ from 'lodash';
-import {otherUserUpdateSuccess} from './action.otherUser';
+import {UserObject} from './models';
+import * as firebase from "firebase";
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const userRequest = () => ({
@@ -26,8 +27,17 @@ export const userError = error => ({
 
 export const getUser = userId => dispatch => {
   dispatch(userRequest());
-  return database.ref(`users/${userId}/`).once('value', (data) => {
+  return database.ref(`users/${userId}/`).on('value', (data) => {
     dispatch(userGetSuccess(data.val()));
+  });
+};
+
+export const getUserPromise = (userId) => dispatch => {
+  return new Promise(function(resolve, reject) {
+    database.ref(`users/${userId}`).on('value', (data) => {
+      let userInfo = data.val();
+      resolve(dispatch(userGetSuccess(userInfo)));
+    });
   });
 };
 

@@ -15,18 +15,21 @@ export default function reducer(state = initialState, action) {
     case USER_REQUEST:
       return Object.assign({}, state, {
         error: null,
-        loading: true
+        loading: true,
+        isUser: true
       });
     case USER_GET_SUCCESS:
       return Object.assign({}, state, {
         data: action.data,
         loading: false,
         error: null,
+        isUser: false
       });
     case USER_ERROR:
       return Object.assign({}, state, {
         error: action.error,
-        loading: false
+        loading: false,
+        isUser: false
       });
     default:
       return state;

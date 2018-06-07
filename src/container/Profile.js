@@ -5,9 +5,8 @@ import _ from 'lodash';
 
 import {Grid, Header, Container} from 'semantic-ui-react';
 
-import {getUser} from "../actions/action.user";
+import {getUser, getUserPromise} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
-import {getOtherUser, deleteOtherUser} from "../actions/action.otherUser";
 
 import ProfileDetail from "../component/ProfileDetails";
 
@@ -15,93 +14,115 @@ export class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOtherUser: true,
-      user: this.props.user,
-      otherUser: this.props.otherUser
+      loadingProfile: false,
+      userProfile: null,
     }
   }
 
   // Set the initial State
-  componentWillMount() {
-    this.setState({
-      user: this.props.user,
-      otherUser: this.props.otherUser
-    })
-  }
+  // componentWillMount() {
+  //   const {match: {params}} = this.props;
+  //   if(this.state.loadingProfile === false) {
+  //     this.setState({loadingProfile: true});
+  //     this.props.getUserPromise(params.userId).then((userInfo) => {
+  //       console.log(userInfo);
+  //       this.setState({userProfile: userInfo})
+  //     });
+  //   }
+  // }
 
   // Decide if we are on our or otherUser profile before render
   componentWillReceiveProps(nextProps) {
-    if(_.isEmpty(nextProps.otherUser.data)){
-      this.setState({
-        isOtherUser: false
-      })
-    } else if(_.isEmpty(nextProps.user.data)){
-      this.setState({
-        isOtherUser: true
-      })
-    } else if (nextProps.otherUser.data.id !== this.props.auth.currentUser.uid){ //nextProps.user.data.id){
-      this.setState({
-        isOtherUser: true
-      })
-    }else if(nextProps.otherUser.data.id === this.props.auth.currentUser.uid){ //nextProps.user.data.id) {
-      if(!_.isEmpty(nextProps.user)){
-        this.setState({
-          isOtherUser: false
-        })
-      }
+    const {match: {params}} = this.props;
+    if(!this.state.userProfile && this.state.loadingProfile === false) {
+      this.setState({loadingProfile: true});
+      this.props.getUserPromise(params.userId).then(() => {
+        this.setState({userProfile: this.props.user})
+      });
+    }
+
+    if(this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
+      this.setState({loadingProfile: true});
+      this.props.getUserPromise(params.userId).then(() => {
+        console.log(userInfo);
+        this.setState({userProfile: this.props.user})
+      });
+    }
+
+    if(this.state.userProfile && nextProps.user && nextProps.user.data && (nextProps.user.data.id === this.state.userProfile.data.id) && !_.isEqual(nextProps.user, this.state.userProfile)) {
+      this.updatePageDetails(nextProps.user);
     }
   }
 
   // Get otherUser w/ .on call as we only get user once on UserCard profile button click
   componentDidMount() {
-    //TODO: Get otherUser on profile page for updates
-    this.props.getOtherUser(this.state.otherUser.data.id);
-    if(!_.isEmpty(this.props.user.currentUser)) {
-      this.props.getUser(this.state.user.data.id);
+    const {match: {params}} = this.props;
+    if(this.state.loadingProfile === false) {
+      this.setState({loadingProfile: true});
+      this.props.getUserPromise(params.userId)
+        .then(() => {
+          this.setState({userProfile: this.props.user})
+      });
     }
   }
 
-  // Remove otherUser if exist from profile on page switch
-  componentWillUnmount() {
-    if(!_.isEmpty(this.props.otherUser.data)){
-      this.props.deleteOtherUser();
-    }
+  updatePageDetails(user){
+    // let thisContainer = this;
+    // thisContainer.setState({userProfile:user }, () => {
+    //
+    //   let { userProfile } = thisContainer.state
+    //   thisContainer.getUserPoints(userProfile);
+    //   thisContainer.getUserTeamList(userProfile);
+    //   thisContainer.props.getUserVideos(userProfile.profile.id);
+    //
+    //
+    //   if(userProfile.favorite && userProfile.favorite.videos){
+    //     thisContainer.props.getUserFavoriteVideos(userProfile.favorite.videos);
+    //   }else{
+    //     thisContainer.props.getUserFavoriteVideos({});
+    //   }
+    //
+    //   if(userProfile.favorite && userProfile.favorite.categories){
+    //     thisContainer.props.getUserFavoriteSports(userProfile.favorite.categories);
+    //   }else{
+    //     thisContainer.props.getUserFavoriteSports({});
+    //   }
+    //   if(userProfile.following){
+    //     thisContainer.props.getUserFollowing(userProfile.following);
+    //   }else{
+    //     thisContainer.props.getUserFollowing({});
+    //   }
+    //
+    //   if(userProfile.followers){
+    //     thisContainer.props.getUserFollowers(userProfile.followers);
+    //   }else{
+    //     thisContainer.props.getUserFollowers({});
+    //   }
+
+      this.setState({loadingProfile: false});
+
+    // });
   }
 
   render() {
-    const {user, otherUser} = this.props;
-
-    if (user.loading) {
-      return <Header style={{marginTop: '5rem'}} as={'h1'}>Loading...</Header>
-    }
-
-    if (otherUser.loading) {
-      return <Header style={{marginTop: '5rem'}} as={'h1'}>Loading...</Header>
-    }
+    const {user} = this.props;
 
     return (
-      <div style={{marginTop: '5rem'}}>
-        {
-          this.state.isOtherUser &&
-            <ProfileDetail
-              history={this.props.history}
-              user={otherUser}
-              images={otherUser.data.images}
-              videos={otherUser.data.videos}
-              following={otherUser.data.following}
-              followers={otherUser.data.followers}/>
-        }
-        {
-          !this.state.isOtherUser &&
-            <ProfileDetail
-              history={this.props.history}
-              user={user}
-              images={user.data.images}
-              videos={user.data.videos}
-              following={user.data.following}
-              followers={user.data.followers}/>
-        }
-        </div>
+    <div style={{marginTop: '5rem'}}>
+      {
+        this.state.loadingProfile ? (
+        <ProfileDetail
+          history={this.props.history}
+          user={user}
+          images={user.data.images}
+          videos={user.data.videos}
+          following={user.data.following}
+          followers={user.data.followers}/>
+        ):(
+          <Header style={{marginTop: '5rem'}} as={'h1'}>Loading...</Header>
+        )
+      }
+    </div>
     );
   }
 }
@@ -109,8 +130,7 @@ export class Profile extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   user: state.user,
-  otherUser: state.user2,
 });
 
 export default connect(mapStateToProps,
-  {getAuth, getUser, getOtherUser, deleteOtherUser})(Profile);
+  {getAuth, getUser, getUserPromise})(Profile);
