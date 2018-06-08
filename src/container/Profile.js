@@ -16,9 +16,17 @@ export class Profile extends Component {
     this.state = {
       loadingProfile: false,
       userProfile: null,
+      initState: false
     }
   }
 
+  // componentWillMount(){
+  //   console.log('Component Will Mount')
+  // }
+  //
+  // componentWillUnmount() {
+  //   console.log('Component Will Unmount');
+  // }
   // Set the initial State
   // componentWillMount() {
   //   const {match: {params}} = this.props;
@@ -34,35 +42,40 @@ export class Profile extends Component {
   // Decide if we are on our or otherUser profile before render
   componentWillReceiveProps(nextProps) {
     const {match: {params}} = this.props;
-    if(!this.state.userProfile && this.state.loadingProfile === false) {
-      this.setState({loadingProfile: true});
+
+
+    if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId) {
+      this.setState({loadingProfile: true, intiState: false});
       this.props.getUserPromise(params.userId).then(() => {
         this.setState({userProfile: this.props.user})
       });
     }
 
-    if(this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
-      this.setState({loadingProfile: true});
+    // Handles Same Page different User
+    if(!this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
+      this.setState({loadingProfile: true, initState: true});
       this.props.getUserPromise(params.userId).then(() => {
-        console.log(userInfo);
-        this.setState({userProfile: this.props.user})
+        this.setState({userProfile: this.props.user.data})
       });
     }
 
-    if(this.state.userProfile && nextProps.user && nextProps.user.data && (nextProps.user.data.id === this.state.userProfile.data.id) && !_.isEqual(nextProps.user, this.state.userProfile)) {
-      this.updatePageDetails(nextProps.user);
-    }
+    // if(this.state.userProfile && nextProps.user && nextProps.user.data && (nextProps.user.data.id === this.state.userProfile.data.id) && !_.isEqual(nextProps.user, this.state.userProfile)) {
+    //   this.updatePageDetails(nextProps.user);
+    // }
   }
 
-  // Get otherUser w/ .on call as we only get user once on UserCard profile button click
+  // Handles refresh
   componentDidMount() {
     const {match: {params}} = this.props;
     if(this.state.loadingProfile === false) {
       this.setState({loadingProfile: true});
-      this.props.getUserPromise(params.userId)
-        .then(() => {
-          this.setState({userProfile: this.props.user})
-      });
+      this.props.getUserPromise(params.userId).then(() => {
+        this.setState({
+          userProfile: this.props.user.data,
+          loadingProfile: false,
+          initState: false
+        })
+      })
     }
   }
 
@@ -99,7 +112,7 @@ export class Profile extends Component {
     //     thisContainer.props.getUserFollowers({});
     //   }
 
-      this.setState({loadingProfile: false});
+      //this.setState({loadingProfile: false});
 
     // });
   }
@@ -110,7 +123,7 @@ export class Profile extends Component {
     return (
     <div style={{marginTop: '5rem'}}>
       {
-        this.state.loadingProfile ? (
+        this.state.loadingProfile === false && !_.isEmpty(this.state.userProfile) ? (
         <ProfileDetail
           history={this.props.history}
           user={user}
