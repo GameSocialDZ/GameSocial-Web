@@ -23,7 +23,7 @@ export class ProfileDetail extends Component {
   }
 
   componentWillUnmount() {
-     this.props.noLoad()
+     this.props.onReload();
   }
 
   renderUserImages(images) {

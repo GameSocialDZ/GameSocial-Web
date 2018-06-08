@@ -16,7 +16,7 @@ export class Profile extends Component {
     this.state = {
       loadingProfile: false,
       userProfile: null,
-      initState: false
+      initState: true
     }
   }
 
@@ -55,9 +55,9 @@ export class Profile extends Component {
     //Handles Same Page different User
     if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
       this.setState({loadingProfile: true, initState: false});
-      this.props.getUserPromise(nextProps.match.params.userId).then((user) => {
+      this.props.getUserPromise(nextProps.match.params.userId).then(() => {
         this.setState({
-          userProfile: user.data
+          userProfile: this.props.user.data
         })
       });
     }
@@ -121,11 +121,10 @@ export class Profile extends Component {
     // });
   }
 
-  noLoad = () => {
+  onReload = () => {
     this.setState({
       loadingProfile: false,
-      initState: true,
-      userProfile: this.props.user.data
+      initState: true
     })
   };
 
@@ -137,7 +136,7 @@ export class Profile extends Component {
       {
         this.state.loadingProfile === false && !_.isEmpty(this.state.userProfile) ? (
         <ProfileDetail
-          noLoad={this.noLoad}
+          onReload={this.onReload}
           history={this.props.history}
           user={user}
           images={user.data.images}
