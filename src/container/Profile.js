@@ -16,7 +16,7 @@ export class Profile extends Component {
     this.state = {
       loadingProfile: false,
       userProfile: null,
-      initState: true
+      initState: false
     }
   }
 
@@ -53,13 +53,15 @@ export class Profile extends Component {
     // }
 
     //Handles Same Page different User
-    if(!this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
+    if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
       this.setState({loadingProfile: true, initState: false});
-      this.props.getUserPromise(params.userId).then(() => {
-        this.setState({userProfile: this.props.user.data})
+      this.props.getUserPromise(params.userId).then((user) => {
+        this.setState({
+          userProfile: user.data
+        })
       });
     }
-    //
+
     // if(this.state.userProfile && nextProps.user && nextProps.user.data && (nextProps.user.data.id === this.state.userProfile.data.id) && !_.isEqual(nextProps.user, this.state.userProfile)) {
     //   this.updatePageDetails(nextProps.user);
     // }
@@ -70,11 +72,12 @@ export class Profile extends Component {
     const {match: {params}} = this.props;
     if(this.state.loadingProfile === false) {
       this.setState({loadingProfile: true});
-      this.props.getUserPromise(params.userId).then(() => {
+      this.props.getUserPromise(params.userId).then((user) => {
+        console.log(user);
         this.setState({
           userProfile: this.props.user.data,
           loadingProfile: false,
-          initState: false
+          initState: true
         })
       })
     }
@@ -121,7 +124,8 @@ export class Profile extends Component {
   noLoad = () => {
     this.setState({
       loadingProfile: false,
-      initState: true
+      initState: true,
+      userProfile: this.props.user.data
     })
   };
 
