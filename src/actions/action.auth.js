@@ -92,7 +92,8 @@ export const updateAuth = (file) => dispatch => {
   auth.currentUser.updateProfile({
     photoURL: file.secure_url
   }).then(() => {
-      console.log('Successfully Updated')
+      console.log('Successfully Updated');
+      dispatch(authUpdateSuccess())
     }).catch(error => {
       dispatch(authError(error));
       console.log(error);

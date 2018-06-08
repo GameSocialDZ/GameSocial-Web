@@ -18,6 +18,10 @@ class MenuHeader extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+
+  }
+
   handleItemClick = (e, { name }) => this.setState({ activeMenu: name });
 
   renderSearchDropdown = () => {
@@ -35,7 +39,7 @@ class MenuHeader extends Component {
   }
 
   renderProfileDropdown = () => {
-    const currentUser = this.props.currentUser;
+    const {currentUser} = this.props;
     const trigger = (
       <span>
         <Image avatar src={currentUser.photoURL} /> {currentUser.displayName}
@@ -46,7 +50,7 @@ class MenuHeader extends Component {
       <Dropdown trigger={trigger}>
         <Dropdown.Menu>
           <Dropdown.Item
-            onClick={this.getProfile.bind(this)}><Link to='/profile'>Profile</Link></Dropdown.Item>
+            onClick={this.getProfile.bind(this)}><Link to={`/profile/${currentUser.uid}`}>Profile</Link></Dropdown.Item>
           <Dropdown.Divider/>
           <Dropdown.Item
             text='Sign Out'
