@@ -8,8 +8,6 @@ import {Button, Card, Image, Segment} from 'semantic-ui-react';
 
 import FormEditUserUpload from '../Form/Form.EditUserUpload';
 
-import {getView} from "../../actions/action.view";
-
 class VideoCard extends Component {
   constructor(props) {
     super(props);
@@ -23,11 +21,6 @@ class VideoCard extends Component {
       editing: false
     })
   }
-
-  getViewState() {
-    const {video, getView} = this.props;
-    getView(video);
-  };
 
   setFormState(editing) {
     if (editing){
@@ -76,7 +69,7 @@ class VideoCard extends Component {
             )
           }
           <Button.Group>
-            <Button type="button" onClick={this.getViewState.bind(this)}>
+            <Button type="button">
               <Link to={`/view/${video.publisher.id}/${video.config.type}/${video.id}`}>View</Link>
             </Button>
             {
@@ -96,4 +89,4 @@ const mapStateToProps = state => ({
   currentUser: state.auth.cuurentUser,
 });
 
-export default connect(mapStateToProps, {getView})(VideoCard);
+export default connect(mapStateToProps)(VideoCard);

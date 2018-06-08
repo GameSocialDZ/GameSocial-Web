@@ -57,17 +57,17 @@ class UserCard extends Component {
     // this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
-  getUserProfile = () => {
-    console.log('click success');
-    const {publisher, auth} = this.props;
-    if(_.isEmpty(auth.currentUser)){
-
-    } else{
-      if(auth.currentUser.uid !== publisher.id) {
-
-      }
-    }
-  };
+  // getUserProfile = () => {
+  //   console.log('click success');
+  //   const {publisher, auth} = this.props;
+  //   if(_.isEmpty(auth.currentUser)){
+  //
+  //   } else{
+  //     if(auth.currentUser.uid !== publisher.id) {
+  //
+  //     }
+  //   }
+  // };
 
   render() {
     const {publisher, auth} = this.props;

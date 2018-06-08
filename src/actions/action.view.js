@@ -1,6 +1,8 @@
 //import  {database, storage} from "../firebase";
 //import {VideoObject} from "./models";
 
+import {database} from "../firebase";
+
 export const VIEW_REQUEST = 'VIEW_REQUEST';
 export const viewRequest = () => ({
   type: VIEW_REQUEST
@@ -24,9 +26,14 @@ export const viewError = error => ({
   error
 });
 
-export const getView = data => dispatch => {
-  dispatch(viewRequest);
-  return dispatch(viewGetSuccess(data));
+export const getViewPromise = (uploadId, type) => dispatch => {
+  return new Promise((resolve, reject) => {
+    database.ref(`uploads/${type}/${uploadId}`).on('value', (data) => {
+      let upload = data.val();
+      console.log(upload);
+      resolve(dispatch(viewGetSuccess(upload)));
+    });
+  });
 };
 
 export const deleteView = () => dispatch => {

@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {getView} from "../../actions/action.view";
-import {getUser, getUserOnce} from '../../actions/action.user';
-
 import {Image, Card, Button, Container, Segment} from 'semantic-ui-react';
 
 import FormEditUserUpload from '../Form/Form.EditUserUpload';
@@ -23,12 +20,6 @@ class ImageCard extends Component {
       editing: false
     })
   }
-
-  // On click set the redux view state with upload details
-  getViewState() {
-    const {getView, image} = this.props;
-    getView(image);
-  };
 
   // Edit form button switching
   setFormState(editing) {
@@ -73,7 +64,7 @@ class ImageCard extends Component {
             )
           }
           <Button.Group>
-            <Button type="button" onClick={this.getViewState.bind(this)}>
+            <Button type="button">
               <Link to={`/view/${image.publisher.id}/${image.config.type}/${image.id}`}>View</Link>
             </Button>
             {
@@ -95,6 +86,5 @@ const mapStateToProps = state => ({
   user: state.user.data
 });
 
-export default connect(mapStateToProps,
-  {getView, getUser, getUserOnce})
+export default connect(mapStateToProps)
 (ImageCard);

@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import {deleteUpload} from "../actions/action.upload";
-import {deleteView} from "../actions/action.view";
-import {getUser} from '../actions/action.user';
+import {deleteView, getViewPromise} from "../actions/action.view";
+import {getUserPromise} from '../actions/action.user';
 
 import ImageView from '../component/View/Image.View';
 import VideoView from '../component/View/Video.View';
@@ -13,44 +13,55 @@ class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: [],
-      user: [],
+      user: null,
+      view: null,
+      follow: null,
+      loadingView: false,
+      initState: true
     }
   }
-
-  /*** I have commented out otherUser for view page as I am unsure if I will use
-   * this is also commented out on ProfileDetails and UserCard***/
 
   // Set the initial state
   componentWillMount() {
     this.setState({
-      user: this.props.user,
-      view: this.props.view,
+      loadingView: true
     })
   }
 
+  // Handles Refresh
   componentDidMount() {
-    // Get and listen for User data if logged in (This also updates user following for User.Card)
-    if(!_.isEmpty(this.props.user.data)) {
-      this.props.getUser(this.state.user.data.id);
-    }
+    const {match: {params}} = this.props;
+    // Get upload state
+    // then =>
+    // Get the publisher state
+    // then =>
+    // Get the follow state
+    this.props.getViewPromise(params.uploadId, params.type + 's').then((view) => {
+      console.log(view);
+      this.setState({
+        view: this.props.view.data,
+        loadingView: false,
+        initState: true
+      })
+    }).then(() => {
+      this.props.getUserPromise(params.userId).then((user) => {
+        console.log(user);
+        this.setState({
+          user: this.props.user.data,
+          loadingView: false,
+          initState: true
+        })
+      });
+    });
   }
-
-  // Clear Redux state when component unmounts
-  // componentWillUnmount() {
-  //   this.props.deleteView();
-  // }
 
   render() {
     const {view, user} = this.props;
-    const {history} = this.props;
 
-    if (view.loading) {
+    if (this.state.loadingView) {
       return <h1 style={{marginTop: '5rem'}}>Loading...</h1>
     }
-    else if (_.isEmpty(view.data)){
-      return history.goBack();
-    }
+
     return (
       <div style={{marginTop: '5rem'}}>
         {view.data.config.type === 'image' ? (
@@ -80,4 +91,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getUser, deleteUpload, deleteView})(View);
+  {deleteView, getViewPromise, getUserPromise})(View);

@@ -16,29 +16,17 @@ export class Profile extends Component {
     this.state = {
       loadingProfile: false,
       userProfile: null,
-      initState: true
+      initState: true,
+      follow: null
     }
   }
 
-  componentWillMount(){
-    console.log('Component Will Mount')
-  }
-
-  componentWillUnmount() {
-    console.log('Component Will Unmount');
-  }
-
   //Set the initial State
-  // componentWillMount() {
-  //   const {match: {params}} = this.props;
-  //   if(this.state.loadingProfile === false) {
-  //     this.setState({loadingProfile: true});
-  //     this.props.getUserPromise(params.userId).then((userInfo) => {
-  //       console.log(userInfo);
-  //       this.setState({userProfile: userInfo})
-  //     });
-  //   }
-  // }
+  componentWillMount() {
+    this.setState({
+      loadingProfile: false
+    });
+  }
 
   // Decide if we are on our or otherUser profile before render
   componentWillReceiveProps(nextProps) {
@@ -70,6 +58,10 @@ export class Profile extends Component {
   // Handles refresh
   componentDidMount() {
     const {match: {params}} = this.props;
+
+    // Get the follow state
+
+    // get the user profile state
     if(this.state.loadingProfile === false) {
       this.setState({loadingProfile: true});
       this.props.getUserPromise(params.userId).then((user) => {
