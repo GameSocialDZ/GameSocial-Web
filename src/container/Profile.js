@@ -55,7 +55,7 @@ export class Profile extends Component {
     //Handles Same Page different User
     if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
       this.setState({loadingProfile: true, initState: false});
-      this.props.getUserPromise(params.userId).then((user) => {
+      this.props.getUserPromise(nextProps.match.params.userId).then((user) => {
         this.setState({
           userProfile: user.data
         })
