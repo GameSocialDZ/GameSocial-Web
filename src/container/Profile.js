@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import {Grid, Header, Container} from 'semantic-ui-react';
 
-import {getUser, getUserPromise} from "../actions/action.user";
+import {getUserOnce, getUserPromise} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
 
 import ProfileDetail from "../component/ProfileDetails";
@@ -24,14 +24,14 @@ export class Profile extends Component {
   //Set the initial State
   componentWillMount() {
     this.setState({
-      loadingProfile: false
+      loadingProfile: true,
+      initState: true
     });
   }
 
   // Decide if we are on our or otherUser profile before render
   componentWillReceiveProps(nextProps) {
     const {match: {params}} = this.props;
-
 
     // if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId) {
     //   this.setState({loadingProfile: false, intiState: false});
@@ -43,8 +43,11 @@ export class Profile extends Component {
     //Handles Same Page different User
     if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
       this.setState({loadingProfile: true, initState: false});
-      this.props.getUserPromise(nextProps.match.params.userId).then(() => {
+      this.props.getUserPromise(nextProps.match.params.userId).then((user) => {
+        console.log(user);
         this.setState({
+          initState: true,
+          loadingProfile: false,
           userProfile: this.props.user.data
         })
       });
@@ -62,17 +65,14 @@ export class Profile extends Component {
     // Get the follow state
 
     // get the user profile state
-    if(this.state.loadingProfile === false) {
-      this.setState({loadingProfile: true});
-      this.props.getUserPromise(params.userId).then((user) => {
-        console.log(user);
-        this.setState({
-          userProfile: this.props.user.data,
-          loadingProfile: false,
-          initState: true
-        })
+    this.props.getUserPromise(params.userId).then((user) => {
+      console.log(user);
+      this.setState({
+        userProfile: this.props.user.data,
+        loadingProfile: false,
+        initState: true
       })
-    }
+    })
   }
 
   updatePageDetails(user){
@@ -113,22 +113,16 @@ export class Profile extends Component {
     // });
   }
 
-  onReload = () => {
-    this.setState({
-      loadingProfile: false,
-      initState: true
-    })
-  };
-
   render() {
     const {user} = this.props;
 
+    if (this.state.loadingProfile) {
+      return <h1 style={{marginTop: '5rem'}}>Loading...</h1>
+    }
+
     return (
-    <div style={{marginTop: '5rem'}}>
-      {
-        this.state.loadingProfile === false && !_.isEmpty(this.state.userProfile) ? (
+      <div style={{marginTop: '5rem'}}>
         <ProfileDetail
-          onReload={this.onReload}
           history={this.props.history}
           user={user}
           images={user.data.images}
@@ -136,11 +130,7 @@ export class Profile extends Component {
           following={user.data.following}
           followers={user.data.followers}
         />
-        ):(
-          <Header style={{marginTop: '5rem'}} as={'h1'}>Loading...</Header>
-        )
-      }
-    </div>
+      </div>
     );
   }
 }
@@ -151,4 +141,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getAuth, getUser, getUserPromise})(Profile);
+  {getAuth, getUserOnce, getUserPromise})(Profile);

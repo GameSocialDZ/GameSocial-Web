@@ -111,7 +111,6 @@ class UserCard extends Component {
               )
             }
             <Button
-              onClick={this.getUserProfile}
               basic color='blue'><Link to={`/profile/${publisher.id}`}>Profile</Link></Button>
           </div>
         </Card.Content>

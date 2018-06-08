@@ -22,10 +22,6 @@ export class ProfileDetail extends Component {
     }
   }
 
-  componentWillUnmount() {
-     this.props.onReload();
-  }
-
   renderUserImages(images) {
     return _.map(images, (image) => {
       return (
