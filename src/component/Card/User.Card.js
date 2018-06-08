@@ -45,7 +45,7 @@ class UserCard extends Component {
     this.props.removeUserFollower(auth.currentUser.uid, publisher.id);
     this.props.removeUserFollowing(user.data.id, publisher.id);
     // Gets the user once and switches the unfollow/follow buttons
-    this.props.getUserOnce(this.props.auth.currentUser.uid)
+    // this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
   Follow = () => {
@@ -54,7 +54,7 @@ class UserCard extends Component {
     this.props.addUserFollower(user.data, publisher.id);
     this.props.addUserFollowing(auth.currentUser.uid, publisher);
     // Gets the user once and switches the unfollow/follow buttons
-    this.props.getUserOnce(this.props.auth.currentUser.uid)
+    // this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
   getUserProfile = () => {
@@ -91,7 +91,7 @@ class UserCard extends Component {
                   <div>
                     {
                       // if unAuthorized (not logged in) don't show follow or unfollow button
-                      !_.isEmpty(auth.currentUser) &&
+                      !_.isEmpty(auth.currentUser) && publisher.id !== this.props.auth.currentUser.uid &&
                       <div>
                         {
                           // Check auth user's following list to render unfollow or follow button

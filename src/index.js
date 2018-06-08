@@ -17,7 +17,7 @@ ReactDOM.render(
         <MenuHeader/>
         <Switch>
           <Route exact path="/profile/:userId" component={Profile}/>
-          <Route exact path="/view" component={View}/>
+          <Route exact path="/view/:publisherId/:type/:uploadId" component={View}/>
           <Route exact path="/" component={Home}/>
         </Switch>
       </div>

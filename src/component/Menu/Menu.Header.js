@@ -50,7 +50,9 @@ class MenuHeader extends Component {
       <Dropdown trigger={trigger}>
         <Dropdown.Menu>
           <Dropdown.Item
-            onClick={this.getProfile.bind(this)}><Link to={`/profile/${currentUser.uid}`}>Profile</Link></Dropdown.Item>
+            onClick={this.getProfile.bind(this)}>
+            <Link to={`/profile/${currentUser.uid}`}>Profile</Link>
+          </Dropdown.Item>
           <Dropdown.Divider/>
           <Dropdown.Item
             text='Sign Out'
@@ -67,13 +69,10 @@ class MenuHeader extends Component {
 
     return (
       <Menu fixed={'top'}>
-        <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
-          <Link to="/">
-            <img style={{width: '50px'}} src="https://www.showwp.com/wp-content/uploads/2016/02/fox-gradient.png"/>
-          </Link>
+        <Menu.Item as={Link} to='/' name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
+          <img style={{width: '50px'}} src="https://www.showwp.com/wp-content/uploads/2016/02/fox-gradient.png"/>
         </Menu.Item>
-        <Menu.Item name='feed' active={activeItem === 'feed'} onClick={this.handleItemClick}>
-          <Link to="/feed">Feed</Link>
+        <Menu.Item as={Link} to='/feed' name='feed' active={activeItem === 'feed'} onClick={this.handleItemClick}>
         </Menu.Item>
         <Menu.Item>
           {this.renderSearchDropdown()}

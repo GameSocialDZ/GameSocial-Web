@@ -77,7 +77,7 @@ class VideoCard extends Component {
           }
           <Button.Group>
             <Button type="button" onClick={this.getViewState.bind(this)}>
-              <Link to="/view">View</Link>
+              <Link to={`/view/${video.publisher.id}/${video.config.type}/${video.id}`}>View</Link>
             </Button>
             {
               (history.location.pathname === '/profile' && currentUser !== null) &&

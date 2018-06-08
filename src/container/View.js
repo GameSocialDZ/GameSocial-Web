@@ -15,7 +15,6 @@ class View extends Component {
     this.state = {
       view: [],
       user: [],
-      // otherUser: []
     }
   }
 

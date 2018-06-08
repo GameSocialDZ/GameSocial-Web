@@ -74,7 +74,7 @@ class ImageCard extends Component {
           }
           <Button.Group>
             <Button type="button" onClick={this.getViewState.bind(this)}>
-              <Link className="" to="/view">View</Link>
+              <Link to={`/view/${image.publisher.id}/${image.config.type}/${image.id}`}>View</Link>
             </Button>
             {
               // Disable Edit button if on profile page and unAuthorized (not logged in)
