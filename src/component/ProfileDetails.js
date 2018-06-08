@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import {Grid, Header, Container} from 'semantic-ui-react';
 
-import {getUser} from "../actions/action.user";
+import {getUser, getUserPromise} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
 
 import ImageCard from "../component/Card/Image.Card";
@@ -18,8 +18,12 @@ export class ProfileDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeMenu: 'images'
+      activeMenu: 'images',
     }
+  }
+
+  componentWillUnmount() {
+     this.props.noLoad()
   }
 
   renderUserImages(images) {
@@ -97,18 +101,18 @@ export class ProfileDetail extends Component {
 
     return (
       <div style={{marginTop: '5rem'}}>
-        <div>
-          <ProfileCard
-            user={user.data}/>
-        </div>
-        <MenuProfile
-          images={images}
-          videos={videos}
-          followers={followers}
-          following={following}
-          getActiveMenu={(state) => this.getActiveMenu(state)}/>
-        {
-          this.state.activeMenu === 'images' &&
+          <div>
+            <ProfileCard
+              user={user.data}/>
+          </div>
+          <MenuProfile
+            images={images}
+            videos={videos}
+            followers={followers}
+            following={following}
+            getActiveMenu={(state) => this.getActiveMenu(state)}/>
+          {
+            this.state.activeMenu === 'images' &&
           (
             <Container>
               <Grid stackable columns={3}>
@@ -117,48 +121,53 @@ export class ProfileDetail extends Component {
                 </Grid.Row>
               </Grid>
             </Container>
-          )
-        }
-        {
-          this.state.activeMenu === 'videos' &&
-          (
-            <Container>
-              <Grid stackable columns={3}>
-                <Grid.Row>
-                  {this.renderUserVideos(videos)}
-                </Grid.Row>
-              </Grid>
-            </Container>
-          )
-        }
-        {
-          this.state.activeMenu === 'followers' &&
-          (
-            <Container>
-              <Grid stackable columns={3}>
-                <Grid.Row>
-                  {this.renderUserFollowers(followers)}
-                </Grid.Row>
-              </Grid>
-            </Container>
-          )
-        }
-        {
-          this.state.activeMenu === 'following' &&
-          (
-            <Container>
-              <Grid stackable columns={3}>
-                <Grid.Row>
-                  {this.renderUserFollowing(following)}
-                </Grid.Row>
-              </Grid>
-            </Container>
-          )
-        }
+            )
+          }
+          {
+            this.state.activeMenu === 'videos' &&
+            (
+              <Container>
+                <Grid stackable columns={3}>
+                  <Grid.Row>
+                    {this.renderUserVideos(videos)}
+                  </Grid.Row>
+                </Grid>
+              </Container>
+            )
+          }
+          {
+            this.state.activeMenu === 'followers' &&
+            (
+              <Container>
+                <Grid stackable columns={3}>
+                  <Grid.Row>
+                    {this.renderUserFollowers(followers)}
+                  </Grid.Row>
+                </Grid>
+              </Container>
+            )
+          }
+          {
+            this.state.activeMenu === 'following' &&
+            (
+              <Container>
+                <Grid stackable columns={3}>
+                  <Grid.Row>
+                    {this.renderUserFollowing(following)}
+                    </Grid.Row>
+                </Grid>
+              </Container>
+
+            )
+          }
       </div>
     );
   }
 }
 
-export default connect(null,
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps,
   {getAuth, getUser})(ProfileDetail);

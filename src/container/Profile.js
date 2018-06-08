@@ -16,18 +16,19 @@ export class Profile extends Component {
     this.state = {
       loadingProfile: false,
       userProfile: null,
-      initState: false
+      initState: true
     }
   }
 
-  // componentWillMount(){
-  //   console.log('Component Will Mount')
-  // }
-  //
-  // componentWillUnmount() {
-  //   console.log('Component Will Unmount');
-  // }
-  // Set the initial State
+  componentWillMount(){
+    console.log('Component Will Mount')
+  }
+
+  componentWillUnmount() {
+    console.log('Component Will Unmount');
+  }
+
+  //Set the initial State
   // componentWillMount() {
   //   const {match: {params}} = this.props;
   //   if(this.state.loadingProfile === false) {
@@ -44,21 +45,21 @@ export class Profile extends Component {
     const {match: {params}} = this.props;
 
 
-    if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId) {
-      this.setState({loadingProfile: true, intiState: false});
-      this.props.getUserPromise(params.userId).then(() => {
-        this.setState({userProfile: this.props.user})
-      });
-    }
+    // if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId) {
+    //   this.setState({loadingProfile: false, intiState: false});
+    //   this.props.getUserPromise(params.userId).then(() => {
+    //     this.setState({userProfile: this.props.user.data})
+    //   });
+    // }
 
-    // Handles Same Page different User
+    //Handles Same Page different User
     if(!this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
-      this.setState({loadingProfile: true, initState: true});
+      this.setState({loadingProfile: true, initState: false});
       this.props.getUserPromise(params.userId).then(() => {
         this.setState({userProfile: this.props.user.data})
       });
     }
-
+    //
     // if(this.state.userProfile && nextProps.user && nextProps.user.data && (nextProps.user.data.id === this.state.userProfile.data.id) && !_.isEqual(nextProps.user, this.state.userProfile)) {
     //   this.updatePageDetails(nextProps.user);
     // }
@@ -112,10 +113,17 @@ export class Profile extends Component {
     //     thisContainer.props.getUserFollowers({});
     //   }
 
-      //this.setState({loadingProfile: false});
+    //this.setState({loadingProfile: false});
 
     // });
   }
+
+  noLoad = () => {
+    this.setState({
+      loadingProfile: false,
+      initState: true
+    })
+  };
 
   render() {
     const {user} = this.props;
@@ -125,12 +133,14 @@ export class Profile extends Component {
       {
         this.state.loadingProfile === false && !_.isEmpty(this.state.userProfile) ? (
         <ProfileDetail
+          noLoad={this.noLoad}
           history={this.props.history}
           user={user}
           images={user.data.images}
           videos={user.data.videos}
           following={user.data.following}
-          followers={user.data.followers}/>
+          followers={user.data.followers}
+        />
         ):(
           <Header style={{marginTop: '5rem'}} as={'h1'}>Loading...</Header>
         )
@@ -142,7 +152,7 @@ export class Profile extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  user: state.user,
+  user: state.user
 });
 
 export default connect(mapStateToProps,
