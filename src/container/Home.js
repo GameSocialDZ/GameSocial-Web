@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import {Grid, Segment, Container} from 'semantic-ui-react';
 
-import {getUploads, getUploadsOnce} from "../actions/action.upload";
+import {getUploads, getUploadsPromise} from "../actions/action.upload";
 import {getUserOnce, getUser} from '../actions/action.user';
 
 import ContentSlider from '../component/Slider/Content.Slider';
@@ -16,19 +16,29 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      uploads: []
+      uploads: null,
+      loadingUploads: true,
+      initState: true
     }
   }
 
   // Get the uploads for home page
   componentDidMount() {
-    this.props.getUploads();
+    this.props.getUploadsPromise().then((uploads) => {
+      console.log(uploads);
+      this.setState({
+        uploads: this.props.uploads.data,
+        loadingUploads: false,
+        initState: true
+      });
+    })
   }
 
   // Set all uploads within components state
   componentWillMount() {
     this.setState({
-      uploads: this.props.uploads
+      loadingUploads: true,
+      initState: true
     })
   }
 
@@ -83,7 +93,7 @@ class Home extends Component {
   render() {
     const {uploads} = this.props;
 
-    if (this.props.uploads.loading) {
+    if (this.state.loadingUploads) {
       return <h1 style={{marginTop: '5rem'}}>Loading...</h1>
     }
 
@@ -134,4 +144,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getUploads, getUser, getUserOnce, getUploadsOnce})(Home);
+  {getUploads, getUser, getUserOnce, getUploadsPromise})(Home);

@@ -33,6 +33,7 @@ export const getUser = userId => dispatch => {
 };
 
 export const getUserPromise = (userId) => dispatch => {
+  dispatch(userRequest());
   return new Promise((resolve, reject) => {
     database.ref(`users/${userId}`).on('value', (data) => {
       let userInfo = data.val();

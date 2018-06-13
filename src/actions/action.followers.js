@@ -1,34 +1,44 @@
 import {database} from "../firebase";
 import _ from 'lodash';
 
-export const FOLLOW_REQUEST = 'USER_REQUEST';
-export const followRequest = () => ({
-  type: FOLLOW_REQUEST,
+export const FOLLOWERS_REQUEST = 'FOLLOWERS_REQUEST';
+export const followersRequest = () => ({
+  type: FOLLOWERS_REQUEST,
 });
 
-export const FOLLOW_GET_SUCCESS = 'FOLLOW_GET_SUCCESS';
-export const followGetSuccess = (followers, following) => ({
-  type: FOLLOW_GET_SUCCESS,
-  followers,
-  following
+export const FOLLOWERS_GET_SUCCESS = 'FOLLOWERS_GET_SUCCESS';
+export const followersGetSuccess = (followers) => ({
+  type: FOLLOWERS_GET_SUCCESS,
+  followers
 });
 
-export const FOLLOW_UPDATE_SUCCESS = 'FOLLOW_UPDATE_SUCCESS';
-export const followUpdateSuccess = () => ({
-  type: FOLLOW_UPDATE_SUCCESS,
+export const FOLLOWERS_UPDATE_SUCCESS = 'FOLLOWERS_UPDATE_SUCCESS';
+export const followersUpdateSuccess = () => ({
+  type: FOLLOWERS_UPDATE_SUCCESS,
 });
 
-export const FOLLOW_DELETE_SUCCESS = 'FOLLOW_DELETE_SUCCESS';
-export const followDeleteSuccess = () => ({
-  type: FOLLOW_DELETE_SUCCESS,
+export const FOLLOWERS_DELETE_SUCCESS = 'FOLLOWERS_DELETE_SUCCESS';
+export const followersDeleteSuccess = () => ({
+  type: FOLLOWERS_DELETE_SUCCESS,
 });
 
-export const FOLLOW_ERROR = 'FOLLOW_ERROR';
-export const followError = error => ({
-  type: FOLLOW_ERROR,
+export const FOLLOWERS_ERROR = 'FOLLOWERS_ERROR';
+export const followersError = error => ({
+  type: FOLLOWERS_ERROR,
   error
 });
 
+export const getFollowersPromise = (userId) => dispatch => {
+  dispatch(followersRequest());
+  return new Promise((resolve, reject) => {
+    database.ref(`users/${userId}/followers`).on('value', (data) => {
+      let followers = data.val();
+      resolve(dispatch(followersGetSuccess(followers)));
+    });
+  })
+};
+
+///////////*******DIVIDE FUNCTIONS BETWEEN NEW ACTIONS*******/////////////////
 export const getFollowers = (userId) => dispatch => {
   dispatch(followRequest());
   return database.ref(`users/${userId}/followers/`).on('value', (data) => {

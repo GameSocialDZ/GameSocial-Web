@@ -3,7 +3,8 @@ import authReducer from "./reducer.auth";
 import userReducer from "./reducer.user";
 import uploadReducer from "./reducer.upload";
 import viewReducer from "./reducer.view";
-import followReducer from "./reducer.follow";
+import followersReducer from "./reducer.followers";
+import followingReducer from "./reducer.following";
 import {reducer as formReducer} from "redux-form";
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   uploads: uploadReducer,
   view: viewReducer,
-  follow: followReducer
+  following: followingReducer,
+  followers: followersReducer
 });
 
 export default rootReducer;

@@ -45,6 +45,16 @@ export const getUploads = () => dispatch => {
   })
 };
 
+export const getUploadsPromise = () => dispatch => {
+  dispatch(uploadRequest());
+  return new Promise((resolve, reject) => {
+    database.ref('uploads/').on('value', data => {
+      let uploads = data.val();
+      resolve(dispatch(uploadGetSuccess(uploads)));
+    })
+  });
+};
+
 export const upload = (data, file) => dispatch => {
   // TODO: Check Authentication
   dispatch(uploadRequest());

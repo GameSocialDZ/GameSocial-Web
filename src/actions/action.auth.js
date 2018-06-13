@@ -1,8 +1,7 @@
 import {auth, database} from "../firebase";
 import * as firebase from "firebase";
 import {NewUserObject} from "./models";
-import {getUser} from "./action.user";
-import {userError} from './action.user';
+import {getUserOnce} from "./action.user";
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const authRequest = () => ({
@@ -56,28 +55,24 @@ export const registerEmailPassword = (user) => dispatch => {
 
 
 export const loginEmailPassword = (user) => dispatch => {
-  return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    .then(function() {
-      dispatch(authRequest());
-      return auth.signInWithEmailAndPassword(user.loginEmail, user.loginPassword)
-        .then(auth => {
-          console.log(auth);
+  dispatch(authRequest());
+  return new Promise((resolve, reject) => {
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(function() {
+        auth.signInWithEmailAndPassword(user.loginEmail, user.loginPassword)
+          .then(auth => {
+            console.log(auth);
 
-          const AuthUserRef = database.ref(`/users/${auth.uid}`);
-          AuthUserRef.child(`/profile/avatar/url`).once('value', data =>{
-            auth.updateProfile({photoURL: data.val()});
-          });
+            const AuthUserRef = database.ref(`/users/${auth.uid}`);
+            AuthUserRef.child(`/profile/avatar/url`).once('value', data =>{
+              auth.updateProfile({photoURL: data.val()});
+            });
 
-          dispatch(authGetSuccess(auth));
-          return dispatch(getUser(auth.uid))
-            .catch(error => dispatch(userError(error)))
-        })
-        .catch(error => {
-          dispatch(authError(error));
-        })
-    }).catch((error) =>{
-     dispatch(authError(error));
-  });
+            dispatch(authGetSuccess(auth));
+            dispatch(getUserOnce(auth.uid));
+          })
+      })
+  }).catch(error => dispatch(authError(error)))
 };
 
 export const getAuth = () => dispatch => {

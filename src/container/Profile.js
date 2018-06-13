@@ -7,6 +7,8 @@ import {Grid, Header, Container} from 'semantic-ui-react';
 
 import {getUserOnce, getUserPromise} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
+import {getFollowersPromise} from '../actions/action.followers';
+import {getFollowingPromise} from '../actions/action.following';
 
 import ProfileDetail from "../component/ProfileDetails";
 
@@ -14,10 +16,12 @@ export class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loadingProfile: false,
+      loadingProfile: true,
       userProfile: null,
       initState: true,
-      follow: null
+      follow: null,
+      loadingFollowing: true,
+      loadingFollowers: true,
     }
   }
 
@@ -33,12 +37,10 @@ export class Profile extends Component {
   componentWillReceiveProps(nextProps) {
     const {match: {params}} = this.props;
 
-    // if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId) {
-    //   this.setState({loadingProfile: false, intiState: false});
-    //   this.props.getUserPromise(params.userId).then(() => {
-    //     this.setState({userProfile: this.props.user.data})
-    //   });
-    // }
+    //TODO: Handle login on view page
+    if(!_.isEmpty(nextProps.auth.currentUser)){
+      console.log('Logged in');
+    }
 
     //Handles Same Page different User
     if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
@@ -60,7 +62,7 @@ export class Profile extends Component {
 
   // Handles refresh
   componentDidMount() {
-    const {match: {params}} = this.props;
+    const {match: {params}, auth} = this.props;
 
     // Get the follow state
 
@@ -72,7 +74,29 @@ export class Profile extends Component {
         loadingProfile: false,
         initState: true
       })
-    })
+    }).then(() => {
+      if(!_.isEmpty(auth.currentUser)) {
+        this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
+          console.log(following);
+          this.setState({
+            following: this.props.following.data,
+            loadingFollowing: false,
+            initState: true
+          })
+        });
+      }
+    }).then(() => {
+      if(!_.isEmpty(auth.currentUser)) {
+        this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
+          console.log(followers);
+          this.setState({
+            followers: this.props.followers.data,
+            loadingFollowers: false,
+            initState: true
+          })
+        });
+      }
+    });
   }
 
   updatePageDetails(user){
@@ -137,8 +161,11 @@ export class Profile extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  user: state.user
+  user: state.user,
+  following: state.following,
+  followers: state.followers
 });
 
 export default connect(mapStateToProps,
-  {getAuth, getUserOnce, getUserPromise})(Profile);
+  {getAuth, getUserOnce, getUserPromise, getFollowersPromise, getFollowingPromise})
+(Profile);

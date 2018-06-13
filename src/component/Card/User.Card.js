@@ -14,10 +14,12 @@ class UserCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // Initialize the auth user's followers
-      following: []
+      followers: null,
+      following: null
     }
   }
+
+  //TODO:
 
   // set initial user following state if logged in
   componentWillMount() {
@@ -36,6 +38,10 @@ class UserCard extends Component {
     }
   }
 
+  componentDidMount() {
+
+  }
+
   /**Publisher each follower & following from user
    ** profile page and the owner of upload on view page.**/
 
@@ -44,8 +50,6 @@ class UserCard extends Component {
     const {user, auth, publisher} = this.props;
     this.props.removeUserFollower(auth.currentUser.uid, publisher.id);
     this.props.removeUserFollowing(user.data.id, publisher.id);
-    // Gets the user once and switches the unfollow/follow buttons
-    // this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
   Follow = () => {
@@ -53,24 +57,10 @@ class UserCard extends Component {
     const {user, auth, publisher} = this.props;
     this.props.addUserFollower(user.data, publisher.id);
     this.props.addUserFollowing(auth.currentUser.uid, publisher);
-    // Gets the user once and switches the unfollow/follow buttons
-    // this.props.getUserOnce(this.props.auth.currentUser.uid)
   };
 
-  // getUserProfile = () => {
-  //   console.log('click success');
-  //   const {publisher, auth} = this.props;
-  //   if(_.isEmpty(auth.currentUser)){
-  //
-  //   } else{
-  //     if(auth.currentUser.uid !== publisher.id) {
-  //
-  //     }
-  //   }
-  // };
-
   render() {
-    const {publisher, auth} = this.props;
+    const {publisher, auth, followers, following} = this.props;
     return (
       <Card>
         <Card.Content>
@@ -95,7 +85,7 @@ class UserCard extends Component {
                       <div>
                         {
                           // Check auth user's following list to render unfollow or follow button
-                          this.state.following[publisher.id] ? (
+                          this.props.following[publisher.id] ? (
                             <Button
                               onClick={this.unFollow}
                               basic color='green'>Unfollow</Button>
@@ -121,7 +111,9 @@ class UserCard extends Component {
 
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  followers: state.followers,
+  following: state.following
 });
 
 export default connect(mapStateToProps,

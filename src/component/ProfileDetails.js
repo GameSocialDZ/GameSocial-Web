@@ -47,6 +47,7 @@ export class ProfileDetail extends Component {
   }
 
   renderUserFollowers(followers) {
+    const {following} = this.props;
     return _.map(followers, (follower) => {
       if(follower.id === 'default') {
         return <span key={follower.id}/>;
@@ -54,6 +55,8 @@ export class ProfileDetail extends Component {
         return (
           <Grid.Column key={follower.id}>
             <UserCard
+              followers={followers}
+              following={following}
               user={this.props.user}
               publisher={follower}
             />
@@ -64,6 +67,7 @@ export class ProfileDetail extends Component {
   }
 
   renderUserFollowing(following) {
+    const {followers} = this(props);
     return _.map(following, (followee) => {
       if(followee.id === 'default') {
         return <span key={followee.id}/>;
@@ -71,6 +75,8 @@ export class ProfileDetail extends Component {
         return (
           <Grid.Column key={followee.id}>
             <UserCard
+              followers={followers}
+              following={following}
               user={this.props.user}
               publisher={followee}
             />
