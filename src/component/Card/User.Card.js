@@ -6,8 +6,10 @@ import _ from 'lodash';
 import {Image, Card, Button} from 'semantic-ui-react';
 
 import {deleteUpload} from "../../actions/action.upload";
-import {getUserOnce, addUserFollower, addUserFollowing,
-  removeUserFollower, removeUserFollowing, getUser
+import {getFollowingPromise, getFollowing} from '../../actions/action.following';
+import {getFollowersPromise, getFollowers} from '../../actions/action.followers';
+import {addUserFollower, addUserFollowing,
+  removeUserFollower, removeUserFollowing,
 } from "../../actions/action.user";
 
 class UserCard extends Component {
@@ -20,23 +22,45 @@ class UserCard extends Component {
   }
 
   //TODO:
+  componentWillUnmount() {
+    const {auth, getFollowingPromise, getFollowersPromise} = this.props;
 
-  // set initial user following state if logged in
-  componentWillMount() {
-    if(!_.isEmpty(this.props.auth.currentUser))
-    this.setState({
-      following: this.props.user.data.following
-    })
+    // if(!_.isEmpty(auth.currentUser)) {
+    //   getFollowingPromise(auth.currentUser.uid).then((following) => {
+    //     console.log(following);
+    //     this.setState({
+    //       following: this.props.following,
+    //       loadingFollowing: false,
+    //       initState: true,
+    //     })
+    //   }).then(() => {
+    //     getFollowersPromise(auth.currentUser.uid).then((followers) => {
+    //       console.log(followers);
+    //       this.setState({
+    //         followers: this.props.followers,
+    //         loadingFollowers: false,
+    //         initState: true,
+    //       })
+    //     });
+    //   })
+    // }
   }
 
   // Update this components state with the new auth user's followers
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.user.data.following !== this.state.following) {
-      this.setState({
-        following: nextProps.user.data.following
-      })
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if(!_.isEmpty(nextProps.auth.currentUser)) {
+  //     if (nextProps.following.data !== this.state.following.data) {
+  //       this.setState({
+  //         following: nextProps.following
+  //       })
+  //     }
+  //     if (nextProps.followers.data !== this.state.followers.data) {
+  //       this.setState({
+  //         followers: nextProps.followers
+  //       })
+  //     }
+  //   }
+  // }
 
   componentDidMount() {
 
@@ -60,7 +84,7 @@ class UserCard extends Component {
   };
 
   render() {
-    const {publisher, auth, followers, following} = this.props;
+    const {publisher, auth, following, user} = this.props;
     return (
       <Card>
         <Card.Content>
@@ -75,7 +99,7 @@ class UserCard extends Component {
           <div className='ui two buttons'>
             {
               // If followers is updating return loading button
-              this.props.user.loading ? (
+              following.loading ? (
                 <Button loading/>
                 ):(
                   <div>
@@ -85,7 +109,7 @@ class UserCard extends Component {
                       <div>
                         {
                           // Check auth user's following list to render unfollow or follow button
-                          this.props.following[publisher.id] ? (
+                          following.data[publisher.id] ? (
                             <Button
                               onClick={this.unFollow}
                               basic color='green'>Unfollow</Button>
@@ -111,12 +135,15 @@ class UserCard extends Component {
 
 
 const mapStateToProps = state => ({
+  user: state.user,
   auth: state.auth,
   followers: state.followers,
   following: state.following
 });
 
 export default connect(mapStateToProps,
-  {deleteUpload, getUserOnce, getUser, addUserFollowing, addUserFollower,
-  removeUserFollowing, removeUserFollower})
+  {deleteUpload, addUserFollowing, addUserFollower,
+    removeUserFollowing, removeUserFollower,
+    getFollowersPromise, getFollowingPromise,
+    getFollowers, getFollowing})
 (UserCard);

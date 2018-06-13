@@ -5,7 +5,7 @@ import {
 const initialState = {
   loading: false,
   error: null,
-  followers: []
+  data: []
 };
 
 export default function reducer(state = initialState, action) {
@@ -17,7 +17,7 @@ export default function reducer(state = initialState, action) {
       });
     case(FOLLOWERS_GET_SUCCESS):
       return Object.assign({}, state, {
-        followers: action.followers,
+        data: action.data,
         error: null,
         loading: false
       });

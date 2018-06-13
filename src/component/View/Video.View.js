@@ -51,7 +51,6 @@ class VideoView extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <UserCard
-                user={user}
                 publisher={video.publisher}/>
             </Grid.Column>
           </Grid.Row>

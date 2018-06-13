@@ -26,6 +26,15 @@ export const viewError = error => ({
   error
 });
 
+export const getView = (uploadId, type) => dispatch => {
+  dispatch(viewRequest());
+  database.ref(`uploads/${type}/${uploadId}`).on('value', (data) => {
+    let upload = data.val();
+    console.log(upload);
+    dispatch(viewGetSuccess(upload));
+  });
+};
+
 export const getViewPromise = (uploadId, type) => dispatch => {
   dispatch(viewRequest());
   return new Promise((resolve, reject) => {

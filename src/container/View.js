@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
-import {deleteView, getViewPromise} from "../actions/action.view";
+import {deleteView, getViewPromise, getView} from "../actions/action.view";
 import {getUserPromise} from '../actions/action.user';
-import {getFollowingPromise} from "../actions/action.following";
-import {getFollowersPromise} from "../actions/action.followers";
+import {getFollowingPromise, getFollowing} from "../actions/action.following";
+import {getFollowersPromise, getFollowers} from "../actions/action.followers";
 
 import ImageView from '../component/View/Image.View';
 import VideoView from '../component/View/Video.View';
@@ -27,12 +27,40 @@ class View extends Component {
 
   /////*****Will receive Next Props for when user logs in on view page*****/////
   componentWillReceiveProps(nextProps) {
-      console.log(nextProps);
 
-      //TODO: Handle login on view page
-      if(!_.isEmpty(nextProps.auth.currentUser)){
-        console.log('Logged in');
-      }
+    // Handle following change to toggle follow/unfollow button
+    if(this.state.initState && nextProps.following.data !== this.state.following) {
+      this.setState({loadingFollowing: true});
+      this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
+        console.log(following);
+        this.setState({
+          following: this.props.following.data,
+          loadingFollowing: false
+        })
+      });
+    }
+
+    // Handle Login on view page
+    if(this.state.initState && !_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
+      this.setState({loadingFollowers: true, loadingFollowing: true});
+
+      //this.props.getFollowers(nextProps.auth.currentUser.uid);
+      this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
+        console.log(following);
+        this.setState({
+          following: this.props.following.data,
+          loadingFollowing: false
+        })
+      });
+
+      //this.props.getFollowing(nextProps.auth.currentUser.uid);
+      this.props.getFollowersPromise(nextProps.auth.currentUser.uid).then((followers) => {
+        console.log(followers);
+        this.setState({loadingFollowers: false})
+      });
+    }
+
+      this.setState({initState: false})
   }
 
   // Set the initial state
@@ -46,50 +74,36 @@ class View extends Component {
   // Handles Refresh
   componentDidMount() {
     const {match: {params}, auth} = this.props;
-    // Get upload state
-    // then =>
-    // Get the publisher state
-    // then =>
-    // Get the following and followers state if logged in
+
+    //this.props.getView(params.uploadId, params.type + 's');
     this.props.getViewPromise(params.uploadId, params.type + 's').then((view) => {
       console.log(view);
-      this.setState({
-        view: this.props.view.data,
-        loadingView: false,
-        initState: true,
-      })
-    }).then(() => {
-      this.props.getUserPromise(params.userId).then((user) => {
-        console.log(user);
+      this.setState({loadingView: false})
+    });
+
+    //this.props.getUser(params.userId);
+    this.props.getUserPromise(params.userId).then((user) => {
+      console.log(user);
+      this.setState({loadingUser: false})
+    });
+
+    if(!_.isEmpty(auth.currentUser)) {
+      //this.props.getFollowing(auth.currentUser.uid);
+      this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
+        console.log(following);
         this.setState({
-          user: this.props.user.data,
-          loadingUser: false,
-          initState: true,
+          following: this.props.following,
+          loadingFollowing: false
         })
       });
-    }).then(() => {
-      if(!_.isEmpty(auth.currentUser)) {
-        this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
-          console.log(following);
-          this.setState({
-            following: this.props.following.data,
-            loadingFollowing: false,
-            initState: true,
-          })
-        });
-      }
-    }).then(() => {
-      if(!_.isEmpty(auth.currentUser)) {
-        this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
-          console.log(followers);
-          this.setState({
-            followers: this.props.followers.data,
-            loadingFollowers: false,
-            initState: true,
-          })
-        });
-      }
-    });
+      //this.props.getFollowers(auth.currentUser.uid);
+      this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
+        console.log(followers);
+        this.setState({loadingFollowers: false})
+      });
+    }
+
+    this.setState({initState: true})
   }
 
   render() {
@@ -128,5 +142,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {deleteView, getViewPromise, getUserPromise, getFollowingPromise, getFollowersPromise})
+  {deleteView, getViewPromise, getView, getUserPromise,
+    getFollowingPromise, getFollowersPromise, getFollowing, getFollowers})
 (View);

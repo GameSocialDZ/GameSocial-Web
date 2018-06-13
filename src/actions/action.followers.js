@@ -7,9 +7,9 @@ export const followersRequest = () => ({
 });
 
 export const FOLLOWERS_GET_SUCCESS = 'FOLLOWERS_GET_SUCCESS';
-export const followersGetSuccess = (followers) => ({
+export const followersGetSuccess = (data) => ({
   type: FOLLOWERS_GET_SUCCESS,
-  followers
+  data
 });
 
 export const FOLLOWERS_UPDATE_SUCCESS = 'FOLLOWERS_UPDATE_SUCCESS';
@@ -40,31 +40,17 @@ export const getFollowersPromise = (userId) => dispatch => {
 
 ///////////*******DIVIDE FUNCTIONS BETWEEN NEW ACTIONS*******/////////////////
 export const getFollowers = (userId) => dispatch => {
-  dispatch(followRequest());
+  dispatch(followersRequest());
   return database.ref(`users/${userId}/followers/`).on('value', (data) => {
-    dispatch(followGetSuccess(data.val()));
-  });
-};
-
-export const getFollowing = (userId) => dispatch => {
-  dispatch(followRequest());
-  return database.ref(`users/${userId}/followers`).on('value', (data) => {
-    dispatch(followGetSuccess(data.val()));
+    dispatch(followersGetSuccess(data.val()));
   });
 };
 
 export const getFollowersOnce = (userId) => dispatch => {
-  dispatch(userRequest());
+  dispatch(followersRequest());
   return database.ref(`users/${userId}/followers`).once('value', (data) => {
-    dispatch(userGetSuccess(data.val()));
-  }).catch(error => dispatch(userError(error)));
-};
-
-export const getFollowingOnce = (userId) => dispatch => {
-  dispatch(followRequest());
-  return database.ref(`users/${userId}/following`).once('value', (data) => {
-    dispatch(followGetSuccess(data.val()));
-  }).catch(error => dispatch(followError(error)));
+    dispatch(followersGetSuccess(data.val()));
+  }).catch(error => dispatch(followersError(error)));
 };
 
 export const addUserFollowing = (userId ,publisher) => dispatch => {

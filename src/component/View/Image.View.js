@@ -47,7 +47,6 @@ class ImageView extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <UserCard
-                user={user}
                 publisher={image.publisher}/>
               </Grid.Column>
           </Grid.Row>

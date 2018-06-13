@@ -7,9 +7,9 @@ export const followingRequest = () => ({
 });
 
 export const FOLLOWING_GET_SUCCESS = 'FOLLOWING_GET_SUCCESS';
-export const followingGetSuccess = (following) => ({
+export const followingGetSuccess = (data) => ({
   type: FOLLOWING_GET_SUCCESS,
-  following
+  data
 });
 
 export const FOLLOWING_UPDATE_SUCCESS = 'FOLLOWING_UPDATE_SUCCESS';
@@ -32,38 +32,24 @@ export const getFollowingPromise = (userId) => dispatch => {
   dispatch(followingRequest());
   return new Promise((resolve, reject) => {
     database.ref(`users/${userId}/following`).on('value', (data) => {
-      let following = data.val();
+      const following = data.val();
       resolve(dispatch(followingGetSuccess(following)));
-    });
+    })
   })
 };
 
-export const getFollowers = (userId) => dispatch => {
-  dispatch(followRequest());
-  return database.ref(`users/${userId}/followers/`).on('value', (data) => {
-    dispatch(followGetSuccess(data.val()));
-  });
-};
-
 export const getFollowing = (userId) => dispatch => {
-  dispatch(followRequest());
-  return database.ref(`users/${userId}/followers`).on('value', (data) => {
-    dispatch(followGetSuccess(data.val()));
+  dispatch(followingRequest());
+  return database.ref(`users/${userId}/followers/`).on('value', (data) => {
+    dispatch(followingGetSuccess(data.val()));
   });
-};
-
-export const getFollowersOnce = (userId) => dispatch => {
-  dispatch(userRequest());
-  return database.ref(`users/${userId}/followers`).once('value', (data) => {
-    dispatch(userGetSuccess(data.val()));
-  }).catch(error => dispatch(userError(error)));
 };
 
 export const getFollowingOnce = (userId) => dispatch => {
-  dispatch(followRequest());
+  dispatch(followingRequest());
   return database.ref(`users/${userId}/following`).once('value', (data) => {
-    dispatch(followGetSuccess(data.val()));
-  }).catch(error => dispatch(followError(error)));
+    dispatch(followingGetSuccess(data.val()));
+  }).catch(error => dispatch(followingError(error)));
 };
 
 export const addUserFollowing = (userId ,publisher) => dispatch => {
