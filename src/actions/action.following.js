@@ -53,48 +53,22 @@ export const getFollowingOnce = (userId) => dispatch => {
 };
 
 export const addUserFollowing = (userId ,publisher) => dispatch => {
-  const followingRef = database.ref(`users/${userId}/following`);
-  followingRef.child(`${publisher.id}/id`).set(publisher.id);
-  followingRef.child(`${publisher.id}/username`).set(publisher.username);
-  followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
-  // followingRef.child(`${publisher.id}/bio`).set(publisher.bio);
-};
-
-export const addUserFollower = (user, publisherId) => dispatch => {
-  const followersRef = database.ref(`users/${publisherId}/followers`);
-  followersRef.child(`${user.id}/id`).set(user.id);
-  followersRef.child(`${user.id}/username`).set(user.username);
-  followersRef.child(`${user.id}/avatar/url`).set(user.avatar.url);
-  // followersRef.child(`${user.id}/bio`).set(user.bio);
+  dispatch(followingRequest());
+  return new Promise((resolve, reject) => {
+    const followingRef = database.ref(`users/${userId}/following`);
+    followingRef.child(`${publisher.id}/id`).set(publisher.id);
+    followingRef.child(`${publisher.id}/username`).set(publisher.username);
+    followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
+    // followingRef.child(`${publisher.id}/bio`).set(publisher.bio);
+    resolve(dispatch(followingUpdateSuccess()));
+  })
 };
 
 export const removeUserFollowing = (userId, publisherId) => dispatch => {
   database.ref(`users/${userId}/following/${publisherId}`).remove();
 };
 
-export const removeUserFollower = (userId, publisherId) => dispatch => {
-  database.ref(`users/${publisherId}/followers/${userId}`).remove();
-};
-
-export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch => {
-  database.ref(`/users/${auth.uid}/followers/`).on('value', data => {
-    const followersArray = data.val();
-    _.forEach(followersArray, follower => {
-      if (follower.id === 'default') {
-        return null
-      }
-      const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.uid}`);
-      userFollowersRef.update({
-        avatar: {
-          url: file.secure_url
-        },
-        bio: values.editBio,
-        name: values.editName,
-        username: auth.displayName
-      })
-    });
-  });
-
+export const updateUserFollowing = (auth, values, file) => dispatch => {
   database.ref(`/users/${auth.uid}/following`).on('value', data => {
     const followingArray = data.val();
     _.forEach(followingArray, followee => {
@@ -110,9 +84,4 @@ export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch 
       })
     })
   });
-};
-
-export const deleteFollow = () => dispatch => {
-  dispatch(followRequest());
-  dispatch(followDeleteSuccess());
 };

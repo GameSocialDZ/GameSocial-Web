@@ -33,29 +33,17 @@ export class Profile extends Component {
     });
   }
 
-  // Decide if we are on our or otherUser profile before render
   componentWillReceiveProps(nextProps) {
     const {match: {params}} = this.props;
 
-    // Handle following change to toggle follow/unfollow button
-    if(this.state.initState && !_.isEmpty(nextProps.auth.currentUser) && nextProps.following.data !== this.state.following) {
-      this.setState({loadingFollowing: true});
-      this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
-        console.log(following);
-        this.setState({loadingFollowing: false})
-      });
-    }
-
-    // Handle Login on profile page
+    //TODO: Handle Login on profile page
     if(this.state.initState && !_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
       this.setState({loadingFollowers: true, loadingFollowing: true});
 
       //this.props.getFollowers(nextProps.auth.currentUser.uid);
       this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
         console.log(following);
-        this.setState({
-          following: this.props.following.data,
-          loadingFollowing: false})
+        this.setState({loadingFollowing: false})
       });
 
       //this.props.getFollowing(nextProps.auth.currentUser.uid);
@@ -65,7 +53,7 @@ export class Profile extends Component {
       });
     }
 
-    //Handles Same Page different User
+    //TODO: Handles Same Page different User
     if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
       this.setState({loadingProfile: true});
       //this.props.getUser(nextProps.match.params.userId);
@@ -76,6 +64,7 @@ export class Profile extends Component {
 
     }
 
+    //TODO: Handle profile page updates
     // if(this.state.userProfile && nextProps.user && nextProps.user.data && (nextProps.user.data.id === this.state.userProfile.data.id) && !_.isEqual(nextProps.user, this.state.userProfile)) {
     //   this.updatePageDetails(nextProps.user);
     // }
@@ -100,7 +89,6 @@ export class Profile extends Component {
       this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
         console.log(following);
         this.setState({
-          following: this.props.following.data,
           loadingFollowing: false
         })
       });

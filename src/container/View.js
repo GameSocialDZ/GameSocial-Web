@@ -28,18 +28,6 @@ class View extends Component {
   /////*****Will receive Next Props for when user logs in on view page*****/////
   componentWillReceiveProps(nextProps) {
 
-    // Handle following change to toggle follow/unfollow button
-    if(this.state.initState && nextProps.following.data !== this.state.following) {
-      this.setState({loadingFollowing: true});
-      this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
-        console.log(following);
-        this.setState({
-          following: this.props.following.data,
-          loadingFollowing: false
-        })
-      });
-    }
-
     // Handle Login on view page
     if(this.state.initState && !_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
       this.setState({loadingFollowers: true, loadingFollowing: true});
