@@ -99,18 +99,17 @@ export const removeUserFollower = (authId, publisherId) => dispatch => {
 };
 
 export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch => {
+
   database.ref(`/users/${auth.uid}/followers/`).on('value', data => {
     const followersArray = data.val();
     _.forEach(followersArray, follower => {
-      if (follower.id === 'default') {
-        return null
-      }
-      const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.uid}`);
+      if (follower.id === 'default') {return null}
+      const userFollowersRef = database.ref(`users/${follower.id}/following/${auth.uid}`);
       userFollowersRef.update({
         avatar: {
           url: file.secure_url
         },
-        bio: values.editBio,
+        id: auth.uid,
         name: values.editName,
         username: auth.displayName
       })
@@ -121,12 +120,12 @@ export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch 
     const followingArray = data.val();
     _.forEach(followingArray, followee => {
       if(followee.id === 'default'){return null}
-      const userFollowingRef = database.ref(`users/${followee.id}/following/${auth.uid}`);
+      const userFollowingRef = database.ref(`users/${followee.id}/followers/${auth.uid}`);
       userFollowingRef.update({
         avatar: {
           url: file.secure_url
         },
-        bio: values.editBio,
+        id: auth.uid,
         name: values.editName,
         username: auth.displayName
       })
