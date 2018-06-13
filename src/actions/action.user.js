@@ -80,8 +80,6 @@ export const addUserFollowing = (authId ,publisher) => dispatch => {
   followingRef.child(`${publisher.id}/id`).set(publisher.id);
   followingRef.child(`${publisher.id}/username`).set(publisher.username);
   followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
-  // followingRef.child(`${publisher.id}/bio`).set(publisher.bio);
-  // dispatch(userUpdateSuccess());
 };
 
 //TODO: make user auth info
@@ -90,7 +88,6 @@ export const addUserFollower = (auth, publisherId) => dispatch => {
   followersRef.child(`${auth.uid}/id`).set(auth.uid);
   followersRef.child(`${auth.uid}/username`).set(auth.displayName);
   followersRef.child(`${auth.uid}/avatar/url`).set(auth.photoURL);
-  // followersRef.child(`${user.id}/bio`).set(user.bio);
 };
 
 export const removeUserFollowing = (authId, publisherId) => dispatch => {

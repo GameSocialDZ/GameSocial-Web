@@ -36,7 +36,7 @@ class View extends Component {
       this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
         console.log(following);
         this.setState({
-          following: this.props.following.data,
+          // following: this.props.following.data,
           loadingFollowing: false
         })
       });
@@ -80,7 +80,7 @@ class View extends Component {
       this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
         console.log(following);
         this.setState({
-          following: this.props.following,
+          // following: this.props.following,
           loadingFollowing: false
         })
       });

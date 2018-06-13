@@ -63,7 +63,7 @@ export const loginEmailPassword = (user) => dispatch => {
           .then(auth => {
             console.log(auth);
 
-            const AuthUserRef = database.ref(`/users/${auth.uid}`);
+            const AuthUserRef = database.ref(`/users${auth.uid}`);
             AuthUserRef.child(`/profile/avatar/url`).once('value', data =>{
               auth.updateProfile({photoURL: data.val()});
             });

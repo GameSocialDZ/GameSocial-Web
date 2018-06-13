@@ -37,7 +37,7 @@ export class Profile extends Component {
     const {match: {params}} = this.props;
 
     //TODO: Handle Login on profile page
-    if(this.state.initState && !_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
+    if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
       this.setState({loadingFollowers: true, loadingFollowing: true});
 
       //this.props.getFollowers(nextProps.auth.currentUser.uid);
@@ -54,12 +54,12 @@ export class Profile extends Component {
     }
 
     //TODO: Handles Same Page different User
-    if(this.state.initState && this.state.userProfile && this.state.userProfile.id !== nextProps.match.params.userId){
+    if(this.state.initState && this.props.user.data && this.props.user.data.id !== nextProps.match.params.userId){
       this.setState({loadingProfile: true});
       //this.props.getUser(nextProps.match.params.userId);
       this.props.getUserPromise(nextProps.match.params.userId).then((user) => {
         console.log(user);
-        this.setState({loadingProfile: false})
+        this.setState({loadingProfile: false, initState: true})
       });
 
     }
@@ -69,7 +69,7 @@ export class Profile extends Component {
     //   this.updatePageDetails(nextProps.user);
     // }
 
-    this.setState({initState: true});
+    this.setState({initState: false});
   }
 
   // Handles refresh
