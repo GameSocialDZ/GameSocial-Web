@@ -71,15 +71,15 @@ class UserCard extends Component {
 
   unFollow = () =>{
     console.log('click unfollow success');
-    const {user, auth, publisher} = this.props;
+    const {auth, publisher} = this.props;
     this.props.removeUserFollower(auth.currentUser.uid, publisher.id);
-    this.props.removeUserFollowing(user.data.id, publisher.id);
+    this.props.removeUserFollowing(auth.currentUser.uid, publisher.id);
   };
 
   Follow = () => {
     console.log('click follow success');
-    const {user, auth, publisher} = this.props;
-    this.props.addUserFollower(user.data, publisher.id);
+    const {auth, publisher} = this.props;
+    this.props.addUserFollower(auth.currentUser, publisher.id);
     this.props.addUserFollowing(auth.currentUser.uid, publisher);
   };
 

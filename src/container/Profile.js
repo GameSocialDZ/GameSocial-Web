@@ -69,7 +69,7 @@ export class Profile extends Component {
     //   this.updatePageDetails(nextProps.user);
     // }
 
-    this.setState({initState: false});
+    this.setState({initState: true});
   }
 
   // Handles refresh

@@ -75,8 +75,8 @@ export const updateUserUpload = (auth, data) => dispatch => {
     .catch(error => dispatch(userError(error)));
 };
 
-export const addUserFollowing = (userId ,publisher) => dispatch => {
-  const followingRef = database.ref(`users/${userId}/following/`);
+export const addUserFollowing = (authId ,publisher) => dispatch => {
+  const followingRef = database.ref(`users/${authId}/following/`);
   followingRef.child(`${publisher.id}/id`).set(publisher.id);
   followingRef.child(`${publisher.id}/username`).set(publisher.username);
   followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
@@ -84,20 +84,21 @@ export const addUserFollowing = (userId ,publisher) => dispatch => {
   // dispatch(userUpdateSuccess());
 };
 
-export const addUserFollower = (user, publisherId) => dispatch => {
+//TODO: make user auth info
+export const addUserFollower = (auth, publisherId) => dispatch => {
   const followersRef = database.ref(`users/${publisherId}/followers/`);
-  followersRef.child(`${user.id}/id`).set(user.id);
-  followersRef.child(`${user.id}/username`).set(user.profile.username);
-  followersRef.child(`${user.id}/avatar/url`).set(user.profile.avatar.url);
+  followersRef.child(`${auth.uid}/id`).set(auth.uid);
+  followersRef.child(`${auth.uid}/username`).set(auth.displayName);
+  followersRef.child(`${auth.uid}/avatar/url`).set(auth.photoURL);
   // followersRef.child(`${user.id}/bio`).set(user.bio);
 };
 
-export const removeUserFollowing = (userId, publisherId) => dispatch => {
-  database.ref(`users/${userId}/following/${publisherId}`).remove();
+export const removeUserFollowing = (authId, publisherId) => dispatch => {
+  database.ref(`users/${authId}/following/${publisherId}`).remove();
 };
 
-export const removeUserFollower = (userId, publisherId) => dispatch => {
-  database.ref(`users/${publisherId}/followers/${userId}`).remove();
+export const removeUserFollower = (authId, publisherId) => dispatch => {
+  database.ref(`users/${publisherId}/followers/${authId}`).remove();
 };
 
 export const updateUserFollowersAndFollowing = (auth, values, file) => dispatch => {
