@@ -14,14 +14,8 @@ class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
-      view: null,
-      follow: null,
-      loadingView: true,
-      loadingUser: true,
-      loadingFollowing: true,
-      loadingFollowers: true,
-      initState: true
+      page: 'view',
+      loadingView: true
     }
   }
 
@@ -29,16 +23,13 @@ class View extends Component {
   componentWillReceiveProps(nextProps) {
 
     // Handle Login on view page
-    if(this.state.initState && !_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
+    if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
       this.setState({loadingFollowers: true, loadingFollowing: true});
 
       //this.props.getFollowers(nextProps.auth.currentUser.uid);
       this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
         console.log(following);
-        this.setState({
-          // following: this.props.following.data,
-          loadingFollowing: false
-        })
+        this.setState({loadingFollowing: false})
       });
 
       //this.props.getFollowing(nextProps.auth.currentUser.uid);
@@ -47,15 +38,13 @@ class View extends Component {
         this.setState({loadingFollowers: false})
       });
     }
-
-      this.setState({initState: false})
   }
 
   // Set the initial state
   componentWillMount() {
     this.setState({
-      loadingView: true,
-      initState: true
+      page: 'view',
+      loadingView: true
     })
   }
 
@@ -79,10 +68,7 @@ class View extends Component {
       //this.props.getFollowing(auth.currentUser.uid);
       this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
         console.log(following);
-        this.setState({
-          // following: this.props.following,
-          loadingFollowing: false
-        })
+        this.setState({loadingFollowing: false})
       });
       //this.props.getFollowers(auth.currentUser.uid);
       this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
@@ -90,7 +76,6 @@ class View extends Component {
         this.setState({loadingFollowers: false})
       });
     }
-
     this.setState({initState: true})
   }
 

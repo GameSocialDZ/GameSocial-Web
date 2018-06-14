@@ -52,19 +52,18 @@ export const getFollowersOnce = (userId) => dispatch => {
   }).catch(error => dispatch(followersError(error)));
 };
 
-export const addUserFollowers = (user, publisherId) => dispatch => {
-  const followersRef = database.ref(`users/${publisherId}/followers`);
-  followersRef.child(`${user.id}/id`).set(user.id);
-  followersRef.child(`${user.id}/username`).set(user.username);
-  followersRef.child(`${user.id}/avatar/url`).set(user.avatar.url);
-  // followersRef.child(`${user.id}/bio`).set(user.bio);
+export const addFollowers = (auth, publisherId) => dispatch => {
+  const followersRef = database.ref(`users/${publisherId}/followers/`);
+  followersRef.child(`${auth.uid}/id`).set(auth.uid);
+  followersRef.child(`${auth.uid}/username`).set(auth.displayName);
+  followersRef.child(`${auth.uid}/avatar/url`).set(auth.photoURL);
 };
 
-export const removeUserFollowers = (userId, publisherId) => dispatch => {
-  database.ref(`users/${publisherId}/followers/${userId}`).remove();
+export const removeFollowers = (authId, publisherId) => dispatch => {
+  database.ref(`users/${publisherId}/followers/${authId}`).remove()
 };
 
-export const updateUserFollowers = (auth, values, file) => dispatch => {
+export const updateFollowers = (auth, values, file) => dispatch => {
   database.ref(`/users/${auth.uid}/followers/`).on('value', data => {
     const followersArray = data.val();
     _.forEach(followersArray, follower => {

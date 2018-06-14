@@ -35,7 +35,7 @@ class VideoCard extends Component {
   };
 
   render() {
-    const {currentUser, history, video} = this.props;
+    const {currentUser, page, video} = this.props;
     return (
       <Segment>
       <Card fluid>
@@ -73,7 +73,7 @@ class VideoCard extends Component {
               <Link to={`/view/${video.publisher.id}/${video.config.type}/${video.id}`}>View</Link>
             </Button>
             {
-              (history.location.pathname === '/profile' && currentUser !== null) &&
+              (page === 'profile' && currentUser !== null) &&
               <Button
                 type="button"
                 onClick={() => this.setFormState(this.state.editing)}>Edit</Button>

@@ -52,23 +52,18 @@ export const getFollowingOnce = (userId) => dispatch => {
   }).catch(error => dispatch(followingError(error)));
 };
 
-export const addUserFollowing = (userId ,publisher) => dispatch => {
-  dispatch(followingRequest());
-  return new Promise((resolve, reject) => {
-    const followingRef = database.ref(`users/${userId}/following`);
-    followingRef.child(`${publisher.id}/id`).set(publisher.id);
-    followingRef.child(`${publisher.id}/username`).set(publisher.username);
-    followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
-    // followingRef.child(`${publisher.id}/bio`).set(publisher.bio);
-    resolve(dispatch(followingUpdateSuccess()));
-  })
+export const addFollowing = (authId ,publisher) => dispatch => {
+  const followingRef = database.ref(`users/${authId}/following`);
+  followingRef.child(`${publisher.id}/id`).set(publisher.id);
+  followingRef.child(`${publisher.id}/username`).set(publisher.username);
+  followingRef.child(`${publisher.id}/avatar/url`).set(publisher.avatar.url);
 };
 
-export const removeUserFollowing = (userId, publisherId) => dispatch => {
-  database.ref(`users/${userId}/following/${publisherId}`).remove();
+export const removeFollowing = (authId, publisherId) => dispatch => {
+  database.ref(`users/${authId}/following/${publisherId}`).remove();
 };
 
-export const updateUserFollowing = (auth, values, file) => dispatch => {
+export const updateFollowing = (auth, values, file) => dispatch => {
   database.ref(`/users/${auth.uid}/following`).on('value', data => {
     const followingArray = data.val();
     _.forEach(followingArray, followee => {

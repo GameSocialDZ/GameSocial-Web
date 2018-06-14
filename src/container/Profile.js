@@ -28,6 +28,7 @@ export class Profile extends Component {
   //Set the initial State
   componentWillMount() {
     this.setState({
+      page: 'profile',
       loadingProfile: true,
       initState: false
     });
@@ -53,9 +54,9 @@ export class Profile extends Component {
       });
     }
 
-    //TODO: Handles Same Page different User
+    //*** EXAMPLE HOW TO SET INTSTATE  ***//
     if(this.state.initState && this.props.user.data && this.props.user.data.id !== nextProps.match.params.userId){
-      this.setState({loadingProfile: true});
+      this.setState({loadingProfile: true, initState: false});
       //this.props.getUser(nextProps.match.params.userId);
       this.props.getUserPromise(nextProps.match.params.userId).then((user) => {
         console.log(user);
@@ -68,19 +69,16 @@ export class Profile extends Component {
     // if(this.state.userProfile && nextProps.user && nextProps.user.data && (nextProps.user.data.id === this.state.userProfile.data.id) && !_.isEqual(nextProps.user, this.state.userProfile)) {
     //   this.updatePageDetails(nextProps.user);
     // }
-
-    this.setState({initState: false});
   }
 
   // Handles refresh
   componentDidMount() {
-    const {match: {params}, auth} = this.props;
+    const {match: {params}, auth, history} = this.props;
+    console.log(history);
     //this.props.getUser(params.userId);
     this.props.getUserPromise(params.userId).then((user) => {
       console.log(user);
-      this.setState({
-        loadingProfile: false
-      })
+      this.setState({loadingProfile: false})
     });
 
     // get followers and following if logged in
@@ -88,16 +86,12 @@ export class Profile extends Component {
       //this.props.getFollowing(auth.currentUser.uid);
       this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
         console.log(following);
-        this.setState({
-          loadingFollowing: false
-        })
+        this.setState({loadingFollowing: false})
       });
       //this.props.getFollowers(auth.currentUser.uid);
       this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
         console.log(followers);
-        this.setState({
-          loadingFollowers: false
-        })
+        this.setState({loadingFollowers: false})
       });
     }
 
@@ -152,7 +146,7 @@ export class Profile extends Component {
     return (
       <div style={{marginTop: '5rem'}}>
         <ProfileDetail
-          history={this.props.history}
+          page={this.state.page}
           user={user}
           images={user.data.images}
           videos={user.data.videos}

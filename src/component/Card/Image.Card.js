@@ -35,7 +35,7 @@ class ImageCard extends Component {
   };
 
   render() {
-    const {currentUser, history, image} = this.props;
+    const {currentUser, page, image} = this.props;
     return (
       <Segment>
       <Card fluid>
@@ -69,7 +69,7 @@ class ImageCard extends Component {
             </Button>
             {
               // Disable Edit button if on profile page and unAuthorized (not logged in)
-              (history.location.pathname === '/profile' && currentUser !==null) &&
+              (page === 'profile' && currentUser !==null) &&
               <Button
                 type="button"
                 onClick={() => this.setFormState(this.state.editing)}>Edit</Button>

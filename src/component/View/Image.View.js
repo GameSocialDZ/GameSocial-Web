@@ -17,7 +17,7 @@ class ImageView extends Component {
   }
 
   render() {
-    const {image, user} = this.props;
+    const {image} = this.props;
     return (
       <div>
         <Grid stackable>
@@ -47,6 +47,7 @@ class ImageView extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <UserCard
+                page={this.props.page}
                 publisher={image.publisher}/>
               </Grid.Column>
           </Grid.Row>

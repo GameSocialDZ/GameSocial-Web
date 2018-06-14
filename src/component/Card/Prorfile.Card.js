@@ -6,6 +6,9 @@ import {Grid, Image, Button, Segment} from 'semantic-ui-react';
 import ModalEditProfile from '../Modal/Modal.EditProfile';
 import ModalLinkAccounts from '../Modal/Modal.LinkAccounts';
 
+import {addFollowers, removeFollowers} from "../../actions/action.followers";
+import {addFollowing,removeFollowing} from "../../actions/action.following";
+
 export class ProfileCard extends Component {
   constructor(props) {
     super(props);
@@ -13,8 +16,22 @@ export class ProfileCard extends Component {
     }
   }
 
+  unFollow = () =>{
+    console.log('click unfollow success');
+    const {auth, user} = this.props;
+    this.props.removeFollowers(auth.currentUser.uid, user.id);
+    this.props.removeFollowing(auth.currentUser.uid, user.id);
+  };
+
+  Follow = () => {
+    console.log('click follow success');
+    const {auth, user} = this.props;
+    this.props.addFollowers(auth.currentUser, user.id);
+    this.props.addFollowing(auth.currentUser.uid, user.profile);
+  };
+
   render() {
-    const {user} = this.props;
+    const {user, auth, following} = this.props;
     return (
       <div>
         <Grid columns={3} stackable padded>
@@ -29,18 +46,37 @@ export class ProfileCard extends Component {
             </Grid.Column>
             <Grid.Column>
               <Segment>
-              <Segment>
-              <p>{user.profile.name}</p>
-              <p>@{user.profile.username}</p>
-              <p>{user.profile.bio}</p>
-              <div>
-                <a type='email'>{user.profile.email}</a>
-              </div>
-              </Segment>
-              <Button.Group>
-                <ModalLinkAccounts/>
-                <ModalEditProfile/>
-              </Button.Group>
+                <Segment>
+                  <p>{user.profile.name}</p>
+                  <p>@{user.profile.username}</p>
+                  <p>{user.profile.bio}</p>
+                  <div>
+                    <a type='email'>{user.profile.email}</a>
+                  </div>
+                </Segment>
+                {
+                  !_.isEmpty(auth.currentUser) && (user.id !== auth.currentUser.uid) ? (
+                    <div>
+                      {
+                        // Check auth user's following list to render unfollow or follow button
+                        following.data[user.id] ? (
+                          <Button
+                            onClick={this.unFollow}
+                            basic color='green'>Unfollow</Button>
+                        ):(
+                          <Button
+                            onClick={this.Follow}
+                            basic color='green'>Follow</Button>
+                        )
+                      }
+                    </div>
+                  ):(
+                    <Button.Group>
+                      <ModalLinkAccounts/>
+                      <ModalEditProfile/>
+                    </Button.Group>
+                  )
+                }
               </Segment>
             </Grid.Column>
             <Grid.Column>
@@ -58,7 +94,10 @@ export class ProfileCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  following: state.following
 });
 
-export default connect(mapStateToProps)(ProfileCard);
+export default connect(mapStateToProps,
+  {addFollowing,removeFollowing,addFollowers,removeFollowers})
+(ProfileCard);

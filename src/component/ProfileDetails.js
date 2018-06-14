@@ -28,7 +28,8 @@ export class ProfileDetail extends Component {
         <Grid.Column key={image.id}>
           <ImageCard
             image={image}
-            history={this.props.history}/>
+            page={this.props.page}
+          />
         </Grid.Column>
       )
     });
@@ -40,7 +41,8 @@ export class ProfileDetail extends Component {
         <Grid.Column key={video.id}>
           <VideoCard
             video={video}
-            history={this.props.history}/>
+            page={this.props.page}
+          />
         </Grid.Column>
       )
     });
@@ -54,6 +56,7 @@ export class ProfileDetail extends Component {
         return (
           <Grid.Column key={follower.id}>
             <UserCard
+              page={this.props.page}
               publisher={follower}
             />
           </Grid.Column>
@@ -70,6 +73,7 @@ export class ProfileDetail extends Component {
         return (
           <Grid.Column key={followee.id}>
             <UserCard
+              page={this.props.page}
               publisher={followee}
             />
           </Grid.Column>
