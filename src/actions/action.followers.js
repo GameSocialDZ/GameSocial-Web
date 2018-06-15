@@ -28,6 +28,8 @@ export const followersError = error => ({
   error
 });
 
+//*** ACTIONS **//
+
 export const getFollowersPromise = (userId) => dispatch => {
   dispatch(followersRequest());
   return new Promise((resolve, reject) => {
@@ -51,6 +53,8 @@ export const getFollowersOnce = (userId) => dispatch => {
     dispatch(followersGetSuccess(data.val()));
   }).catch(error => dispatch(followersError(error)));
 };
+
+//*** SERVICES ***//
 
 export const addFollowers = (auth, publisherId) => dispatch => {
   const followersRef = database.ref(`users/${publisherId}/followers/`);

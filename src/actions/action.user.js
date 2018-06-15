@@ -25,6 +25,8 @@ export const userError = error => ({
   error
 });
 
+//*** ACTIONS ***//
+
 export const getUser = userId => dispatch => {
   dispatch(userRequest());
   return database.ref(`users/${userId}/`).on('value', (data) => {
@@ -48,6 +50,18 @@ export const getUserOnce = userId => dispatch => {
     dispatch(userGetSuccess(data.val()));
   }).catch(error => dispatch(userError(error)));
 };
+
+export const getUserOncePromise = userId => dispatch => {
+  dispatch(userRequest());
+  return new Promise((resolve, reject) => {
+    database.ref(`users/${userId}/`).once('value', (data) => {
+      let userInfo = data.val();
+      resolve(dispatch(userGetSuccess(userInfo)));
+    }).catch(error => reject(dispatch(userError(error))));
+  })
+};
+
+//*** SERVICES ***//
 
 export const updateUserProfile = (auth, data, file) => dispatch => {
   dispatch(userRequest());

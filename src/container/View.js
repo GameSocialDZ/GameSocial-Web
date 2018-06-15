@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import {deleteView, getViewPromise, getView} from "../actions/action.view";
-import {getUserPromise} from '../actions/action.user';
+import {getUserPromise, getUserOncePromise} from '../actions/action.user';
 import {getFollowingPromise, getFollowing} from "../actions/action.following";
 import {getFollowersPromise, getFollowers} from "../actions/action.followers";
 
@@ -52,25 +52,21 @@ class View extends Component {
   componentDidMount() {
     const {match: {params}, auth} = this.props;
 
-    //this.props.getView(params.uploadId, params.type + 's');
     this.props.getViewPromise(params.uploadId, params.type + 's').then((view) => {
       console.log(view);
       this.setState({loadingView: false})
     });
 
-    //this.props.getUser(params.userId);
-    this.props.getUserPromise(params.userId).then((user) => {
+    this.props.getUserOncePromise(params.userId).then((user) => {
       console.log(user);
       this.setState({loadingUser: false})
     });
 
     if(!_.isEmpty(auth.currentUser)) {
-      //this.props.getFollowing(auth.currentUser.uid);
       this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
         console.log(following);
         this.setState({loadingFollowing: false})
       });
-      //this.props.getFollowers(auth.currentUser.uid);
       this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
         console.log(followers);
         this.setState({loadingFollowers: false})
@@ -91,13 +87,13 @@ class View extends Component {
         {view.data.config.type === 'image' ? (
           <div className="">
             <ImageView
-              user={user}
+              page={this.state.page}
               image={view.data}/>
           </div>
         ):(
           <div className="">
             <VideoView
-              user={user}
+              page={this.state.page}
               video={view.data}/>
           </div>)
         }
@@ -115,6 +111,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {deleteView, getViewPromise, getView, getUserPromise,
+  {deleteView, getViewPromise, getView, getUserPromise,getUserOncePromise,
     getFollowingPromise, getFollowersPromise, getFollowing, getFollowers})
 (View);

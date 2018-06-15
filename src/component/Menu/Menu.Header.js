@@ -34,9 +34,9 @@ class MenuHeader extends Component {
     )
   };
 
-  getProfile() {
-    this.props.getUserOnce(this.props.currentUser.uid);
-  }
+  // getProfile() {
+  //   this.props.getUserOnce(this.props.currentUser.uid);
+  // }
 
   renderProfileDropdown = () => {
     const {currentUser} = this.props;
@@ -49,8 +49,7 @@ class MenuHeader extends Component {
     return(
       <Dropdown trigger={trigger}>
         <Dropdown.Menu>
-          <Dropdown.Item
-            onClick={this.getProfile.bind(this)}>
+          <Dropdown.Item>
             <Link to={`/profile/${currentUser.uid}`}>Profile</Link>
           </Dropdown.Item>
           <Dropdown.Divider/>

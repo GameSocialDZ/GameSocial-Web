@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import _ from 'lodash';
 
 import {Grid, Header, Container} from 'semantic-ui-react';
 
-import {getUser, getUserPromise} from "../actions/action.user";
+import {getUser, getUserPromise, getUserOncePromise} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
 import {getFollowersPromise, getFollowers} from '../actions/action.followers';
 import {getFollowingPromise, getFollowing} from '../actions/action.following';
@@ -16,12 +16,6 @@ export class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loadingProfile: true,
-      userProfile: null,
-      initState: true,
-      follow: null,
-      loadingFollowing: true,
-      loadingFollowers: true,
     }
   }
 
@@ -39,30 +33,38 @@ export class Profile extends Component {
 
     //TODO: Handle Login on profile page
     if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
-      this.setState({loadingFollowers: true, loadingFollowing: true});
+      this.setState({loadingFollowers: true, loadingFollowing: true, initState: false});
 
-      //this.props.getFollowers(nextProps.auth.currentUser.uid);
       this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
         console.log(following);
-        this.setState({loadingFollowing: false})
+        this.setState({loadingFollowing: false, initState: true});
+        this.updatePageDetails();
       });
 
-      //this.props.getFollowing(nextProps.auth.currentUser.uid);
       this.props.getFollowersPromise(nextProps.auth.currentUser.uid).then((followers) => {
         console.log(followers);
-        this.setState({loadingFollowers: false})
+        this.setState({loadingFollowers: false, initState: true});
+        this.updatePageDetails();
       });
     }
 
-    //*** EXAMPLE HOW TO SET INTSTATE  ***//
+    // Same page different User //*** EXAMPLE HOW TO SET INTSTATE  ***//
     if(this.state.initState && this.props.user.data && this.props.user.data.id !== nextProps.match.params.userId){
       this.setState({loadingProfile: true, initState: false});
-      //this.props.getUser(nextProps.match.params.userId);
-      this.props.getUserPromise(nextProps.match.params.userId).then((user) => {
+      this.props.getUserOncePromise(nextProps.match.params.userId).then((user) => {
         console.log(user);
-        this.setState({loadingProfile: false, initState: true})
+        this.setState({loadingProfile: false, initState: true});
+        this.updatePageDetails();
       });
+    }
 
+    if(this.state.initState && this.props.user.data && this.props.user.data.id === nextProps.match.params.userId){
+      //this.setState({initState: false});
+      // this.props.getUserPromise(nextProps.match.params.userId).then((user) => {
+      //   console.log(user);
+      //   this.setState({loadingProfile: false, initState: true});
+      //   this.updatePageDetails();
+      // });
     }
 
     //TODO: Handle profile page updates
@@ -74,11 +76,11 @@ export class Profile extends Component {
   // Handles refresh
   componentDidMount() {
     const {match: {params}, auth, history} = this.props;
-    console.log(history);
-    //this.props.getUser(params.userId);
-    this.props.getUserPromise(params.userId).then((user) => {
+
+    this.props.getUserOncePromise(params.userId).then((user) => {
       console.log(user);
-      this.setState({loadingProfile: false})
+      this.setState({loadingProfile: false});
+      this.updatePageDetails();
     });
 
     // get followers and following if logged in
@@ -130,9 +132,9 @@ export class Profile extends Component {
     //   }else{
     //     thisContainer.props.getUserFollowers({});
     //   }
-
-    //this.setState({loadingProfile: false});
-
+    //
+    // this.setState({loadingProfile: false});
+    //
     // });
   }
 
@@ -147,11 +149,6 @@ export class Profile extends Component {
       <div style={{marginTop: '5rem'}}>
         <ProfileDetail
           page={this.state.page}
-          user={user}
-          images={user.data.images}
-          videos={user.data.videos}
-          following={user.data.following}
-          followers={user.data.followers}
         />
       </div>
     );
@@ -166,7 +163,7 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getAuth, getUser, getUserPromise,
+  {getAuth, getUser, getUserPromise, getUserOncePromise,
     getFollowersPromise, getFollowingPromise,
     getFollowing, getFollowers})
 (Profile);

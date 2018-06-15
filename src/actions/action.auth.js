@@ -30,6 +30,8 @@ export const authError = (error) => ({
   error
 });
 
+//*** ACTIONS ***//
+
 export const registerEmailPassword = (user) => dispatch => {
   dispatch(authRequest());
   return auth.createUserWithEmailAndPassword(user.email, user.password)
@@ -69,7 +71,7 @@ export const loginEmailPassword = (user) => dispatch => {
             });
 
             dispatch(authGetSuccess(auth));
-            dispatch(getUserOnce(auth.uid));
+            // dispatch(getUserOnce(auth.uid));
           })
       })
   }).catch(error => dispatch(authError(error)))
@@ -82,26 +84,24 @@ export const getAuth = () => dispatch => {
   });
 };
 
+
+//*** SERVICES ***//
+
 export const updateAuth = (file) => dispatch => {
-  dispatch(authRequest());
   auth.currentUser.updateProfile({
     photoURL: file.secure_url
   }).then(() => {
       console.log('Successfully Updated');
-      dispatch(authUpdateSuccess())
     }).catch(error => {
-      dispatch(authError(error));
       console.log(error);
     });
 };
 
 export const signOut = () => dispatch => {
-  dispatch(authRequest());
   return auth.signOut().then(() =>{
-    dispatch(authDeleteSuccess());
     console.log('Sign Out Successful');
   }).catch(error =>{
-    dispatch(authError(error));
+    console.log(error);
   });
 };
 

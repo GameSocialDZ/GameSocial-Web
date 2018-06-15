@@ -16,18 +16,18 @@ export class ProfileCard extends Component {
     }
   }
 
-  unFollow = () =>{
+  unFollow = () => {
     console.log('click unfollow success');
     const {auth, user} = this.props;
-    this.props.removeFollowers(auth.currentUser.uid, user.id);
-    this.props.removeFollowing(auth.currentUser.uid, user.id);
+    this.props.removeFollowers(auth.currentUser.uid, user.data.id);
+    this.props.removeFollowing(auth.currentUser.uid, user.data.id);
   };
 
   Follow = () => {
     console.log('click follow success');
     const {auth, user} = this.props;
-    this.props.addFollowers(auth.currentUser, user.id);
-    this.props.addFollowing(auth.currentUser.uid, user.profile);
+    this.props.addFollowers(auth.currentUser, user.data.id);
+    this.props.addFollowing(auth.currentUser.uid, user.data.profile);
   };
 
   render() {
@@ -40,26 +40,26 @@ export class ProfileCard extends Component {
               <Segment textAlign={'center'}>
               <Image
                 style={{borderRadius: '9rem', width: '200px', height: '200px', display: 'inline-block'}}
-                src={user.profile.avatar.url}
+                src={user.data.profile.avatar.url}
                 alt="Placeholder"/>
               </Segment>
             </Grid.Column>
             <Grid.Column>
               <Segment>
                 <Segment>
-                  <p>{user.profile.name}</p>
-                  <p>@{user.profile.username}</p>
-                  <p>{user.profile.bio}</p>
+                  <p>{user.data.profile.name}</p>
+                  <p>@{user.data.profile.username}</p>
+                  <p>{user.data.profile.bio}</p>
                   <div>
-                    <a type='email'>{user.profile.email}</a>
+                    <a type='email'>{user.data.profile.email}</a>
                   </div>
                 </Segment>
                 {
-                  !_.isEmpty(auth.currentUser) && (user.id !== auth.currentUser.uid) ? (
+                  !_.isEmpty(auth.currentUser) && (user.data.id !== auth.currentUser.uid) ? (
                     <div>
                       {
                         // Check auth user's following list to render unfollow or follow button
-                        following.data[user.id] ? (
+                        following.data[user.data.id] ? (
                           <Button
                             onClick={this.unFollow}
                             basic color='green'>Unfollow</Button>
@@ -81,9 +81,9 @@ export class ProfileCard extends Component {
             </Grid.Column>
             <Grid.Column>
               <Segment>
-                <Segment><span>Points: {user.points}</span></Segment>
-                <Segment><span>Followers:</span></Segment>
-                <Segment><span>Following:</span></Segment>
+                <Segment><span>Points: {user.data.points}</span></Segment>
+                <Segment><span>Followers: {_.size(user.data.followers)-1}</span></Segment>
+                <Segment><span>Following: {_.size(user.data.following)-1}</span></Segment>
               </Segment>
             </Grid.Column>
           </Grid.Row>
@@ -95,7 +95,8 @@ export class ProfileCard extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  following: state.following
+  following: state.following,
+  user: state.user
 });
 
 export default connect(mapStateToProps,

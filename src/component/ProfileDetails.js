@@ -89,7 +89,8 @@ export class ProfileDetail extends Component {
   }
 
   render() {
-    const {images, videos, user, following, followers} = this.props;
+    //const {images, videos, user, following, followers} = this.props;
+    const {user} = this.props;
 
     if (user.loading) {
       return <Header as={'h1'}>Loading...</Header>
@@ -98,14 +99,9 @@ export class ProfileDetail extends Component {
     return (
       <div style={{marginTop: '5rem'}}>
           <div>
-            <ProfileCard
-              user={user.data}/>
+            <ProfileCard/>
           </div>
           <MenuProfile
-            images={images}
-            videos={videos}
-            followers={followers}
-            following={following}
             getActiveMenu={(state) => this.getActiveMenu(state)}/>
           {
             this.state.activeMenu === 'images' &&
@@ -113,7 +109,7 @@ export class ProfileDetail extends Component {
             <Container>
               <Grid stackable columns={3}>
                 <Grid.Row>
-                  {this.renderUserImages(images)}
+                  {this.renderUserImages(user.data.images)}
                 </Grid.Row>
               </Grid>
             </Container>
@@ -125,7 +121,7 @@ export class ProfileDetail extends Component {
               <Container>
                 <Grid stackable columns={3}>
                   <Grid.Row>
-                    {this.renderUserVideos(videos)}
+                    {this.renderUserVideos(user.data.videos)}
                   </Grid.Row>
                 </Grid>
               </Container>
@@ -137,7 +133,7 @@ export class ProfileDetail extends Component {
               <Container>
                 <Grid stackable columns={3}>
                   <Grid.Row>
-                    {this.renderUserFollowers(followers)}
+                    {this.renderUserFollowers(user.data.followers)}
                   </Grid.Row>
                 </Grid>
               </Container>
@@ -149,7 +145,7 @@ export class ProfileDetail extends Component {
               <Container>
                 <Grid stackable columns={3}>
                   <Grid.Row>
-                    {this.renderUserFollowing(following)}
+                    {this.renderUserFollowing(user.data.following)}
                     </Grid.Row>
                 </Grid>
               </Container>

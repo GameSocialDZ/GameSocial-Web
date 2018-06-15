@@ -35,6 +35,8 @@ export const getView = (uploadId, type) => dispatch => {
   });
 };
 
+//*** ACTIONS ***//
+
 export const getViewPromise = (uploadId, type) => dispatch => {
   dispatch(viewRequest());
   return new Promise((resolve, reject) => {
@@ -45,6 +47,8 @@ export const getViewPromise = (uploadId, type) => dispatch => {
     });
   });
 };
+
+//*** SERVICES **//
 
 export const deleteView = () => dispatch => {
   dispatch(viewRequest());

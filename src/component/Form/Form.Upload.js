@@ -32,9 +32,9 @@ class FormUpload extends Component{
     };
   }
 
-  componentDidMount() {
-    this.props.getUser(this.props.currentUser.uid);
-  }
+  // componentDidMount() {
+  //   this.props.getUser(this.props.currentUser.uid);
+  // }
 
   onSubmit(values, file) {
     if(_.isEmpty(file)){

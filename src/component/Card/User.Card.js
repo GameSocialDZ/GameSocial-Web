@@ -33,7 +33,7 @@ class UserCard extends Component {
   };
 
   render() {
-    const {publisher, auth, following, user} = this.props;
+    const {publisher, auth, following, page} = this.props;
     return (
       <Card>
         <Card.Content>
@@ -54,7 +54,7 @@ class UserCard extends Component {
                   <div>
                     {
                       // if unAuthorized (not logged in) don't show follow or unfollow button
-                      (!_.isEmpty(auth.currentUser) && this.props.page !== 'profile' && (publisher.id !== this.props.auth.currentUser.uid)) &&
+                      (!_.isEmpty(auth.currentUser) && page !== 'profile' && (publisher.id !== this.props.auth.currentUser.uid)) &&
                       <div>
                         {
                           // Check auth user's following list to render unfollow or follow button
