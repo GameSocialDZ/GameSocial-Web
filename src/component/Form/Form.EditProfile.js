@@ -12,7 +12,9 @@ import axios from "axios/index";
 
 import {updateAuth, setAuthData} from '../../actions/action.auth';
 import {updatePublisherUploads} from "../../actions/action.upload";
-import {updateUserProfile, updateUserFollowersAndFollowing} from '../../actions/action.user';
+import {updateUserProfile, updateUserFollow} from '../../actions/action.user';
+import {updateFollowers} from "../../actions/action.followers";
+import {updateFollowing} from "../../actions/action.following";
 
 class FormEditProfile extends Component{
   constructor(props){
@@ -46,7 +48,9 @@ class FormEditProfile extends Component{
     // Update 3
     this.props.updatePublisherUploads(auth, values, file);
     // Update 4
-    this.props.updateUserFollowersAndFollowing(auth, values, file);
+    this.props.updateUserFollow(auth, values, file);
+    // Update 5
+    //TODO: Update user comments
 
     this.props.dispatch(reset('editProfile'));
   }
@@ -185,7 +189,7 @@ const mapStateToProps = state => ({
 
 FormEditProfile = connect(mapStateToProps,
   {updateAuth, updateUserProfile, updatePublisherUploads,
-    updateUserFollowersAndFollowing, setAuthData})
+    updateUserFollow, updateFollowing, updateFollowers})
 (FormEditProfile);
 
 export default reduxForm({

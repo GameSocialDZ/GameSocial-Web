@@ -9,6 +9,8 @@ import ModalLinkAccounts from '../Modal/Modal.LinkAccounts';
 import {addFollowers, removeFollowers} from "../../actions/action.followers";
 import {addFollowing,removeFollowing} from "../../actions/action.following";
 
+import {getUserOnce} from "../../actions/action.user";
+
 export class ProfileCard extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +23,7 @@ export class ProfileCard extends Component {
     const {auth, user} = this.props;
     this.props.removeFollowers(auth.currentUser.uid, user.data.id);
     this.props.removeFollowing(auth.currentUser.uid, user.data.id);
+    //this.props.getUserOnce(this.props.auth.currentUser.uid);
   };
 
   Follow = () => {
@@ -28,6 +31,7 @@ export class ProfileCard extends Component {
     const {auth, user} = this.props;
     this.props.addFollowers(auth.currentUser, user.data.id);
     this.props.addFollowing(auth.currentUser.uid, user.data.profile);
+    //this.props.getUserOnce(this.props.auth.currentUser.uid);
   };
 
   render() {
@@ -100,5 +104,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {addFollowing,removeFollowing,addFollowers,removeFollowers})
+  {addFollowing,removeFollowing,addFollowers,removeFollowers, getUserOnce})
 (ProfileCard);

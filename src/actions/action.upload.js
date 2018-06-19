@@ -37,7 +37,7 @@ export const uploadError = error => ({
   error
 });
 
-// Methods
+// Actions
 export const getUploads = () => dispatch => {
   dispatch(uploadRequest());
   return database.ref('uploads/').on('value', data => {
@@ -54,6 +54,8 @@ export const getUploadsPromise = () => dispatch => {
     })
   });
 };
+
+// Services
 
 export const upload = (data, file) => dispatch => {
   // TODO: Check Authentication

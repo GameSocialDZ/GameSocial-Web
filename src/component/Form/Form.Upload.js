@@ -11,7 +11,7 @@ import CommonInput  from "../Common/Common.Input";
 import FormDropzone from './Form.Dropzone';
 
 import {upload} from '../../actions/action.upload';
-import {getUser} from "../../actions/action.user";
+import {getUserOnce} from "../../actions/action.user";
 
 //TODO: Remove dubug
 console.log(CloudinaryConfig);
@@ -32,16 +32,16 @@ class FormUpload extends Component{
     };
   }
 
-  // componentDidMount() {
-  //   this.props.getUser(this.props.currentUser.uid);
-  // }
+  componentDidMount() {
+    this.props.getUserOnce(this.props.auth.currentUser.uid);
+  }
 
   onSubmit(values, file) {
     if(_.isEmpty(file)){
       return alert('File not selected or still uploading!');
     }
     // Add publisher
-    values.publisher = this.props.publisher;
+    values.publisher = this.props.user.data.profile;
     this.props.upload(values, file);
     this.props.dispatch(reset('upload'));
   }
@@ -181,11 +181,11 @@ class FormUpload extends Component{
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser,
-  publisher: state.user.data.profile
+  auth: state.auth,
+  user: state.user
 });
 
-FormUpload = connect(mapStateToProps, {upload, getUser})(FormUpload);
+FormUpload = connect(mapStateToProps, {upload, getUserOnce})(FormUpload);
 
 export default reduxForm({
   form: 'upload',

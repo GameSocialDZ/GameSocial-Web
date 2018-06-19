@@ -6,6 +6,7 @@ import _ from 'lodash';
 import {Image, Grid, Button, Segment} from 'semantic-ui-react';
 
 import UserCard from '../Card/User.Card';
+import Comments from '../Comment/comment';
 
 import {deleteUpload} from "../../actions/action.upload";
 
@@ -54,7 +55,7 @@ class ImageView extends Component {
           <Grid.Row>
             <Grid.Column width={16}>
               <Segment>
-              <h1>Comments</h1>
+              <Comments/>
               </Segment>
             </Grid.Column>
           </Grid.Row>

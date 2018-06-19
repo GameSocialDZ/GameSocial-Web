@@ -57,14 +57,13 @@ export const getUserOncePromise = userId => dispatch => {
     database.ref(`users/${userId}/`).once('value', (data) => {
       let userInfo = data.val();
       resolve(dispatch(userGetSuccess(userInfo)));
-    }).catch(error => reject(dispatch(userError(error))));
+    }).catch(error => resolve(dispatch(userError(error))));
   })
 };
 
 //*** SERVICES ***//
 
 export const updateUserProfile = (auth, data, file) => dispatch => {
-  dispatch(userRequest());
   return database.ref(`users/${auth.uid}/profile`).update({
     name: data.editName,
     bio: data.editBio,
@@ -87,4 +86,40 @@ export const updateUserUpload = (auth, data) => dispatch => {
 
   return database.ref().update(updates)
     .catch(error => dispatch(userError(error)));
+};
+
+export const updateUserFollows = (auth, values, file) => dispatch => {
+  database.ref(`/users/${auth.uid}/following`).on('value', data => {
+    const followingArray = data.val();
+    _.forEach(followingArray, followee => {
+      if(followee.id === 'default'){return null}
+      const userFollowingRef = database.ref(`users/${followee.id}/following/${auth.uid}`);
+      userFollowingRef.update({
+        avatar: {
+          url: file.secure_url
+        },
+        bio: values.editBio,
+        name: values.editName,
+        username: auth.displayName
+      })
+    })
+  });
+
+  database.ref(`/users/${auth.uid}/followers/`).on('value', data => {
+    const followersArray = data.val();
+    _.forEach(followersArray, follower => {
+      if (follower.id === 'default') {
+        return null
+      }
+      const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.uid}`);
+      userFollowersRef.update({
+        avatar: {
+          url: file.secure_url
+        },
+        bio: values.editBio,
+        name: values.editName,
+        username: auth.displayName
+      })
+    });
+  });
 };

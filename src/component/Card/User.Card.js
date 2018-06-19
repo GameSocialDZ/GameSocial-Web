@@ -23,6 +23,7 @@ class UserCard extends Component {
     const {auth, publisher} = this.props;
     this.props.removeFollowers(auth.currentUser.uid, publisher.id);
     this.props.removeFollowing(auth.currentUser.uid, publisher.id);
+    //this.props.getUserOnce(this.props.user.data.id);
   };
 
   Follow = () => {
@@ -30,6 +31,7 @@ class UserCard extends Component {
     const {auth, publisher} = this.props;
     this.props.addFollowers(auth.currentUser, publisher.id);
     this.props.addFollowing(auth.currentUser.uid, publisher);
+    //this.props.getUserOnce(this.props.user.data.id);
   };
 
   render() {

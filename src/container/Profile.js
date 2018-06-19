@@ -30,6 +30,7 @@ export class Profile extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {match: {params}} = this.props;
+    console.log(nextProps);
 
     //TODO: Handle Login on profile page
     if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
@@ -59,13 +60,9 @@ export class Profile extends Component {
     }
 
     if(this.state.initState && this.props.user.data && this.props.user.data.id === nextProps.match.params.userId){
-      //this.setState({initState: false});
-      // this.props.getUserPromise(nextProps.match.params.userId).then((user) => {
-      //   console.log(user);
-      //   this.setState({loadingProfile: false, initState: true});
-      //   this.updatePageDetails();
-      // });
+
     }
+
 
     //TODO: Handle profile page updates
     // if(this.state.userProfile && nextProps.user && nextProps.user.data && (nextProps.user.data.id === this.state.userProfile.data.id) && !_.isEqual(nextProps.user, this.state.userProfile)) {

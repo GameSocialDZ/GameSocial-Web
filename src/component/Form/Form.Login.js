@@ -47,7 +47,6 @@ class FormLogin extends Component{
                 type="password" required
                 onChange={this.handleChange}/>
               <Button
-                className="btn btn-primary col-sm-12"
                 type="submit" disabled={this.props.pristine || this.props.submitting}>
                 Submit</Button>
             </Form>

@@ -98,9 +98,12 @@ export const updateAuth = (file) => dispatch => {
 };
 
 export const signOut = () => dispatch => {
+  dispatch(authRequest());
   return auth.signOut().then(() =>{
+    dispatch(authDeleteSuccess());
     console.log('Sign Out Successful');
   }).catch(error =>{
+    dispatch(authError(error));
     console.log(error);
   });
 };

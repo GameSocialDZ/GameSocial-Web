@@ -71,7 +71,7 @@ class FormEditUserUpload extends Component{
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser,
+  auth: state.auth,
   publisher: state.user.data.profile
 });
 

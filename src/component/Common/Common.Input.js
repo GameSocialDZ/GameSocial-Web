@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input, Label, TextArea} from 'semantic-ui-react';
 
 export default class CommonInput extends React.Component {
   componentDidUpdate(prevProps) {
@@ -23,22 +24,22 @@ export default class CommonInput extends React.Component {
 
     return (
       <div className="form-input">
-        <label
+        <Label
           htmlFor={input.name}>
           {label}
           {error}
           {warning}
-        </label>
+        </Label>
         {
           type === 'textarea' ? (
-            <textarea
+            <TextArea
               className="col-sm-12"
               {...input}
               id={input.name}
               ref={input => (this.input = input)}
             />
           ):(
-            <input
+            <Input
               placeholder={placeholder !== null && placeholder}
               className="col-sm-12"
               {...input}

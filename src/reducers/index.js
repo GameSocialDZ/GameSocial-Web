@@ -5,6 +5,7 @@ import uploadReducer from "./reducer.upload";
 import viewReducer from "./reducer.view";
 import followersReducer from "./reducer.followers";
 import followingReducer from "./reducer.following";
+import commentsReducer from './reducer.comments';
 import {reducer as formReducer} from "redux-form";
 
 const rootReducer = combineReducers({
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   uploads: uploadReducer,
   view: viewReducer,
   following: followingReducer,
-  followers: followersReducer
+  followers: followersReducer,
+  comments: commentsReducer
 });
 
 export default rootReducer;
