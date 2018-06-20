@@ -54,7 +54,7 @@ class ImageCard extends Component {
             ):(
               <Card.Content>
                 <Image
-                  style={{borderRadius: '9rem'}}
+                  style={{borderRadius: '.25rem'}}
                   floated='right' size='mini' src={image.publisher.avatar.url}/>
                 <Card.Meta textAlign='right'>{image.publisher.username}</Card.Meta>
                 <Card.Header>{image.content.title}</Card.Header>

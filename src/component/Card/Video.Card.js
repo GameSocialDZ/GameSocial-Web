@@ -59,7 +59,7 @@ class VideoCard extends Component {
             ):(
               <Card.Content>
                 <Image
-                  style={{borderRadius: '9rem'}}
+                  style={{borderRadius: '.25rem'}}
                   floated='right' size='mini' src={video.publisher.avatar.url}/>
                 <Card.Meta textAlign='right'>{video.publisher.username}</Card.Meta>
                 <Card.Header>{video.content.title}</Card.Header>

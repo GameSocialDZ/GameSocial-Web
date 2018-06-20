@@ -40,7 +40,7 @@ class UserCard extends Component {
       <Card>
         <Card.Content>
           <Image
-            style={{borderRadius: '2rem'}}
+            style={{borderRadius: '.25rem'}}
             floated='right' size='mini' src={publisher.avatar.url} />
           <Card.Header>
             {publisher.username}
