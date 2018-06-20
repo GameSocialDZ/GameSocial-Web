@@ -89,7 +89,6 @@ export class ProfileDetail extends Component {
   }
 
   render() {
-    //const {images, videos, user, following, followers} = this.props;
     const {user} = this.props;
 
     if (user.loading) {

@@ -51,6 +51,9 @@ class FormEditProfile extends Component{
     this.props.updateUserComments(auth, user.data.comments, file);
 
     this.props.dispatch(reset('editProfile'));
+
+    // Re-render Profile
+    this.props.getUserOnce(this.props.auth.uid);
   }
 
   onFileSelect(file) {
