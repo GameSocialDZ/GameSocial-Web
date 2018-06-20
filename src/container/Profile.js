@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import {Grid, Header, Container} from 'semantic-ui-react';
 
-import {getUser, getUserPromise, getUserOncePromise} from "../actions/action.user";
+import {getUser, getUserPromise, getUserOncePromise, getUserOnce} from "../actions/action.user";
 import {getAuth} from '../actions/action.auth';
 import {getFollowersPromise, getFollowers} from '../actions/action.followers';
 import {getFollowingPromise, getFollowing} from '../actions/action.following';
@@ -160,7 +160,7 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getAuth, getUser, getUserPromise, getUserOncePromise,
+  {getAuth, getUser, getUserPromise, getUserOncePromise, getUserOnce,
     getFollowersPromise, getFollowingPromise,
     getFollowing, getFollowers})
 (Profile);

@@ -66,21 +66,3 @@ export const addFollowing = (authId ,publisher) => dispatch => {
 export const removeFollowing = (authId, publisherId) => dispatch => {
   database.ref(`users/${authId}/following/${publisherId}`).remove();
 };
-
-export const updateFollowing = (auth, values, file) => dispatch => {
-  database.ref(`/users/${auth.uid}/following`).on('value', data => {
-    const followingArray = data.val();
-    _.forEach(followingArray, followee => {
-      if(followee.id === 'default'){return null}
-      const userFollowingRef = database.ref(`users/${followee.id}/following/${auth.uid}`);
-      userFollowingRef.update({
-        avatar: {
-          url: file.secure_url
-        },
-        bio: values.editBio,
-        name: values.editName,
-        username: auth.displayName
-      })
-    })
-  });
-};

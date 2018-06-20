@@ -23,7 +23,7 @@ export class ProfileCard extends Component {
     const {auth, user} = this.props;
     this.props.removeFollowers(auth.currentUser.uid, user.data.id);
     this.props.removeFollowing(auth.currentUser.uid, user.data.id);
-    //this.props.getUserOnce(this.props.auth.currentUser.uid);
+    // this.props.getUserOnce(this.props.auth.currentUser.uid);
   };
 
   Follow = () => {
@@ -31,7 +31,7 @@ export class ProfileCard extends Component {
     const {auth, user} = this.props;
     this.props.addFollowers(auth.currentUser, user.data.id);
     this.props.addFollowing(auth.currentUser.uid, user.data.profile);
-    //this.props.getUserOnce(this.props.auth.currentUser.uid);
+    // this.props.getUserOnce(this.props.auth.currentUser.uid);
   };
 
   render() {

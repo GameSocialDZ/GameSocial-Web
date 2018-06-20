@@ -97,6 +97,18 @@ class ImageObject{
   }
 }
 
+class UploadObject{
+  constructor(values, file){
+    this.avatar = {
+      createdAt: file.created_at,
+      format: file.format,
+      url: file.secure_url
+    };
+    this.bio = values.editBio;
+    this.name = values.editName;
+  }
+}
+
 // class UserObject {
 //   constructor(isAuth, user) {
 //     this.isAuth = isAuth;
@@ -146,4 +158,4 @@ class ImageObject{
 //   }
 // }
 
-module.exports = {NewUserObject, VideoObject, ImageObject, UserObject};
+module.exports = {NewUserObject, VideoObject, ImageObject, UserObject, UploadObject};

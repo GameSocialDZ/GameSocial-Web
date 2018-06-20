@@ -1,7 +1,6 @@
 import {database} from "../firebase";
 import _ from 'lodash';
-import {UserObject} from './models';
-import * as firebase from "firebase";
+import {UserObject, UploadObject} from './models';
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const userRequest = () => ({
@@ -78,48 +77,96 @@ export const updateUserProfile = (auth, data, file) => dispatch => {
     .catch(error => dispatch(userError(error)))
 };
 
-export const updateUserUpload = (auth, data) => dispatch => {
-  dispatch(userRequest());
+export const editUserUpload = (auth, data) => dispatch => {
   const updates = {};
   updates[`users/${auth.uid}/${data.type}s/${data.uploadId}/content/title`] = data.editTitle;
   updates[`users/${auth.uid}/${data.type}s/${data.uploadId}/content/caption`] = data.editCaption;
-
   return database.ref().update(updates)
     .catch(error => dispatch(userError(error)));
 };
 
-export const updateUserFollows = (auth, values, file) => dispatch => {
-  database.ref(`/users/${auth.uid}/following`).on('value', data => {
-    const followingArray = data.val();
-    _.forEach(followingArray, followee => {
-      if(followee.id === 'default'){return null}
-      const userFollowingRef = database.ref(`users/${followee.id}/following/${auth.uid}`);
-      userFollowingRef.update({
-        avatar: {
-          url: file.secure_url
-        },
-        bio: values.editBio,
-        name: values.editName,
-        username: auth.displayName
-      })
+export const updateUserComments = (auth, comments, file) => dispatch => {
+  Object.keys(comments).map((vidId) => {
+    Object.keys(comments[vidId]).map((commentId) => {
+      database.ref('/comments/').child(`${comments[vidId][commentId].uploadId}/${comments[vidId][commentId].commentId}/profile/avatar/url`).set(file.secure_url)
+    })
+  })
+};
+
+export const updateUserFollows = (auth, following, followers, values, file) => dispatch => {
+  _.forEach(following, followee => {
+    if(followee.id === 'default'){return null}
+    const userFollowingRef = database.ref(`users/${followee.id}/following/${auth.uid}`);
+    userFollowingRef.update({
+      avatar: {
+        url: file.secure_url
+      },
+      bio: values.editBio,
+      name: values.editName,
+      username: auth.displayName
     })
   });
 
-  database.ref(`/users/${auth.uid}/followers/`).on('value', data => {
-    const followersArray = data.val();
-    _.forEach(followersArray, follower => {
-      if (follower.id === 'default') {
-        return null
+  _.forEach(followers, follower => {
+    if (follower.id === 'default') {
+      return null
+    }
+    const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.uid}`);
+    userFollowersRef.update({
+      avatar: {
+        url: file.secure_url
+      },
+      bio: values.editBio,
+      name: values.editName,
+      username: auth.displayName
+    })
+  });
+};
+
+export const updateUserUploads = (auth, values, file) => dispatch => {
+  database.ref(`/uploads`).child('/images').once('value', data => {
+    const imageArray = data.val();
+    _.forEach(imageArray, item => {
+      const publisherRef = database.ref(`/uploads/images/${item.id}/publisher`);
+      if(item.id === 'default') {
+        return null;
       }
-      const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.uid}`);
-      userFollowersRef.update({
-        avatar: {
-          url: file.secure_url
-        },
-        bio: values.editBio,
-        name: values.editName,
-        username: auth.displayName
-      })
+      else if(item.publisher.id === auth.uid) {
+        const update = new UploadObject(values, file);
+        publisherRef.update(update);
+      }
+    });
+  });
+
+  database.ref(`/uploads`).child('/videos').once('value', data => {
+    const videoArray = data.val();
+    _.forEach(videoArray, item => {
+      const publisherRef = database.ref(`/uploads/videos/${item.id}/publisher`);
+      if(item.id === 'default') {
+        return null;
+      }
+      else if(item.publisher.id === auth.uid) {
+        const update = new UploadObject(values, file);
+        publisherRef.update(update);
+      }
+    });
+  });
+
+  database.ref(`/users/${auth.uid}`).child('/images').once('value', data => {
+    const imageArray = data.val();
+    _.forEach(imageArray, item => {
+      const publisherRef = database.ref(`/users/${auth.uid}/images/${item.id}/publisher`);
+      const update = new UploadObject(values, file);
+      publisherRef.update(update);
+    });
+  });
+
+  database.ref(`/users/${auth.uid}`).child('/videos').once('value', data => {
+    const videoArray = data.val();
+    _.forEach(videoArray, item => {
+      const publisherRef = database.ref(`/users/${auth.uid}/videos/${item.id}/publisher`);
+      const update = new UploadObject(values, file);
+      publisherRef.update(update);
     });
   });
 };

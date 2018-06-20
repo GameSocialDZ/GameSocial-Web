@@ -61,9 +61,15 @@ export const addComment = (auth, uploadId, values) => dispatch => {
   console.log(values);
   const commentId = database.ref(`/comments/${uploadId}`).push().key;
   const commentRef = database.ref(`/comments/${uploadId}/${commentId}`);
+  const userRef = database.ref(`/users/${auth.uid}/comments/${uploadId}/${commentId}`);
+
   commentRef.child('/comment').set(values.comment);
   commentRef.child('/uploadId').set(uploadId);
   commentRef.child('/commentId').set(commentId);
   commentRef.child('/profile/avatar/url').set(auth.photoURL);
   commentRef.child('/profile/username').set(auth.displayName);
+  commentRef.child('profile/id').set(auth.uid);
+
+  userRef.child('/uploadId').set(uploadId);
+  userRef.child('/commentId').set(commentId);
 };

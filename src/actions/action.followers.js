@@ -66,23 +66,3 @@ export const addFollowers = (auth, publisherId) => dispatch => {
 export const removeFollowers = (authId, publisherId) => dispatch => {
   database.ref(`users/${publisherId}/followers/${authId}`).remove()
 };
-
-export const updateFollowers = (auth, values, file) => dispatch => {
-  database.ref(`/users/${auth.uid}/followers/`).on('value', data => {
-    const followersArray = data.val();
-    _.forEach(followersArray, follower => {
-      if (follower.id === 'default') {
-        return null
-      }
-      const userFollowersRef = database.ref(`users/${follower.id}/followers/${auth.uid}`);
-      userFollowersRef.update({
-        avatar: {
-          url: file.secure_url
-        },
-        bio: values.editBio,
-        name: values.editName,
-        username: auth.displayName
-      })
-    });
-  });
-};
