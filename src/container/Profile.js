@@ -143,7 +143,7 @@ export class Profile extends Component {
     }
 
     return (
-      <div style={{marginTop: '5rem', backgroundColor: 'dimgray'}}>
+      <div style={{marginTop: '4.5rem', backgroundColor: 'dimgray'}}>
         <ProfileDetail
           page={this.state.page}
         />

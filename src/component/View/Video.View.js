@@ -18,7 +18,7 @@ class VideoView extends Component {
   }
 
   render() {
-    const {view, page} = this.props;
+    const {view} = this.props;
     return (
       <div>
         <Grid>

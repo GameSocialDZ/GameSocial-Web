@@ -94,14 +94,13 @@ class Home extends Component {
     const {uploads} = this.props;
 
     if (this.state.loadingUploads) {
-      return <h1 style={{marginTop: '5rem'}}>Loading...</h1>
+      return <h1 style={{marginTop: '4.5rem'}}>Loading...</h1>
     }
 
     return (
       <div style={{marginTop: '4.5rem', backgroundColor: 'dimgray'}}>
         <HomeHero/>
-        <Container
-          style={{marginBottom: '1rem'}}>
+        <Container style={{marginBottom: '1rem'}}>
           {
             _.size(uploads.data.images) > 3 &&
             <ContentSlider

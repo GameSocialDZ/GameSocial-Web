@@ -79,19 +79,19 @@ class View extends Component {
     const {view} = this.props;
 
     if (this.state.loadingView) {
-      return <h1 style={{marginTop: '4.5rem', backgroundColor: 'dimgray'}}>Loading...</h1>
+      return <h1 style={{marginTop: '4.5rem'}}>Loading...</h1>
     }
 
     return (
-      <div style={{marginTop: '5rem'}}>
+      <div style={{marginTop: '4.5rem', backgroundColor: 'dimgray'}}>
         {view.data.config.type === 'image' ? (
-          <div className="">
+          <div>
             <ImageView
               page={this.state.page}
               image={view.data}/>
           </div>
         ):(
-          <div className="">
+          <div>
             <VideoView
               page={this.state.page}
               video={view.data}/>

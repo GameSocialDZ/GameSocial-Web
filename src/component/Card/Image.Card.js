@@ -37,7 +37,7 @@ class ImageCard extends Component {
   render() {
     const {currentUser, page, image} = this.props;
     return (
-      <Segment>
+      <Segment style={{backgroundColor: 'transparent', border: '0 none'}}>
       <Card fluid>
         <Image alt="upload" src={image.url}/>
           {
