@@ -26,12 +26,15 @@ class Comments extends Component {
 
   componentDidMount() {
     console.log(this.props.view.data.id);
-    this.props.getComments(this.props.view.data.id);
+    this.props.getCommentsOnce(this.props.view.data.id).then(comments => {
+      console.log(comments);
+      this.setState({loadingComments: false})
+    });
   }
 
   onSubmit(values) {
-    values.profile = this.props.view.data.publisher;
-    this.props.addComment(this.props.view.data.id, values);
+    const currentUser = this.props.auth.currentUser;
+    this.props.addComment(currentUser,this.props.view.data.id, values);
     this.props.dispatch(reset('comments'));
   }
 
@@ -72,17 +75,20 @@ class Comments extends Component {
     console.log(this.renderCommentList());
     return(
       <div>
-        <Form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
-          <Field
-            label="Comment"
-            name="comment"
-            component={CommonInput}
-            type="text-area" required
-            onChange={this.handleChange}/>
-          <Button
-            type="submit" disabled={this.props.pristine || this.props.submitting}>
-            Submit</Button>
-        </Form>
+        {
+          !_.isEmpty(this.props.auth.currentUser) &&
+          <Form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
+            <Field
+              label="Comment"
+              name="comment"
+              component={CommonInput}
+              type="text-area" required
+              onChange={this.handleChange}/>
+            <Button
+              type="submit" disabled={this.props.pristine || this.props.submitting}>
+              Submit</Button>
+          </Form>
+        }
         <div>
           <Comment.Group>
             <Header as={'h3'} dividing>

@@ -33,7 +33,6 @@ export const commentsError = error => ({
 export const getCommentsOnce = (uploadId) => dispatch => {
   dispatch(commentsRequest());
   return database.ref(`/comments/${uploadId}`).once('value', data => {
-
     const comments = data.val();
     dispatch(commentsGetSuccess(comments));
   })
@@ -50,7 +49,7 @@ export const getComments = (uploadId) => dispatch => {
 export const getCommentsPromise = (uploadId) => dispatch => {
   dispatch(commentsRequest());
   return new Promise((resolve, reject) => {
-    database.ref(`/comments/${uploadId}`).on('value', data => {
+    database.ref(`/comments/${uploadId}`).once('value', data => {
       const comments = data.val();
       resolve(dispatch(commentsGetSuccess(comments)))
     })
@@ -58,13 +57,13 @@ export const getCommentsPromise = (uploadId) => dispatch => {
 };
 
 //SERVICES
-export const addComment = (uploadId, values) => dispatch => {
+export const addComment = (auth, uploadId, values) => dispatch => {
   console.log(values);
   const commentId = database.ref(`/comments/${uploadId}`).push().key;
   const commentRef = database.ref(`/comments/${uploadId}/${commentId}`);
   commentRef.child('/comment').set(values.comment);
   commentRef.child('/uploadId').set(uploadId);
   commentRef.child('/commentId').set(commentId);
-  commentRef.child('/profile/avatar/url').set(values.profile.avatar.url);
-  commentRef.child('/profile/username').set(values.profile.username);
+  commentRef.child('/profile/avatar/url').set(auth.photoURL);
+  commentRef.child('/profile/username').set(auth.displayName);
 };
