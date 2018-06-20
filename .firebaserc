@@ -1,5 +1,6 @@
 {
   "projects": {
-    "gamesocial-dev": "gamesocial-zb"
+    "gamesocial-dev": "gamesocial-zb",
+    "default": "gamesocial-zb"
   }
 }

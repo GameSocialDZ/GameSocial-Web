@@ -98,7 +98,7 @@ class Home extends Component {
     }
 
     return (
-      <div style={{marginTop: '5rem'}}>
+      <div style={{marginTop: '4.5rem', backgroundColor: 'dimgray'}}>
         <HomeHero/>
         <Container
           style={{marginBottom: '1rem'}}>

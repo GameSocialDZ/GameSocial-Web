@@ -30,7 +30,7 @@ class HomeHero extends Component {
     return (
       <section
         id='hero'
-        style={{marginBottom: '1rem'}}>
+        style={{marginBottom: '2rem'}}>
         <Container textAlign='center'>
           <HomeSlider
             featured={this.state.featured}/>

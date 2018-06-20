@@ -139,11 +139,11 @@ export class Profile extends Component {
     const {user} = this.props;
 
     if (this.state.loadingProfile) {
-      return <h1 style={{marginTop: '5rem'}}>Loading...</h1>
+      return <h1 style={{marginTop: '4.5rem'}}>Loading...</h1>
     }
 
     return (
-      <div style={{marginTop: '5rem'}}>
+      <div style={{marginTop: '5rem', backgroundColor: 'dimgray'}}>
         <ProfileDetail
           page={this.state.page}
         />

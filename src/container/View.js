@@ -76,10 +76,10 @@ class View extends Component {
   }
 
   render() {
-    const {view, user, followers, following} = this.props;
+    const {view} = this.props;
 
     if (this.state.loadingView) {
-      return <h1 style={{marginTop: '5rem'}}>Loading...</h1>
+      return <h1 style={{marginTop: '4.5rem', backgroundColor: 'dimgray'}}>Loading...</h1>
     }
 
     return (
