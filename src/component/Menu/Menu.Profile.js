@@ -32,6 +32,9 @@ class MenuProfile extends Component {
         <Menu.Item name='following' active={activeMenu === 'following'} onClick={this.handleItemClick}>
           Following {_.size(user.data.following)-1}
         </Menu.Item>
+        <Menu.Item name='favorites' active={activeMenu === 'favorites'} onClick={this.handleItemClick}>
+          Favorites {_.size(user.data.favorites)}
+        </Menu.Item>
       </Menu>
     )
   }

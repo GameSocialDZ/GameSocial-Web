@@ -109,6 +109,16 @@ class UploadObject{
   }
 }
 
+class FavoriteObject{
+  constructor(upload){
+    this.id = upload.id;
+    this.publisher = upload.publisher;
+    this.content = upload.content;
+    this.url = upload.url;
+    this.config = upload.config;
+  }
+}
+
 // class UserObject {
 //   constructor(isAuth, user) {
 //     this.isAuth = isAuth;
@@ -158,4 +168,4 @@ class UploadObject{
 //   }
 // }
 
-module.exports = {NewUserObject, VideoObject, ImageObject, UserObject, UploadObject};
+module.exports = {NewUserObject, VideoObject, ImageObject, UserObject, UploadObject, FavoriteObject};

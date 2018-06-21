@@ -6,6 +6,7 @@ import {deleteView, getViewPromise, getView} from "../actions/action.view";
 import {getUserPromise, getUserOncePromise} from '../actions/action.user';
 import {getFollowingPromise, getFollowing} from "../actions/action.following";
 import {getFollowersPromise, getFollowers} from "../actions/action.followers";
+import {getFavorites} from "../actions/action.favorite";
 
 import ImageView from '../component/View/Image.View';
 import VideoView from '../component/View/Video.View';
@@ -20,6 +21,7 @@ class View extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const {view} = this.props;
     // Handle Login on view page
     if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
       this.setState({loadingFollowers: true, loadingFollowing: true});
@@ -33,6 +35,8 @@ class View extends Component {
         console.log(followers);
         this.setState({loadingFollowers: false, initState: true})
       });
+      // Get auth favorites
+      this.props.getFavorites(nextProps.auth.currentUser.uid, view.data.id);
     }
   }
 
@@ -64,13 +68,15 @@ class View extends Component {
       // Get auth Following
       this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
         console.log(following);
-        this.setState({loadingFollowing: false})
+        // this.setState({loadingFollowing: false})
       });
       // Get Auth Followers
       this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
         console.log(followers);
-        this.setState({loadingFollowers: false})
+        // this.setState({loadingFollowers: false})
       });
+      // Get Auth Favorites
+      this.props.getFavorites(auth.currentUser.uid, view.data.id)
     }
     this.setState({initState: true})
   }
@@ -79,11 +85,11 @@ class View extends Component {
     const {view} = this.props;
 
     if (this.state.loadingView) {
-      return <h1 style={{marginTop: '4.5rem'}}>Loading...</h1>
+      return <h1 style={{marginTop: '5.5rem'}}>Loading...</h1>
     }
 
     return (
-      <div style={{marginTop: '4.5rem', backgroundColor: 'dimgray'}}>
+      <div style={{marginTop: '5.5rem', backgroundColor: 'dimgray'}}>
         {view.data.config.type === 'image' ? (
           <div>
             <ImageView
@@ -112,5 +118,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps,
   {deleteView, getViewPromise, getView, getUserPromise,getUserOncePromise,
-    getFollowingPromise, getFollowersPromise, getFollowing, getFollowers})
+    getFollowingPromise, getFollowersPromise, getFollowing, getFollowers,
+    getFavorites})
 (View);

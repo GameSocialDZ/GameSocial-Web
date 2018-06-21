@@ -5,7 +5,7 @@ import {Grid, Image, Button, Segment} from 'semantic-ui-react';
 
 import ModalEditProfile from '../Modal/Modal.EditProfile';
 import ModalLinkAccounts from '../Modal/Modal.LinkAccounts';
-import FollowButton from '../follow/Follow.Btn';
+import FollowToggle from '../Toggle/Toggle.Follow';
 
 import {addFollowers, removeFollowers} from "../../actions/action.followers";
 import {addFollowing,removeFollowing} from "../../actions/action.following";
@@ -45,7 +45,7 @@ export class ProfileCard extends Component {
                 {
                   !_.isEmpty(auth.currentUser) && (user.data.id !== auth.currentUser.uid) ? (
                     <div>
-                      <FollowButton
+                      <FollowToggle
                         publisher={user.data.profile}/>
                     </div>
                   ):(

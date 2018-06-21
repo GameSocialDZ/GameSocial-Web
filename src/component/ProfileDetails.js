@@ -82,6 +82,26 @@ export class ProfileDetail extends Component {
     });
   }
 
+  renderUserFavorites(favorites) {
+    return _.map(favorites, (favorite) => {
+      return (
+        <Grid.Column key={favorite.id}>
+          {
+            favorite.config.type === 'video' ? (
+              <VideoCard
+                video={favorite}
+                page={this.props.page}/>
+            ):(
+              <ImageCard
+                image={favorite}
+                page={this.props.page}/>
+            )
+          }
+        </Grid.Column>
+      )
+    });
+  }
+
   getActiveMenu(state){
     this.setState({
       activeMenu: state
@@ -142,6 +162,19 @@ export class ProfileDetail extends Component {
                 <Grid.Row>
                   {this.renderUserFollowing(user.data.following)}
                   </Grid.Row>
+              </Grid>
+            </Container>
+
+          )
+        }
+        {
+          this.state.activeMenu === 'favorites' &&
+          (
+            <Container>
+              <Grid stackable columns={3}>
+                <Grid.Row>
+                  {this.renderUserFavorites(user.data.favorites)}
+                </Grid.Row>
               </Grid>
             </Container>
 

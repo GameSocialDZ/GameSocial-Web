@@ -10,7 +10,7 @@ import {addFollowers, removeFollowers} from "../../actions/action.followers";
 import {addFollowing,removeFollowing} from "../../actions/action.following";
 import {getUserOnce} from "../../actions/action.user";
 
-class FollowButton extends Component {
+class FollowToggle extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,6 +24,8 @@ class FollowButton extends Component {
     const {auth, publisher} = this.props;
     this.props.removeFollowers(auth.currentUser.uid, publisher.id);
     this.props.removeFollowing(auth.currentUser.uid, publisher.id);
+    // to update when on profile page
+    // TODO: Mayber check to see if we are on profile page
     this.props.getUserOnce(this.props.user.data.id);
   };
 
@@ -32,6 +34,8 @@ class FollowButton extends Component {
     const {auth, publisher} = this.props;
     this.props.addFollowers(auth.currentUser, publisher.id);
     this.props.addFollowing(auth.currentUser.uid, publisher);
+    // to update when on profile page
+    // TODO: Maybe check to see if we are on profile page
     this.props.getUserOnce(this.props.user.data.id);
   };
 
@@ -54,7 +58,7 @@ class FollowButton extends Component {
                     following.data[publisher.id] ? (
                       <Button
                         onClick={this.unFollow}
-                        basic color='green'>Unfollow</Button>
+                        color='green'>Unfollow</Button>
                     ):(
                       <Button
                         onClick={this.Follow}
@@ -82,4 +86,4 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps,
   {deleteUpload, addFollowing, addFollowers,
     removeFollowing, removeFollowers, getUserOnce})
-(FollowButton);
+(FollowToggle);

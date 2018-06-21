@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import {Image, Card, Button} from 'semantic-ui-react';
 
-import FollowButton from '../follow/Follow.Btn';
+import FollowToggle from '../Toggle/Toggle.Follow';
 
 import {deleteUpload} from "../../actions/action.upload";
 import {addFollowers, removeFollowers} from "../../actions/action.followers";
@@ -34,8 +34,7 @@ class UserCard extends Component {
         </Card.Content>
         <Card.Content extra>
           <div className='ui two buttons'>
-            <FollowButton
-              page={page}
+            <FollowToggle
               publisher={publisher}/>
             <Button
               basic color='blue'><Link to={`/profile/${publisher.id}`}>Profile</Link></Button>

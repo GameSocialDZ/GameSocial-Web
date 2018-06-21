@@ -6,8 +6,9 @@ import _ from 'lodash';
 import {Image, Grid, Button, Segment} from 'semantic-ui-react';
 
 import UserCard from '../Card/User.Card';
-import Comments from '../Comment/comment';
+import Comments from '../Card/Comment.Card';
 import ViewsCount from '../Count/Count.Views';
+import FavoriteToggle from '../Toggle/Toggle.Favorite';
 
 import {deleteUpload} from "../../actions/action.upload";
 
@@ -35,7 +36,8 @@ class ImageView extends Component {
                 <ViewsCount
                   uploadId={view.data.id}
                   type={view.data.config.type}/>
-                <Button>Favorite</Button>
+                <FavoriteToggle
+                  upload={view.data}/>
               </Segment>
             </Grid.Column>
           </Grid.Row>

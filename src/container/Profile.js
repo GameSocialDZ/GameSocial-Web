@@ -90,11 +90,11 @@ export class Profile extends Component {
     if(!_.isEmpty(auth.currentUser)) {
       this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
         console.log(following);
-        this.setState({loadingFollowing: false})
+        // this.setState({loadingFollowing: false})
       });
       this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
         console.log(followers);
-        this.setState({loadingFollowers: false})
+        // this.setState({loadingFollowers: false})
       });
     }
     this.setState({initState: true})

@@ -7,9 +7,10 @@ import {Grid, Button, Segment} from 'semantic-ui-react';
 
 import {deleteUpload} from "../../actions/action.upload";
 
-import Comments from '../Comment/comment';
+import Comments from '../Card/Comment.Card';
 import UserCard from '../Card/User.Card';
 import ViewsCount from '../Count/Count.Views';
+import FavoriteToggle from '../Toggle/Toggle.Favorite';
 
 class VideoView extends Component {
   constructor(props) {
@@ -39,7 +40,8 @@ class VideoView extends Component {
               <ViewsCount
                 uploadId={view.data.id}
                 type={view.data.config.type}/>
-              <Button>Favorite</Button>
+                <FavoriteToggle
+                  upload={view.data}/>
               </Segment>
             </Grid.Column>
           </Grid.Row>
