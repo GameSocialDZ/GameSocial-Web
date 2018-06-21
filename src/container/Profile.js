@@ -9,6 +9,7 @@ import {getUser, getUserPromise, getUserOncePromise, getUserOnce} from "../actio
 import {getAuth} from '../actions/action.auth';
 import {getFollowersPromise, getFollowersOnce} from '../actions/action.followers';
 import {getFollowingPromise, getFollowingOnce} from '../actions/action.following';
+import {getTrackedFavoritesPromise, getTrackedFavoritesOnce} from "../actions/action.track.favorites";
 
 import ProfileDetail from "../component/ProfileDetails";
 
@@ -39,6 +40,9 @@ export class Profile extends Component {
       });
       // Get Auth Followers
       this.props.getFollowersPromise(nextProps.auth.currentUser.uid).then(() => {
+        this.setState({initState: true});
+      });
+      this.props.getTrackedFavoritesPromise(nextProps.auth.currentUser.uid).then(() => {
         this.setState({initState: true});
       });
     }
@@ -73,6 +77,7 @@ export class Profile extends Component {
     if(!_.isEmpty(auth.currentUser)) {
       this.props.getFollowingOnce(auth.currentUser.uid);
       this.props.getFollowersOnce(auth.currentUser.uid);
+      this.props.getTrackedFavoritesOnce(auth.currentUser.uid);
     }
     this.setState({initState: true})
   }
@@ -94,10 +99,12 @@ const mapStateToProps = state => ({
   auth: state.auth,
   user: state.user,
   following: state.following,
-  followers: state.followers
+  followers: state.followers,
+  trackedFavorites: state.trackedFavorites
 });
 
 export default connect(mapStateToProps,
   {getAuth, getUser, getUserPromise, getUserOncePromise, getUserOnce,
-    getFollowersPromise, getFollowingPromise, getFollowersOnce, getFollowingOnce})
+    getFollowersPromise, getFollowingPromise, getFollowersOnce, getFollowingOnce,
+    getTrackedFavoritesPromise, getTrackedFavoritesOnce})
 (Profile);

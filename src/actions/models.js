@@ -119,6 +119,13 @@ class FavoriteObject{
   }
 }
 
+class TrackedFavoriteObject{
+  constructor(authId, publisherId ){
+    this.userId = authId;
+    this.uploadId = publisherId;
+  }
+}
+
 // class UserObject {
 //   constructor(isAuth, user) {
 //     this.isAuth = isAuth;
@@ -168,4 +175,4 @@ class FavoriteObject{
 //   }
 // }
 
-module.exports = {NewUserObject, VideoObject, ImageObject, UserObject, UploadObject, FavoriteObject};
+module.exports = {NewUserObject, VideoObject, ImageObject, UserObject, UploadObject, FavoriteObject, TrackedFavoriteObject};

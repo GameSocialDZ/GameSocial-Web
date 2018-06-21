@@ -7,6 +7,7 @@ import {getUserPromise, getUserOncePromise} from '../actions/action.user';
 import {getFollowingPromise, getFollowingOnce} from "../actions/action.following";
 import {getFollowersPromise, getFollowersOnce} from "../actions/action.followers";
 import {getFavoritesOnce, getFavoritesPromise} from "../actions/action.favorite";
+import {getTrackedFavoritesOnce, getTrackedFavoritesPromise} from '../actions/action.track.favorites';
 
 import ImageView from '../component/View/Image.View';
 import VideoView from '../component/View/Video.View';
@@ -36,6 +37,10 @@ class View extends Component {
       this.props.getFavoritesPromise(nextProps.auth.currentUser.uid, view.data.id).then(() => {
         this.setState({initState: true})
       });
+      // Get Tracked favorites
+      this.props.getTrackedFavoritesPromise(nextProps.auth.currentUser.uid).then(() => {
+        this.setState({initState: true})
+      });
     }
   }
 
@@ -63,6 +68,8 @@ class View extends Component {
       this.props.getFollowersOnce(auth.currentUser.uid);
       // Get Auth Favorites
       this.props.getFavoritesOnce(auth.currentUser.uid, view.data.id);
+      // Get Tracked Favorites List
+      this.props.getTrackedFavoritesOnce(auth.currentUser.uid, )
     }
     this.setState({initState: true})
   }
@@ -105,5 +112,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps,
   {deleteView, getViewPromise, getView, getUserPromise,getUserOncePromise,
     getFollowingPromise, getFollowersPromise, getFollowingOnce, getFollowersOnce,
-    getFavoritesOnce, getFavoritesPromise})
+    getFavoritesOnce, getFavoritesPromise, getTrackedFavoritesOnce, getTrackedFavoritesPromise})
 (View);

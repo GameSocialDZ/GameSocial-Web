@@ -40,13 +40,6 @@ export const getFollowingPromise = (userId) => dispatch => {
   })
 };
 
-// export const getFollowing = (userId) => dispatch => {
-//   dispatch(followingRequest());
-//   return database.ref(`users/${userId}/followers/`).on('value', (data) => {
-//     dispatch(followingGetSuccess(data.val()));
-//   });
-// };
-
 export const getFollowingOnce = (userId) => dispatch => {
   dispatch(followingRequest());
   return database.ref(`users/${userId}/following`).once('value', (data) => {

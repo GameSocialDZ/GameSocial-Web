@@ -11,7 +11,8 @@ import {CloudinaryConfig} from "../../cloudinary";
 import axios from "axios/index";
 
 import {updateAuth} from '../../actions/action.auth';
-import {updateUserProfile, updateUserFollows, updateUserComments, updateUserUploads} from '../../actions/action.user';
+import {updateUserProfile, updateUserFollows, updateUserFavorites,
+  updateUserComments, updateUserUploads, getUserOnce} from '../../actions/action.user';
 
 class FormEditProfile extends Component{
   constructor(props){
@@ -49,7 +50,10 @@ class FormEditProfile extends Component{
     this.props.updateUserFollows(auth, user.data.following, user.data.followers, values, file);
     // Update 5
     this.props.updateUserComments(auth, user.data.comments, file);
+    // Update 6
+    this.props.updateUserFavorites(auth, user.data.tracked_favorites, file);
 
+    // Clear form
     this.props.dispatch(reset('editProfile'));
 
     // Re-render Profile
@@ -189,8 +193,8 @@ const mapStateToProps = state => ({
 });
 
 FormEditProfile = connect(mapStateToProps,
-  {updateAuth, updateUserProfile, updateUserUploads,
-    updateUserFollows, updateUserComments})
+  {updateAuth, updateUserProfile, updateUserUploads, getUserOnce,
+    updateUserFollows, updateUserComments, updateUserFavorites})
 (FormEditProfile);
 
 export default reduxForm({

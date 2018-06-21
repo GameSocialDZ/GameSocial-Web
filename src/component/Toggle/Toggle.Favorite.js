@@ -6,6 +6,7 @@ import _ from 'lodash';
 import {Image, Card, Button} from 'semantic-ui-react';
 
 import {removeFavorite, addFavorite, getFavoritesOnce} from "../../actions/action.favorite";
+import {removeTrackedFavorite, addTrackedFavorite, getTrackedFavoritesOnce} from "../../actions/action.track.favorites";
 
 //TODO: pass uploadId from this parent
 class FavoriteToggle extends Component {
@@ -20,15 +21,21 @@ class FavoriteToggle extends Component {
   unFavorite = () =>{
     console.log('click unfavorite success');
     const {auth, upload} = this.props;
-    this.props.removeFavorite(auth.currentUser.uid, upload.id);
+    this.props.removeFavorite(auth.currentUser.uid, upload);
+    this.props.removeTrackedFavorite(auth.currentUser.uid, upload);
+
     this.props.getFavoritesOnce(auth.currentUser.uid);
+    this.props.getTrackedFavoritesOnce(auth.currentUser.uid);
   };
 
   Favorite = () => {
     console.log('click favorite success');
     const {auth, upload} = this.props;
     this.props.addFavorite(auth.currentUser.uid, upload);
+    this.props.addTrackedFavorite(auth.currentUser.uid, upload);
+
     this.props.getFavoritesOnce(auth.currentUser.uid);
+    this.props.getTrackedFavoritesOnce(auth.currentUser.uid);
   };
 
   render() {
@@ -80,5 +87,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getFavoritesOnce, removeFavorite, addFavorite})
+  {getFavoritesOnce, removeFavorite, addFavorite,
+  removeTrackedFavorite, addTrackedFavorite, getTrackedFavoritesOnce})
 (FavoriteToggle);

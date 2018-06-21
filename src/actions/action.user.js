@@ -86,9 +86,21 @@ export const editUserUpload = (auth, data) => dispatch => {
 };
 
 export const updateUserComments = (auth, comments, file) => dispatch => {
-  Object.keys(comments).map((vidId) => {
-    Object.keys(comments[vidId]).map((commentId) => {
-      database.ref('/comments/').child(`${comments[vidId][commentId].uploadId}/${comments[vidId][commentId].commentId}/profile/avatar/url`).set(file.secure_url)
+  Object.keys(comments).map((uploadId) => {
+    Object.keys(comments[uploadId]).map((commentId) => {
+      database.ref('/comments/').child(`${comments[uploadId][commentId].uploadId}/${comments[uploadId][commentId].commentId}/profile/avatar/url`).set(file.secure_url)
+    })
+  })
+};
+
+export const updateUserFavorites = (auth, trackedFavorites, file) => dispatch => {
+  _.forEach(trackedFavorites, trackedFavorite => {
+    Object.keys(trackedFavorite).map((uploadId) =>{
+      Object.keys(trackedFavorite[uploadId]).map((userId) => {
+        database.ref('users')
+          .child(`/${trackedFavorite[uploadId][userId].userId}/favorites/${trackedFavorite[uploadId][userId].uploadId}/publisher/avatar/url`)
+          .set(file.secure_url)
+      })
     })
   })
 };
@@ -123,6 +135,8 @@ export const updateUserFollows = (auth, following, followers, values, file) => d
   });
 };
 
+
+//TODO: Update all Uploads on user edit (**favorites**, uploads, users)
 export const updateUserUploads = (auth, values, file) => dispatch => {
   database.ref(`/uploads`).child('/images').once('value', data => {
     const imageArray = data.val();
@@ -169,10 +183,6 @@ export const updateUserUploads = (auth, values, file) => dispatch => {
       publisherRef.update(update);
     });
   });
-};
 
-export const updateUserFavorites = (auth, favorites, file) => dispatch => {
-  _.forEach(favorites, favorite => {
-    const favoritesRef = database.ref(`users/${auth.uid}/favorites`)
-  })
+  //TODO: Update all tracked Favorites
 };

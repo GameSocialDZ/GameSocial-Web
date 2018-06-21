@@ -1,5 +1,5 @@
 import {database} from "../firebase";
-import {FavoriteObject} from './models';
+import {FavoriteObject, UsersFavoriteObject} from './models';
 import _ from 'lodash';
 
 export const FAVORITE_REQUEST = 'FAVORITE_REQUEST';
@@ -51,11 +51,10 @@ export const getFavoritesOnce = (authId) => dispatch => {
 //*** SERVICES ***//
 export const addFavorite = (authId, upload) => dispatch => {
   let favoriteObject = new FavoriteObject(upload);
-
   const favoritesRef = database.ref(`users/${authId}/favorites`);
   favoritesRef.child(`/${upload.id}`).set(favoriteObject);
 };
 
-export const removeFavorite = (authId, uploadId) => dispatch => {
-  database.ref(`users/${authId}/favorites/${uploadId}`).remove()
+export const removeFavorite = (authId, upload) => dispatch => {
+  database.ref(`users/${authId}/favorites/${upload.id}`).remove();
 };
