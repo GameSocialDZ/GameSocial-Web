@@ -16,7 +16,6 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      uploads: null,
       loadingUploads: true,
       initState: true
     }
@@ -27,7 +26,6 @@ class Home extends Component {
     this.props.getUploadsPromise().then((uploads) => {
       console.log(uploads);
       this.setState({
-        uploads: this.props.uploads.data,
         loadingUploads: false,
         initState: true
       });

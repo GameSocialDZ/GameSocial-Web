@@ -7,7 +7,7 @@ import {Image, Card, Button} from 'semantic-ui-react';
 
 import {deleteUpload} from "../../actions/action.upload";
 import {addFollowers, removeFollowers} from "../../actions/action.followers";
-import {addFollowing,removeFollowing} from "../../actions/action.following";
+import {addFollowing,removeFollowing, getFollowingOnce} from "../../actions/action.following";
 import {getUserOnce} from "../../actions/action.user";
 
 class FollowToggle extends Component {
@@ -19,24 +19,28 @@ class FollowToggle extends Component {
     }
   }
 
-  unFollow = () =>{
+  unFollow = () => {
     console.log('click unfollow success');
-    const {auth, publisher} = this.props;
+    const {auth, publisher, user} = this.props;
     this.props.removeFollowers(auth.currentUser.uid, publisher.id);
     this.props.removeFollowing(auth.currentUser.uid, publisher.id);
-    // to update when on profile page
-    // TODO: Mayber check to see if we are on profile page
-    this.props.getUserOnce(this.props.user.data.id);
+    this.props.getFollowingOnce(auth.currentUser.uid);
+
+    if(user.data){
+      this.props.getUserOnce(this.props.user.data.id);
+    }
   };
 
   Follow = () => {
     console.log('click follow success');
-    const {auth, publisher} = this.props;
+    const {auth, publisher, user} = this.props;
     this.props.addFollowers(auth.currentUser, publisher.id);
     this.props.addFollowing(auth.currentUser.uid, publisher);
-    // to update when on profile page
-    // TODO: Maybe check to see if we are on profile page
-    this.props.getUserOnce(this.props.user.data.id);
+    this.props.getFollowingOnce(auth.currentUser.uid);
+
+    if(user.data){
+      this.props.getUserOnce(this.props.user.data.id);
+    }
   };
 
   render() {
@@ -85,5 +89,5 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps,
   {deleteUpload, addFollowing, addFollowers,
-    removeFollowing, removeFollowers, getUserOnce})
+    removeFollowing, removeFollowers, getUserOnce, getFollowingOnce})
 (FollowToggle);

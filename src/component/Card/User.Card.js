@@ -37,7 +37,7 @@ class UserCard extends Component {
             <FollowToggle
               publisher={publisher}/>
             <Button
-              basic color='blue'><Link to={`/profile/${publisher.id}`}>Profile</Link></Button>
+              color='blue'><Link to={`/profile/${publisher.id}`}>Profile</Link></Button>
           </div>
         </Card.Content>
       </Card>

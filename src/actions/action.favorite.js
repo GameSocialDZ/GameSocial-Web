@@ -33,19 +33,11 @@ export const favoriteError = error => ({
 export const getFavoritesPromise = (authId) => dispatch => {
   dispatch(favoriteRequest());
   return new Promise((resolve, reject) => {
-    database.ref(`users/${authId}/favorites`).on('value', (data) => {
+    database.ref(`users/${authId}/favorites`).once('value', (data) => {
       let favorites = data.val();
       resolve(dispatch(favoriteGetSuccess(favorites)));
     });
   })
-};
-
-export const getFavorites = (authId) => dispatch => {
-  dispatch(favoriteRequest());
-  return database.ref(`users/${authId}/favorites`).on('value', (data) => {
-    let favorites = data.val();
-    dispatch(favoriteGetSuccess(favorites));
-  });
 };
 
 export const getFavoritesOnce = (authId) => dispatch => {

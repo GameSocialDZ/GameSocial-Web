@@ -33,19 +33,19 @@ export const followingError = error => ({
 export const getFollowingPromise = (userId) => dispatch => {
   dispatch(followingRequest());
   return new Promise((resolve, reject) => {
-    database.ref(`users/${userId}/following`).on('value', (data) => {
+    database.ref(`users/${userId}/following`).once('value', (data) => {
       const following = data.val();
       resolve(dispatch(followingGetSuccess(following)));
     })
   })
 };
 
-export const getFollowing = (userId) => dispatch => {
-  dispatch(followingRequest());
-  return database.ref(`users/${userId}/followers/`).on('value', (data) => {
-    dispatch(followingGetSuccess(data.val()));
-  });
-};
+// export const getFollowing = (userId) => dispatch => {
+//   dispatch(followingRequest());
+//   return database.ref(`users/${userId}/followers/`).on('value', (data) => {
+//     dispatch(followingGetSuccess(data.val()));
+//   });
+// };
 
 export const getFollowingOnce = (userId) => dispatch => {
   dispatch(followingRequest());

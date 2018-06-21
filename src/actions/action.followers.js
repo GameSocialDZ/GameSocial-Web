@@ -33,19 +33,19 @@ export const followersError = error => ({
 export const getFollowersPromise = (userId) => dispatch => {
   dispatch(followersRequest());
   return new Promise((resolve, reject) => {
-    database.ref(`users/${userId}/followers`).on('value', (data) => {
+    database.ref(`users/${userId}/followers`).once('value', (data) => {
       let followers = data.val();
       resolve(dispatch(followersGetSuccess(followers)));
     });
   })
 };
 
-export const getFollowers = (userId) => dispatch => {
-  dispatch(followersRequest());
-  return database.ref(`users/${userId}/followers/`).on('value', (data) => {
-    dispatch(followersGetSuccess(data.val()));
-  });
-};
+// export const getFollowers = (userId) => dispatch => {
+//   dispatch(followersRequest());
+//   return database.ref(`users/${userId}/followers/`).on('value', (data) => {
+//     dispatch(followersGetSuccess(data.val()));
+//   });
+// };
 
 export const getFollowersOnce = (userId) => dispatch => {
   dispatch(followersRequest());

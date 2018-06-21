@@ -4,9 +4,9 @@ import _ from 'lodash';
 
 import {deleteView, getViewPromise, getView} from "../actions/action.view";
 import {getUserPromise, getUserOncePromise} from '../actions/action.user';
-import {getFollowingPromise, getFollowing} from "../actions/action.following";
-import {getFollowersPromise, getFollowers} from "../actions/action.followers";
-import {getFavorites} from "../actions/action.favorite";
+import {getFollowingPromise, getFollowingOnce} from "../actions/action.following";
+import {getFollowersPromise, getFollowersOnce} from "../actions/action.followers";
+import {getFavoritesOnce, getFavoritesPromise} from "../actions/action.favorite";
 
 import ImageView from '../component/View/Image.View';
 import VideoView from '../component/View/Video.View';
@@ -15,7 +15,6 @@ class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'view',
       loadingView: true
     }
   }
@@ -24,26 +23,25 @@ class View extends Component {
     const {view} = this.props;
     // Handle Login on view page
     if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
-      this.setState({loadingFollowers: true, loadingFollowing: true});
+      this.setState({initState: false});
       // Get auth following
-      this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
-        console.log(following);
-        this.setState({loadingFollowing: false, initState: true})
+      this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then(() => {
+        this.setState({initState: true})
       });
       // Get auth Followers
-      this.props.getFollowersPromise(nextProps.auth.currentUser.uid).then((followers) => {
-        console.log(followers);
-        this.setState({loadingFollowers: false, initState: true})
+      this.props.getFollowersPromise(nextProps.auth.currentUser.uid).then(() => {
+        this.setState({initState: true})
       });
       // Get auth favorites
-      this.props.getFavorites(nextProps.auth.currentUser.uid, view.data.id);
+      this.props.getFavoritesPromise(nextProps.auth.currentUser.uid, view.data.id).then(() => {
+        this.setState({initState: true})
+      });
     }
   }
 
   // Set the initial state
   componentWillMount() {
     this.setState({
-      page: 'view',
       loadingView: true
     })
   }
@@ -52,31 +50,19 @@ class View extends Component {
   componentDidMount() {
     const {match: {params}, auth, view} = this.props;
     // Get view data
-
     this.props.getViewPromise(params.uploadId, params.type + 's').then((view) => {
       console.log(view);
       this.setState({loadingView: false})
-    });
-    // Get publisher as user
-    this.props.getUserOncePromise(params.userId).then((user) => {
-      console.log(user);
-      this.setState({loadingUser: false})
     });
 
     // Get Auth info if logged in
     if(!_.isEmpty(auth.currentUser)) {
       // Get auth Following
-      this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
-        console.log(following);
-        // this.setState({loadingFollowing: false})
-      });
+      this.props.getFollowingOnce(auth.currentUser.uid);
       // Get Auth Followers
-      this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
-        console.log(followers);
-        // this.setState({loadingFollowers: false})
-      });
+      this.props.getFollowersOnce(auth.currentUser.uid);
       // Get Auth Favorites
-      this.props.getFavorites(auth.currentUser.uid, view.data.id)
+      this.props.getFavoritesOnce(auth.currentUser.uid, view.data.id);
     }
     this.setState({initState: true})
   }
@@ -118,6 +104,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps,
   {deleteView, getViewPromise, getView, getUserPromise,getUserOncePromise,
-    getFollowingPromise, getFollowersPromise, getFollowing, getFollowers,
-    getFavorites})
+    getFollowingPromise, getFollowersPromise, getFollowingOnce, getFollowersOnce,
+    getFavoritesOnce, getFavoritesPromise})
 (View);
