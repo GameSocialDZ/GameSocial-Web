@@ -11,6 +11,7 @@ import Comments from '../Card/Comment.Card';
 import UserCard from '../Card/User.Card';
 import ViewsCount from '../Count/Count.Views';
 import FavoriteToggle from '../Toggle/Toggle.Favorite';
+import LikesToggle from '../Toggle/Toggle.Like';
 
 class VideoView extends Component {
   constructor(props) {
@@ -36,10 +37,15 @@ class VideoView extends Component {
             </Grid.Column>
             <Grid.Column width={4}>
               <Segment>
-              <p>Likes</p>
-              <ViewsCount
-                uploadId={view.data.id}
-                type={view.data.config.type}/>
+                <Segment>
+                  <LikesToggle
+                    upload={view.data}/>
+                </Segment>
+                <Segment>
+                  <ViewsCount
+                    uploadId={view.data.id}
+                    type={view.data.config.type}/>
+                </Segment>
                 <FavoriteToggle
                   upload={view.data}/>
               </Segment>

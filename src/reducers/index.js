@@ -8,6 +8,7 @@ import followingReducer from "./reducer.following";
 import commentsReducer from './reducer.comments';
 import countViewsReducer from './reducer.count.views';
 import favoritesReducer from './reducer.favoirite';
+import likesReducer from './reducer.likes';
 import {reducer as formReducer} from "redux-form";
 
 const rootReducer = combineReducers({
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   followers: followersReducer,
   comments: commentsReducer,
   countViews: countViewsReducer,
-  favorites: favoritesReducer
+  favorites: favoritesReducer,
+  likes: likesReducer
 });
 
 export default rootReducer;

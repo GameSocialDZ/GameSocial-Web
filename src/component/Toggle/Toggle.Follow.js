@@ -49,6 +49,7 @@ class FollowToggle extends Component {
       <div>
         {
           // If followers is updating return loading button
+          // TODO: Change loading to state to render individual buttons
           following.loading ? (
             <Button loading/>
           ):(
@@ -91,3 +92,4 @@ export default connect(mapStateToProps,
   {deleteUpload, addFollowing, addFollowers,
     removeFollowing, removeFollowers, getUserOnce, getFollowingOnce})
 (FollowToggle);
+

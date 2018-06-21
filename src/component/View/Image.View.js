@@ -9,6 +9,7 @@ import UserCard from '../Card/User.Card';
 import Comments from '../Card/Comment.Card';
 import ViewsCount from '../Count/Count.Views';
 import FavoriteToggle from '../Toggle/Toggle.Favorite';
+import LikesToggle from '../Toggle/Toggle.Like';
 
 import {deleteUpload} from "../../actions/action.upload";
 
@@ -32,10 +33,15 @@ class ImageView extends Component {
             </Grid.Column>
             <Grid.Column width={4}>
               <Segment>
-                <p>Likes</p>
-                <ViewsCount
-                  uploadId={view.data.id}
-                  type={view.data.config.type}/>
+                <Segment>
+                  <LikesToggle
+                    upload={view.data}/>
+                </Segment>
+                <Segment>
+                  <ViewsCount
+                    uploadId={view.data.id}
+                    type={view.data.config.type}/>
+                </Segment>
                 <FavoriteToggle
                   upload={view.data}/>
               </Segment>
