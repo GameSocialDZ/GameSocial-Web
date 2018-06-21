@@ -7,6 +7,7 @@ import {Image, Grid, Button, Segment} from 'semantic-ui-react';
 
 import UserCard from '../Card/User.Card';
 import Comments from '../Comment/comment';
+import ViewsCount from '../Count/Count.Views';
 
 import {deleteUpload} from "../../actions/action.upload";
 
@@ -31,7 +32,9 @@ class ImageView extends Component {
             <Grid.Column width={4}>
               <Segment>
                 <p>Likes</p>
-                <p>Views</p>
+                <ViewsCount
+                  uploadId={view.data.id}
+                  type={view.data.config.type}/>
                 <Button>Favorite</Button>
               </Segment>
             </Grid.Column>

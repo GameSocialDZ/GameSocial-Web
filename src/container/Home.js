@@ -143,4 +143,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getUploads, getUser, getUserOnce, getUploadsPromise})(Home);
+  {getUploads, getUser, getUserOnce, getUploadsPromise})
+(Home);

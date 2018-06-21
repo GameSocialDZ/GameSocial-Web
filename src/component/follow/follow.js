@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as firebase from "firebase";
 import { Icon, Button } from 'semantic-ui-react';
-import { loginActionRequired } from './../../actions/index';
 
 class Follow extends Component {
   constructor(props) {
@@ -87,4 +86,4 @@ class Follow extends Component {
   }
 }
 
-export default connect (null, { loginActionRequired })(Follow);
+export default connect (null, { })(Follow);

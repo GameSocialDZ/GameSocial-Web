@@ -38,6 +38,16 @@ export const getCommentsOnce = (uploadId) => dispatch => {
   })
 };
 
+export const getCommentsOncePromise = (uploadId) => dispatch => {
+  dispatch(commentsRequest());
+  return new Promise((resolve, reject) => {
+    database.ref(`/comments/${uploadId}`).once('value', data => {
+      const comments = data.val();
+      resolve(dispatch(commentsGetSuccess(comments)))
+    })
+  })
+};
+
 export const getComments = (uploadId) => dispatch => {
   dispatch(commentsRequest());
   return database.ref(`/comments/${uploadId}`).on('value', data => {
@@ -49,7 +59,7 @@ export const getComments = (uploadId) => dispatch => {
 export const getCommentsPromise = (uploadId) => dispatch => {
   dispatch(commentsRequest());
   return new Promise((resolve, reject) => {
-    database.ref(`/comments/${uploadId}`).once('value', data => {
+    database.ref(`/comments/${uploadId}`).on('value', data => {
       const comments = data.val();
       resolve(dispatch(commentsGetSuccess(comments)))
     })

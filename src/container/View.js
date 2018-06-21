@@ -19,23 +19,19 @@ class View extends Component {
     }
   }
 
-  /////*****Will receive Next Props for when user logs in on view page*****/////
   componentWillReceiveProps(nextProps) {
-
     // Handle Login on view page
     if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
       this.setState({loadingFollowers: true, loadingFollowing: true});
-
-      //this.props.getFollowers(nextProps.auth.currentUser.uid);
+      // Get auth following
       this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
         console.log(following);
-        this.setState({loadingFollowing: false})
+        this.setState({loadingFollowing: false, initState: true})
       });
-
-      //this.props.getFollowing(nextProps.auth.currentUser.uid);
+      // Get auth Followers
       this.props.getFollowersPromise(nextProps.auth.currentUser.uid).then((followers) => {
         console.log(followers);
-        this.setState({loadingFollowers: false})
+        this.setState({loadingFollowers: false, initState: true})
       });
     }
   }
@@ -50,23 +46,27 @@ class View extends Component {
 
   // Handles Refresh
   componentDidMount() {
-    const {match: {params}, auth} = this.props;
+    const {match: {params}, auth, view} = this.props;
+    // Get view data
 
     this.props.getViewPromise(params.uploadId, params.type + 's').then((view) => {
       console.log(view);
       this.setState({loadingView: false})
     });
-
+    // Get publisher as user
     this.props.getUserOncePromise(params.userId).then((user) => {
       console.log(user);
       this.setState({loadingUser: false})
     });
 
+    // Get Auth info if logged in
     if(!_.isEmpty(auth.currentUser)) {
+      // Get auth Following
       this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
         console.log(following);
         this.setState({loadingFollowing: false})
       });
+      // Get Auth Followers
       this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
         console.log(followers);
         this.setState({loadingFollowers: false})

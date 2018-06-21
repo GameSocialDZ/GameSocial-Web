@@ -91,10 +91,6 @@ export class ProfileDetail extends Component {
   render() {
     const {user} = this.props;
 
-    if (user.loading) {
-      return <Header as={'h1'}>Loading...</Header>
-    }
-
     return (
       <div>
         <div>

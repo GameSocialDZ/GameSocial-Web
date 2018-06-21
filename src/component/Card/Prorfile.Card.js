@@ -5,10 +5,10 @@ import {Grid, Image, Button, Segment} from 'semantic-ui-react';
 
 import ModalEditProfile from '../Modal/Modal.EditProfile';
 import ModalLinkAccounts from '../Modal/Modal.LinkAccounts';
+import FollowButton from '../follow/Follow.Btn';
 
 import {addFollowers, removeFollowers} from "../../actions/action.followers";
 import {addFollowing,removeFollowing} from "../../actions/action.following";
-
 import {getUserOnce} from "../../actions/action.user";
 
 export class ProfileCard extends Component {
@@ -18,24 +18,8 @@ export class ProfileCard extends Component {
     }
   }
 
-  unFollow = () => {
-    console.log('click unfollow success');
-    const {auth, user} = this.props;
-    this.props.removeFollowers(auth.currentUser.uid, user.data.id);
-    this.props.removeFollowing(auth.currentUser.uid, user.data.id);
-    this.props.getUserOnce(this.props.user.data.id);
-  };
-
-  Follow = () => {
-    console.log('click follow success');
-    const {auth, user} = this.props;
-    this.props.addFollowers(auth.currentUser, user.data.id);
-    this.props.addFollowing(auth.currentUser.uid, user.data.profile);
-    this.props.getUserOnce(this.props.user.data.id);
-  };
-
   render() {
-    const {user, auth, following} = this.props;
+    const {user, auth} = this.props;
     return (
       <div>
         <Grid columns={3} stackable padded>
@@ -61,18 +45,8 @@ export class ProfileCard extends Component {
                 {
                   !_.isEmpty(auth.currentUser) && (user.data.id !== auth.currentUser.uid) ? (
                     <div>
-                      {
-                        // Check auth user's following list to render unfollow or follow button
-                        following.data[user.data.id] ? (
-                          <Button
-                            onClick={this.unFollow}
-                            basic color='green'>Unfollow</Button>
-                        ):(
-                          <Button
-                            onClick={this.Follow}
-                            basic color='green'>Follow</Button>
-                        )
-                      }
+                      <FollowButton
+                        publisher={user.data.profile}/>
                     </div>
                   ):(
                     <div>

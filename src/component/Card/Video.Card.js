@@ -37,7 +37,7 @@ class VideoCard extends Component {
   render() {
     const {currentUser, page, video} = this.props;
     return (
-      <Segment>
+      <Segment style={{backgroundColor: 'transparent', border: '0 none'}}>
       <Card fluid>
         <Player
           className="card-img-top"

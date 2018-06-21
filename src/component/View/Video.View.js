@@ -9,6 +9,7 @@ import {deleteUpload} from "../../actions/action.upload";
 
 import Comments from '../Comment/comment';
 import UserCard from '../Card/User.Card';
+import ViewsCount from '../Count/Count.Views';
 
 class VideoView extends Component {
   constructor(props) {
@@ -35,7 +36,9 @@ class VideoView extends Component {
             <Grid.Column width={4}>
               <Segment>
               <p>Likes</p>
-              <p>Views</p>
+              <ViewsCount
+                uploadId={view.data.id}
+                type={view.data.config.type}/>
               <Button>Favorite</Button>
               </Segment>
             </Grid.Column>

@@ -12,26 +12,18 @@ class Comments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loadingComments: true
     }
   }
   componentWillMount() {
     this.setState({
-      loadingComments: true
+      loadingComments: true,
+      initState: false
     })
-  }
-
-  componentWillReceiveProps(nextProps) {
-
   }
 
   componentDidMount() {
     console.log(this.props.view.data.id);
     this.props.getCommentsOnce(this.props.view.data.id)
-    //   .then(comments => {
-    //   console.log(comments);
-    //   this.setState({loadingComments: false})
-    // });
   }
 
   onSubmit(values) {

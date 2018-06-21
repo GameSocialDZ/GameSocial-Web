@@ -32,16 +32,16 @@ export class Profile extends Component {
     const {match: {params}} = this.props;
     console.log(nextProps);
 
-    //TODO: Handle Login on profile page
-    if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
+    //Handle Login on profile page
+    if(this.state.initState && !_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
       this.setState({loadingFollowers: true, loadingFollowing: true, initState: false});
-
+      // Get Auth Following
       this.props.getFollowingPromise(nextProps.auth.currentUser.uid).then((following) => {
         console.log(following);
         this.setState({loadingFollowing: false, initState: true});
         this.updatePageDetails();
       });
-
+      // Get Auth Followers
       this.props.getFollowersPromise(nextProps.auth.currentUser.uid).then((followers) => {
         console.log(followers);
         this.setState({loadingFollowers: false, initState: true});
@@ -49,7 +49,7 @@ export class Profile extends Component {
       });
     }
 
-    // Same page different User //*** EXAMPLE HOW TO SET INTSTATE  ***//
+    // Same page different user update
     if(this.state.initState && this.props.user.data && this.props.user.data.id !== nextProps.match.params.userId){
       this.setState({loadingProfile: true, initState: false});
       this.props.getUserOncePromise(nextProps.match.params.userId).then((user) => {
@@ -59,10 +59,16 @@ export class Profile extends Component {
       });
     }
 
-    if(this.state.initState && this.props.user.data && this.props.user.data.id === nextProps.match.params.userId){
-
+    // Same page same user update
+    if(this.state.initState && this.props.user.data && (this.props.user.data.id === nextProps.match.params.userId)
+      && (this.props.user.data !== nextProps.user.data)){
+      this.setState({ initState: false});
+      this.props.getUserOncePromise(nextProps.match.params.userId).then((user) => {
+        console.log(user);
+        this.setState({loadingProfile: false, initState: true});
+        this.updatePageDetails();
+      });
     }
-
 
     //TODO: Handle profile page updates
     // if(this.state.userProfile && nextProps.user && nextProps.user.data && (nextProps.user.data.id === this.state.userProfile.data.id) && !_.isEqual(nextProps.user, this.state.userProfile)) {
@@ -80,20 +86,17 @@ export class Profile extends Component {
       this.updatePageDetails();
     });
 
-    // get followers and following if logged in
+    // Get Auth info if logged in
     if(!_.isEmpty(auth.currentUser)) {
-      //this.props.getFollowing(auth.currentUser.uid);
       this.props.getFollowingPromise(auth.currentUser.uid).then((following) => {
         console.log(following);
         this.setState({loadingFollowing: false})
       });
-      //this.props.getFollowers(auth.currentUser.uid);
       this.props.getFollowersPromise(auth.currentUser.uid).then((followers) => {
         console.log(followers);
         this.setState({loadingFollowers: false})
       });
     }
-
     this.setState({initState: true})
   }
 
@@ -144,9 +147,7 @@ export class Profile extends Component {
 
     return (
       <div style={{marginTop: '4.5rem', backgroundColor: 'dimgray'}}>
-        <ProfileDetail
-          page={this.state.page}
-        />
+        <ProfileDetail/>
       </div>
     );
   }
