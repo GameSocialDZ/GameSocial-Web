@@ -170,3 +170,9 @@ export const updateUserUploads = (auth, values, file) => dispatch => {
     });
   });
 };
+
+export const updateUserFavorites = (auth, favorites, file) => dispatch => {
+  _.forEach(favorites, favorite => {
+    const favoritesRef = database.ref(`users/${auth.uid}/favorites`)
+  })
+};
