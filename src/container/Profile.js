@@ -11,7 +11,7 @@ import {getFollowersPromise, getFollowersOnce} from '../actions/action.followers
 import {getFollowingPromise, getFollowingOnce} from '../actions/action.following';
 import {getTrackedFavoritesPromise, getTrackedFavoritesOnce} from "../actions/action.track.favorites";
 
-import ProfileDetail from "../component/ProfileDetails";
+import ProfileDetail from "../component/Detail/Detail.Profile";
 
 export class Profile extends Component {
   constructor(props) {

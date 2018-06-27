@@ -8,8 +8,8 @@ import {getUploads, getUploadsPromise} from "../actions/action.upload";
 import {getUserOnce, getUser} from '../actions/action.user';
 
 import ContentSlider from '../component/Slider/Content.Slider';
-import ImageCard from '../component/Card/Image.Card';
-import VideoCard from '../component/Card/Video.Card';
+import ImageCard from '../component/Card/Card.Image';
+import VideoCard from '../component/Card/Card.Video';
 import HomeHero from '../component/Home.Hero';
 
 class Home extends Component {

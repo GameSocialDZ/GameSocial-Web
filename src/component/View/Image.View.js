@@ -5,8 +5,8 @@ import _ from 'lodash';
 
 import {Image, Grid, Button, Segment} from 'semantic-ui-react';
 
-import UserCard from '../Card/User.Card';
-import Comments from '../Card/Comment.Card';
+import UserCard from '../Card/Card.User';
+import Comments from '../Card/Card.Comment';
 import ViewsCount from '../Count/Count.Views';
 import FavoriteToggle from '../Toggle/Toggle.Favorite';
 import LikesToggle from '../Toggle/Toggle.Like';

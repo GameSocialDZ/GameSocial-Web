@@ -7,11 +7,12 @@ import {Grid, Button, Segment} from 'semantic-ui-react';
 
 import {deleteUpload} from "../../actions/action.upload";
 
-import Comments from '../Card/Comment.Card';
-import UserCard from '../Card/User.Card';
+import Comments from '../Card/Card.Comment';
+import UserCard from '../Card/Card.User';
 import ViewsCount from '../Count/Count.Views';
 import FavoriteToggle from '../Toggle/Toggle.Favorite';
 import LikesToggle from '../Toggle/Toggle.Like';
+import PlaylistToggle from '../Toggle/Toggle.Playlist';
 
 class VideoView extends Component {
   constructor(props) {
@@ -46,8 +47,14 @@ class VideoView extends Component {
                     uploadId={view.data.id}
                     type={view.data.config.type}/>
                 </Segment>
+                <div style={{display: 'inline-block'}}>
                 <FavoriteToggle
                   upload={view.data}/>
+                </div>
+                <div style={{display: 'inline-block'}}>
+                <PlaylistToggle
+                  upload={view.data}/>
+                </div>
               </Segment>
             </Grid.Column>
           </Grid.Row>

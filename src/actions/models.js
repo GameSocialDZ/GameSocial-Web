@@ -3,13 +3,9 @@ class UserObject {
     this.id = user.id;
     this.isAdmin = user.isAdmin;
     this.profile = user.profile;
-    // this.likes = user.likes;
-    // this.dislikes = user.dislikes;
-    // this.favorite = user.favorite;
     this.followers = user.followers;
     this.following = user.following;
     this.points = user.points;
-    // this.comments = user.comments;
   }
 }
 
@@ -59,7 +55,6 @@ class VideoObject{
     this.publisher = video.publisher;
     this.name = video.name;
     this.config = video.config;
-    // this.thumbnail = video.thumbnail;
     this.points = video.points;
     this.status = video.status;
     this.options = video.options;
@@ -88,7 +83,6 @@ class ImageObject{
     this.publisher = image.publisher;
     this.name = image.name;
     this.config = image.config;
-    // this.thumbnail = image.thumbnail;
     this.points = image.points;
     this.status = image.status;
     this.options = image.options;
@@ -120,59 +114,27 @@ class FavoriteObject{
 }
 
 class TrackedFavoriteObject{
-  constructor(authId, publisherId ){
+  constructor(authId, publisherId){
     this.userId = authId;
     this.uploadId = publisherId;
   }
 }
 
-// class UserObject {
-//   constructor(isAuth, user) {
-//     this.isAuth = isAuth;
-//     this.isAdmin = user.isAdmin;
-//     this.profile = user.profile;
-//     this.likes = user.likes;
-//     this.dislikes = user.dislikes;
-//     this.favorite = user.favorite;
-//     this.followers = user.followers;
-//     this.following = user.following;
-//     this.points = user.points;
-//     this.teams = user.teams;
-//     this.comments = user.comments;
-//   }
-// }
-//
-// class UpdateUserProfileObject{
-//   constructor(user, profile, avatarUrl){
-//     this.avatar = avatarUrl;
-//     this.bio = profile.bio;
-//     this.id = user.id;
-//     this.name = profile.fullName;
-//     this.userName = user.userName;
-//     this.guild = profile.guild;
-//   }
-// }
-//
-// class LoginModel {
-//   constructor(isOpen, isLoading,showMsg,accountSubmitted, message) {
-//     this.openModal = isOpen;
-//     this.isLoading = isLoading;
-//     this.showMsg = showMsg;
-//     this.accountSubmitted = accountSubmitted;
-//     this.message = message;
-//   }
-// }
-//
-//
-// class CommentsObject{
-//   constructor(video, user, comment){
-//     this.profile = user.profile;
-//     this.videoId = video.id;
-//     this.flags = [];
-//     this.comment = comment;
-//     this.enabled = true;
-//     this.timestamp = new Date().getTime().toString();
-//   }
-// }
+class PlaylistObject{
+  constructor(upload, playlistName) {
+    if(upload === null) {
+      this.id = '';
+      this.url = '';
+      this.name = '';
+      this.playlist = '';
+    }else {
+      this.id = upload.id;
+      this.url = upload.url;
+      this.name = upload.content.title;
+      this.playlist = playlistName;
+    }
+  }
+}
 
-module.exports = {NewUserObject, VideoObject, ImageObject, UserObject, UploadObject, FavoriteObject, TrackedFavoriteObject};
+module.exports = {NewUserObject, VideoObject, ImageObject, UserObject,
+  UploadObject, FavoriteObject, TrackedFavoriteObject, PlaylistObject};

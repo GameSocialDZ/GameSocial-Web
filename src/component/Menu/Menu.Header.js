@@ -67,7 +67,7 @@ class MenuHeader extends Component {
     const { currentUser } = this.props;
 
     return (
-      <Menu fixed={'top'}>
+      <Menu fixed={'top'} style={{backgroundColor: 'gray'}}>
         <Menu.Item as={Link} to='/' name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
           <img style={{width: '50px'}} src="https://www.showwp.com/wp-content/uploads/2016/02/fox-gradient.png"/>
         </Menu.Item>

@@ -47,10 +47,13 @@ class FormEditProfile extends Component{
     // Update 3
     this.props.updateUserUploads(auth, values, file);
     // Update 4
+    //TODO: account for no following or followers to prevent undefined
     this.props.updateUserFollows(auth, user.data.following, user.data.followers, values, file);
     // Update 5
+    //TODO: account for no comments to prevent undefined
     this.props.updateUserComments(auth, user.data.comments, file);
     // Update 6
+    //TODO: account for no tracked_favorites to prevent undefined
     this.props.updateUserFavorites(auth, user.data.tracked_favorites, file);
 
     // Clear form

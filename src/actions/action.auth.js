@@ -1,7 +1,6 @@
 import {auth, database} from "../firebase";
 import * as firebase from "firebase";
 import {NewUserObject} from "./models";
-import {getUserOnce} from "./action.user";
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const authRequest = () => ({
@@ -71,7 +70,6 @@ export const loginEmailPassword = (user) => dispatch => {
             });
 
             dispatch(authGetSuccess(auth));
-            // dispatch(getUserOnce(auth.uid));
           })
       })
   }).catch(error => dispatch(authError(error)))
@@ -107,46 +105,3 @@ export const signOut = () => dispatch => {
     console.log(error);
   });
 };
-
-//TODO: POSSIBLE FACEBOOK AND TWITERLOGIN
-// export const facebookLogin = () => dispatch => {
-//   return auth.signInWithPopup(facebookProvider)
-//     .then(user => {
-//       // TODO: Make any further validations (Check if existing identifier and passwords match)
-//       // const token = result.credential.accessToken;
-//       // const secret = result.credential.secret;
-//       const user = user.user;
-//       // TODO: Create user in the database
-//       let newUser = new NewUserObject(user, '');
-//       database.ref('users/').child(user.id).set(newUser)
-//     }).catch(error => {
-//       // const errorCode = error.code;
-//       // const errorMessage = error.message;
-//       // const email = error.email;
-//       // const credential = error.credential;
-//     });
-// };
-//
-// export const twitterLogin = () => dispatch => {
-//   return auth.signInWithPopup(twitterProvider)
-//     .then(user => {
-//       if(user.email === null) {
-//         //TODO: Request email from user
-//         //user.updateEmail('email')
-//         // .then(() =>{console.log('Email Added')})
-//         // .catch(error =>{console.log(error)})
-//       }
-//       // TODO: Make any further validations (Check if existing identifier and passwords match)
-//       // const token = result.credential.accessToken;
-//       // const secret = result.credential.secret;
-//       // const user = user.user;
-//       // TODO: Create user in the datatbase
-//       let newUser = new NewUserObject(user, '');
-//       database.ref('users/').child(user.id).set(newUser)
-//     }).catch(error => {
-//       // const errorCode = error.code;
-//       // const errorMessage = error.message;
-//       // const email = error.email;
-//       // const credential = error.credential;
-//     });
-// };

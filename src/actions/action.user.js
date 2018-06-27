@@ -1,6 +1,6 @@
 import {database} from "../firebase";
 import _ from 'lodash';
-import {UserObject, UploadObject} from './models';
+import {UploadObject} from './models';
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const userRequest = () => ({
