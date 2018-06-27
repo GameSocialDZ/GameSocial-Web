@@ -26,7 +26,7 @@ export class ProfileDetail extends Component {
   renderUserImages(images) {
     return _.map(images, (image) => {
       return (
-        <Grid.Column key={image.id}>
+        <Grid.Column mobile={16} computer={8} largeScreen={5} key={image.id}>
           <ImageCard
             image={image}
             page={this.props.page}
@@ -39,7 +39,7 @@ export class ProfileDetail extends Component {
   renderUserVideos(videos) {
     return _.map(videos, (video) => {
       return (
-        <Grid.Column key={video.id}>
+        <Grid.Column mobile={16} computer={8} largeScreen={5} key={video.id}>
           <VideoCard
             video={video}
             page={this.props.page}
@@ -86,7 +86,7 @@ export class ProfileDetail extends Component {
   renderUserFavorites(favorites) {
     return _.map(favorites, (favorite) => {
       return (
-        <Grid.Column key={favorite.id}>
+        <Grid.Column mobile={16} computer={8} largeScreen={5} key={favorite.id}>
           {
             favorite.config.type === 'video' ? (
               <VideoCard
@@ -123,7 +123,7 @@ export class ProfileDetail extends Component {
           this.state.activeMenu === 'images' &&
         (
           <Container>
-            <Grid stackable columns={3}>
+            <Grid stackable>
               <Grid.Row>
                 {this.renderUserImages(user.data.images)}
               </Grid.Row>
@@ -135,7 +135,7 @@ export class ProfileDetail extends Component {
           this.state.activeMenu === 'videos' &&
           (
             <Container>
-              <Grid stackable columns={3}>
+              <Grid stackable>
                 <Grid.Row>
                   {this.renderUserVideos(user.data.videos)}
                 </Grid.Row>
@@ -172,7 +172,7 @@ export class ProfileDetail extends Component {
           this.state.activeMenu === 'favorites' &&
           (
             <Container>
-              <Grid stackable columns={3}>
+              <Grid stackable>
                 <Grid.Row>
                   {this.renderUserFavorites(user.data.favorites)}
                 </Grid.Row>
