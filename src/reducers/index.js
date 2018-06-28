@@ -11,6 +11,7 @@ import favoritesReducer from './reducer.favoirites';
 import likesReducer from './reducer.likes';
 import trackedFavoritesReducer from './reducer.track.favorites';
 import playlistReducer from './reducer.playlist';
+import featuredReducer from './reducer.featured';
 import {reducer as formReducer} from "redux-form";
 
 const rootReducer = combineReducers({
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   favorites: favoritesReducer,
   likes: likesReducer,
   trackedFavorites: trackedFavoritesReducer,
-  playlist: playlistReducer
+  playlist: playlistReducer,
+  featured: featuredReducer
 });
 
 export default rootReducer;

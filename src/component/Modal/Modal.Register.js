@@ -29,7 +29,7 @@ class ModalRegister extends Component {
   render() {
     const {activeItem} = this.state;
     return (
-    <Modal trigger={<Button style={{backgroundColor: 'orangered', color: 'white'}}>Register</Button>}>
+    <Modal trigger={<Button color={'orange'}>Register</Button>}>
       {this.renderRegisterMenu(activeItem)}
       <Modal.Content image>
         <Modal.Description>

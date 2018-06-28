@@ -54,6 +54,7 @@ export class ProfileCard extends Component {
                       !_.isEmpty(auth.currentUser) &&
                       <Button.Group>
                         <ModalLinkAccounts/>
+                        <Button.Or />
                         <ModalEditProfile/>
                       </Button.Group>
                     }

@@ -117,6 +117,7 @@ export class ProfileDetail extends Component {
         <div>
           <ProfileCard/>
         </div>
+        <Container fluid>
         <MenuProfile
           getActiveMenu={(state) => this.getActiveMenu(state)}/>
         {
@@ -189,6 +190,7 @@ export class ProfileDetail extends Component {
             </Container>
           )
         }
+        </Container>
       </div>
     );
   }

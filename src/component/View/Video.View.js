@@ -13,6 +13,7 @@ import ViewsCount from '../Count/Count.Views';
 import FavoriteToggle from '../Toggle/Toggle.Favorite';
 import LikesToggle from '../Toggle/Toggle.Like';
 import PlaylistToggle from '../Toggle/Toggle.Playlist';
+import FeaturedToggle from '../Toggle/Toggle.Featured';
 
 class VideoView extends Component {
   constructor(props) {
@@ -55,6 +56,12 @@ class VideoView extends Component {
                 <PlaylistToggle
                   upload={view.data}/>
                 </div>
+                {
+                  <Segment textAlign={'right'}>
+                    <span style={{float: 'left'}}>Featured</span>
+                    <FeaturedToggle upload={view.data}/>
+                  </Segment>
+                }
               </Segment>
             </Grid.Column>
           </Grid.Row>
@@ -63,9 +70,9 @@ class VideoView extends Component {
           <Grid.Row>
             <Grid.Column width={10}>
               <Segment>
-              <h1>{view.data.content.title}</h1>
-              <p>{view.data.content.caption}</p>
-              <span>Tags</span><span style={{float: 'right'}}>{view.data.content.createdAt}</span>
+                <h1>{view.data.content.title}</h1>
+                <p>{view.data.content.caption}</p>
+                <span>Tags</span><span style={{float: 'right'}}>{view.data.content.createdAt}</span>
               </Segment>
             </Grid.Column>
             <Grid.Column width={6}>

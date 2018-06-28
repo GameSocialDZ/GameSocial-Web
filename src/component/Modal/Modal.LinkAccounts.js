@@ -22,7 +22,7 @@ class ModalLinkAccounts extends Component {
 
   render() {
     return (
-    <Modal trigger={<Button>Link</Button>}>
+    <Modal trigger={<Button color={'orange'}>Link</Button>}>
       <Modal.Header>Account Link</Modal.Header>
       <Modal.Content>
         <Modal.Description>

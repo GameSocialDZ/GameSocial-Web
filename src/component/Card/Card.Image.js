@@ -35,7 +35,7 @@ class ImageCard extends Component {
   };
 
   render() {
-    const {currentUser, page, image} = this.props;
+    const {auth, page, image, user} = this.props;
     return (
       <Segment style={{backgroundColor: 'transparent', border: '0 none'}}>
       <Card fluid>
@@ -63,18 +63,24 @@ class ImageCard extends Component {
               </Card.Content>
             )
           }
-          <Button.Group>
-            <Button type="button">
-              <Link to={`/view/${image.publisher.id}/${image.config.type}/${image.id}`}>View</Link>
-            </Button>
-            {
-              // Disable Edit button if on profile page and unAuthorized (not logged in)
-              (page === 'profile' && currentUser !==null) &&
-              <Button
-                type="button"
-                onClick={() => this.setFormState(this.state.editing)}>Edit</Button>
-            }
-            </Button.Group>
+          {
+            // Disable Edit button if on profile page and unAuthorized (not logged in)
+            (page === 'profile' && auth.currentUser && user.data && auth.currentUser.uid === user.data.id) ?(
+              <Button.Group>
+                <Button color={'orange'} type="button">
+                  <Link to={`/view/${image.publisher.id}/${image.config.type}/${image.id}`}>View</Link>
+                </Button>
+                <Button.Or />
+                <Button color={'orange'}
+                  type="button"
+                  onClick={() => this.setFormState(this.state.editing)}>Edit</Button>
+              </Button.Group>
+            ):(
+              <Button color={'orange'} type="button">
+                <Link to={`/view/${image.publisher.id}/${image.config.type}/${image.id}`}>View</Link>
+              </Button>
+            )
+          }
       </Card>
       </Segment>
     );
@@ -82,8 +88,8 @@ class ImageCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser,
-  user: state.user.data
+  auth: state.auth,
+  user: state.user
 });
 
 export default connect(mapStateToProps)

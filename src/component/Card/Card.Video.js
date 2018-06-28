@@ -7,6 +7,7 @@ import _ from 'lodash';
 import {Button, Card, Image, Segment} from 'semantic-ui-react';
 
 import FormEditUserUpload from '../Form/Form.EditUserUpload';
+import FeaturedToggle from "../Toggle/Toggle.Featured";
 
 class VideoCard extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class VideoCard extends Component {
   };
 
   render() {
-    const {currentUser, page, video} = this.props;
+    const {auth, page, video, user} = this.props;
     return (
       <Segment style={{backgroundColor: 'transparent', border: '0 none'}}>
       <Card fluid>
@@ -65,16 +66,19 @@ class VideoCard extends Component {
                 <Card.Header>{video.content.title}</Card.Header>
                 <Card.Meta><span className='date'>{video.content.createdAt}</span></Card.Meta>
                 <Card.Description>{video.content.caption}</Card.Description>
+                <Card.Meta textAlign={'right'}>
+                  <FeaturedToggle upload={video}/>
+                </Card.Meta>
               </Card.Content>
             )
           }
           <Button.Group>
-            <Button type="button">
+            <Button color={'orange'} type="button">
               <Link to={`/view/${video.publisher.id}/${video.config.type}/${video.id}`}>View</Link>
             </Button>
             {
-              (page === 'profile' && currentUser !== null) &&
-              <Button
+              (page === 'profile' && auth.currentUser && user.data && auth.currentUser.uid === user.data.id) &&
+              <Button color={'orange'}
                 type="button"
                 onClick={() => this.setFormState(this.state.editing)}>Edit</Button>
             }
@@ -86,7 +90,8 @@ class VideoCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.cuurentUser,
+  auth: state.auth,
+  user: state.user
 });
 
 export default connect(mapStateToProps)(VideoCard);

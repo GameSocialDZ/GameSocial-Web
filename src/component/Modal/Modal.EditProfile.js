@@ -4,7 +4,7 @@ import { Button, Header, Modal } from 'semantic-ui-react'
 import FormEditProfile from '../Form/Form.EditProfile';
 
 const ModalEditProfile = () => (
-  <Modal trigger={<Button>Edit</Button>}>
+  <Modal trigger={<Button color={'orange'}>Edit</Button>}>
     <Modal.Header>Edit Profile</Modal.Header>
     <Modal.Content >
       <Modal.Description>

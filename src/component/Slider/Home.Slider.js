@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import { Player } from 'video-react';
 import Slider from 'react-slick';
 import _ from 'lodash';
 import { Container, Image, Segment } from 'semantic-ui-react';
@@ -24,16 +25,22 @@ class HomeSlider extends Component {
   }
 
   render() {
-    const hasList = !!(this.props.featured.list);
+    const hasList = !!(this.props.featured.data);
     return hasList ? (
       <Slider {...settings}>
         {
-          _.map(this.props.featured.list, feature => {
+          _.map(this.props.featured.data, feature => {
             return(
               <Segment key={feature.id}>
                 <div className="slideContent">
-                  <Image alt="test" src="https://res.cloudinary.com/diygdnbei/image/upload/v1519444005/zumnvvbqi0fo1zthkal7.png" />
-                  <h1>{feature.title}</h1>
+                  <Player
+                    className="embed-responsive-item"
+                    loop
+                    playsinline
+                    aspectRatio="16:9"
+                    poster={feature.thumbnail.large}
+                    src={feature.url}/>
+                  <h1>{feature.content.title}</h1>
                 </div>
                 <div className="slideInner">
                   <Container text textAlign='center'>
@@ -53,7 +60,7 @@ class HomeSlider extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  currentUser: state.auth.currentUser
+  featured: state.featured
 });
 
 export default connect(mapStateToProps)(HomeSlider);

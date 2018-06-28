@@ -19,28 +19,28 @@ class MenuProfile extends Component {
     //const {followers, following, images, videos} = this.props;
     const {user} = this.props;
     return (
-      <Menu tabular>
-        <Menu.Item style={{backgroundColor: 'orangered', color: 'white'}}
+      <Menu compact color={'orange'} inverted tabular>
+        <Menu.Item
           name='images' active={activeMenu === 'images'} onClick={this.handleItemClick}>
           Images {_.size(user.data.images)}
         </Menu.Item>
-        <Menu.Item style={{backgroundColor: 'orangered', color: 'white'}}
+        <Menu.Item
           name='videos' active={activeMenu === 'videos'} onClick={this.handleItemClick}>
           Videos {_.size(user.data.videos)}
         </Menu.Item>
-        <Menu.Item style={{backgroundColor: 'orangered', color: 'white'}}
+        <Menu.Item
           name='followers' active={activeMenu === 'followers'} onClick={this.handleItemClick}>
           Followers {_.size(user.data.followers)-1}
         </Menu.Item>
-        <Menu.Item style={{backgroundColor: 'orangered', color: 'white'}}
+        <Menu.Item
           name='following' active={activeMenu === 'following'} onClick={this.handleItemClick}>
           Following {_.size(user.data.following)-1}
         </Menu.Item>
-        <Menu.Item style={{backgroundColor: 'orangered', color: 'white'}}
+        <Menu.Item
           name='favorites' active={activeMenu === 'favorites'} onClick={this.handleItemClick}>
           Favorites {_.size(user.data.favorites)}
         </Menu.Item>
-        <Menu.Item style={{backgroundColor: 'orangered', color: 'white'}}
+        <Menu.Item
           name='playlist' active={activeMenu === 'playlist'} onClick={this.handleItemClick}>
           Playlist {_.size(user.data.playlist)}
         </Menu.Item>

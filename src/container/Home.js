@@ -4,8 +4,8 @@ import _ from 'lodash';
 
 import {Grid, Segment, Container} from 'semantic-ui-react';
 
-import {getUploads, getUploadsPromise} from "../actions/action.upload";
-import {getUserOnce, getUser} from '../actions/action.user';
+import {getUploadsPromise} from "../actions/action.upload";
+import {getFeaturedPromise} from "../actions/action.featured";
 
 import ContentSlider from '../component/Slider/Content.Slider';
 import ImageCard from '../component/Card/Card.Image';
@@ -17,19 +17,26 @@ class Home extends Component {
     super(props);
     this.state = {
       loadingUploads: true,
+      loadingFeatured: true,
       initState: true
     }
   }
 
   // Get the uploads for home page
   componentDidMount() {
-    this.props.getUploadsPromise().then((uploads) => {
-      console.log(uploads);
+    this.props.getUploadsPromise().then(() => {
       this.setState({
         loadingUploads: false,
         initState: true
       });
-    })
+    });
+
+    this.props.getFeaturedPromise().then(() => {
+      this.setState({
+        loadingFeatured: false,
+        initState: true
+      })
+    });
   }
 
   // Set all uploads within components state
@@ -51,14 +58,14 @@ class Home extends Component {
             key={image.id}>
             <ImageCard
               image={image}
-              history={this.props.history}/>
+              page={'home'}/>
           </Grid.Column>
         ):(
           <div
             key={image.id}>
             <ImageCard
               image={image}
-              history={this.props.history}/>
+              page={'home'}/>
           </div>
         )
     });
@@ -75,14 +82,14 @@ class Home extends Component {
           key={video.id}>
             <VideoCard
               video={video}
-              history={this.props.history}/>
+              page={'home'}/>
           </Grid.Column>
         ):(
           <div
             key={video.id}>
             <VideoCard
               video={video}
-              history={this.props.history}/>
+              page={'home'}/>
           </div>
         )
     });
@@ -141,5 +148,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getUploads, getUser, getUserOnce, getUploadsPromise})
+  {getUploadsPromise, getFeaturedPromise})
 (Home);
