@@ -71,7 +71,8 @@ class MenuHeader extends Component {
         <Menu.Item as={Link} to='/' name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
           <img style={{width: '50px'}} src="https://www.showwp.com/wp-content/uploads/2016/02/fox-gradient.png"/>
         </Menu.Item>
-        <Menu.Item as={Link} to='/feed' name='feed' active={activeItem === 'feed'} onClick={this.handleItemClick}>
+        <Menu.Item as={Link} to='/feed' active={activeItem === 'feed'} onClick={this.handleItemClick}>
+          <Icon size='large' name={'globe'}/>
         </Menu.Item>
         <Menu.Item>
           {this.renderSearchDropdown()}

@@ -31,7 +31,7 @@ class HomeSlider extends Component {
         {
           _.map(this.props.featured.data, feature => {
             return(
-              <Segment key={feature.id}>
+              <Segment padded={'very'} inverted key={feature.id}>
                 <div className="slideContent">
                   <Player
                     className="embed-responsive-item"

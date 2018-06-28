@@ -45,13 +45,17 @@ export class FeaturedToggle extends Component {
 
   render(){
     const {isFeatured} = this.state;
-    const {featured} = this.props;
+    const {auth} = this.props;
 
     return (
-      <Checkbox
-        toggle
-        checked={isFeatured}
-        onClick={this.onToggle}/>
+      auth.currentUser && auth.currentUser.isAdmin ? (
+          <Checkbox
+            toggle
+            checked={isFeatured}
+            onClick={this.onToggle}/>
+        ):(
+          null
+        )
     )
   }
 }

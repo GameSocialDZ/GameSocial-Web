@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
-import {Grid, Segment, Container} from 'semantic-ui-react';
+import {Grid, Header, Container} from 'semantic-ui-react';
 
 import {getUploadsPromise} from "../actions/action.upload";
 import {getFeaturedPromise} from "../actions/action.featured";
+import {getAuth} from "../actions/action.auth";
 
 import ContentSlider from '../component/Slider/Content.Slider';
 import ImageCard from '../component/Card/Card.Image';
@@ -19,6 +20,13 @@ class Home extends Component {
       loadingUploads: true,
       loadingFeatured: true,
       initState: true
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    //Log in on Home page
+    if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
+      this.props.getAuth();
     }
   }
 
@@ -104,7 +112,9 @@ class Home extends Component {
 
     return (
       <div style={{marginTop: '4.5rem', backgroundColor: 'dimgray'}}>
+        <Header textAlign={'center'} size={'huge'}>Featured Videos</Header>
         <HomeHero/>
+        <Header textAlign={'center'} size={'large'}>Images</Header>
         <Container style={{marginBottom: '1rem'}}>
           {
             _.size(uploads.data.images) > 3 &&
@@ -121,6 +131,7 @@ class Home extends Component {
             </Grid>
           }
         </Container>
+        <Header textAlign={'center'} size={'large'}>Videos</Header>
         <Container>
           {
             _.size(uploads.data.videos) > 3 &&
@@ -148,5 +159,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  {getUploadsPromise, getFeaturedPromise})
+  {getUploadsPromise, getFeaturedPromise, getAuth})
 (Home);

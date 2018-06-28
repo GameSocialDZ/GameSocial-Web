@@ -8,9 +8,10 @@ export const authRequest = () => ({
 });
 
 export const AUTH_GET_SUCCESS = 'AUTH_GET_SUCCESS';
-export const authGetSuccess = (currentUser) => ({
+export const authGetSuccess = (currentUser, data) => ({
   type: AUTH_GET_SUCCESS,
-  currentUser
+  currentUser,
+  data
 });
 
 export const AUTH_UPDATE_SUCCESS = 'AUTH_UPDATE_SUCCESS';
@@ -62,13 +63,12 @@ export const loginEmailPassword = (user) => dispatch => {
       .then(function() {
         auth.signInWithEmailAndPassword(user.loginEmail, user.loginPassword)
           .then(auth => {
-            console.log(auth);
-
-            const AuthUserRef = database.ref(`/users${auth.uid}`);
-            AuthUserRef.child(`/profile/avatar/url`).once('value', data =>{
-              auth.updateProfile({photoURL: data.val()});
+            database.ref(`/users/${auth.uid}`).once('value', data =>{
+              const user = data.val();
+              auth.updateProfile({photoURL: user.profile.avatar.url});
+              auth.isAdmin = user.isAdmin
             });
-
+            console.log(auth);
             dispatch(authGetSuccess(auth));
           })
       })
@@ -84,6 +84,12 @@ export const getAuth = () => dispatch => {
 
 
 //*** SERVICES ***//
+
+export const setAdmin = (auth) => dispatch => {
+  database.ref(`users/${auth.id}/isAdmin`).once('value', data => {
+    auth.isAdmin = data.val();
+  })
+};
 
 export const updateAuth = (file) => dispatch => {
   auth.currentUser.updateProfile({
