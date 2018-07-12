@@ -23,7 +23,8 @@ class Comments extends Component {
 
   componentDidMount() {
     console.log(this.props.view.data.id);
-    this.props.getCommentsOnce(this.props.view.data.id);
+    this.props.getCommentsPromise(this.props.view.data.id)
+      .then(this.setState({loadingComments: false}));
   }
 
   onSubmit(values) {
@@ -64,7 +65,8 @@ class Comments extends Component {
   }
 
   render() {
-    if(this.state.loadingComments){
+    const {comments} = this.props;
+    if(comments.loading){
       return <div>Loading...</div>
     }
 

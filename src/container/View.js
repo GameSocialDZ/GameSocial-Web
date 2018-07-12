@@ -49,7 +49,6 @@ class View extends Component {
         this.setState({initState: true})
       });
     }
-
     if(initState && nextProps.comments.data && nextProps.comments.data !== this.props.comments.data) {
       this.setState({initState: false});
       this.props.getCommentsPromise(view.data.id).then(() => {
@@ -132,5 +131,5 @@ export default connect(mapStateToProps,
   {deleteView, getViewPromise, getView, getUserPromise,getUserOncePromise,
     getFollowingPromise, getFollowersPromise, getFollowingOnce, getFollowersOnce,
     getFavoritesOnce, getFavoritesPromise, getTrackedFavoritesOnce, getTrackedFavoritesPromise,
-    getPlaylistPromise, getPlaylistOnce,getCommentsPromise})
+    getPlaylistPromise, getPlaylistOnce, getCommentsPromise})
 (View);
