@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Redirect, withRouter} from 'react-router-dom';
 import _ from 'lodash';
+import ReactGa from 'react-ga';
 
 import {Grid, Header, Container} from 'semantic-ui-react';
 
@@ -69,6 +70,7 @@ export class Profile extends Component {
 
   // Handles refresh
   componentDidMount() {
+    ReactGa.pageview('/profile');
     const {match: {params}, auth} = this.props;
 
     this.props.getUserOnce(params.userId);

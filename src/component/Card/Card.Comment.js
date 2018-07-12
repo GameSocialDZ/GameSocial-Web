@@ -23,16 +23,15 @@ class Comments extends Component {
 
   componentDidMount() {
     console.log(this.props.view.data.id);
-    //this.props.getCommentsOnce(this.props.view.data.id);
-    this.props.getComments(this.props.view.data.id);
+    this.props.getCommentsOnce(this.props.view.data.id);
   }
 
   onSubmit(values) {
     const currentUser = this.props.auth.currentUser;
     this.props.addComment(currentUser, this.props.view.data.id, values);
     this.props.dispatch(reset('comments'));
-
-    this.props.getCommentsOnce(this.props.view.data.id)
+    this.props.getCommentsPromise(this.props.view.data.id)
+      .then(this.setState({loadingComments: false}))
   }
 
   handleChange = (e) => {
@@ -65,9 +64,9 @@ class Comments extends Component {
   }
 
   render() {
-    // if(this.props.comments.loading){
-    //   return <div>Loading...</div>
-    // }
+    if(this.state.loadingComments){
+      return <div>Loading...</div>
+    }
 
     console.log(this.renderCommentList());
     return(

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
+import ReactGA from 'react-ga';
 
 import {Grid, Header, Container} from 'semantic-ui-react';
 
@@ -32,6 +33,9 @@ class Home extends Component {
 
   // Get the uploads for home page
   componentDidMount() {
+    // Track the home page for users
+    ReactGA.pageview('/');
+
     this.props.getUploadsPromise().then(() => {
       this.setState({
         loadingUploads: false,

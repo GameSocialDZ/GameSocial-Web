@@ -26,6 +26,11 @@ class PlaylistMenu extends Component {
     const { playlist } = this.state;
     const {auth} = this.props;
 
+    ReactGA.event({
+      category: 'Playlist',
+      action: 'Playlist Created',
+    });
+
     database.ref(`users/${auth.currentUser.uid}/playlist`).orderByChild('name').equalTo(playlist)
       .once('value', data => {
         const exist = !!data.val();

@@ -9,6 +9,7 @@ import {getFollowersPromise, getFollowersOnce} from "../actions/action.followers
 import {getFavoritesOnce, getFavoritesPromise} from "../actions/action.favorite";
 import {getTrackedFavoritesOnce, getTrackedFavoritesPromise} from '../actions/action.track.favorites';
 import {getPlaylistPromise, getPlaylistOnce} from "../actions/action.playlist";
+import {getCommentsPromise} from '../actions/action.comments';
 
 import ImageView from '../component/View/Image.View';
 import VideoView from '../component/View/Video.View';
@@ -23,6 +24,7 @@ class View extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {view} = this.props;
+    const {initState} = this.state;
     // Handle Login on view page
     if(!_.isEmpty(nextProps.auth.currentUser) && _.isEmpty(this.props.auth.currentUser)) {
       this.setState({initState: false});
@@ -46,6 +48,13 @@ class View extends Component {
       this.props.getPlaylistPromise(nextProps.auth.currentUser.uid).then(() => {
         this.setState({initState: true})
       });
+    }
+
+    if(initState && nextProps.comments.data && nextProps.comments.data !== this.props.comments.data) {
+      this.setState({initState: false});
+      this.props.getCommentsPromise(view.data.id).then(() => {
+        this.setState({initState: true})
+      })
     }
   }
 
@@ -115,12 +124,13 @@ const mapStateToProps = state => ({
   auth: state.auth,
   view: state.view,
   following: state.following,
-  followers: state.followers
+  followers: state.followers,
+  comments: state.comments
 });
 
 export default connect(mapStateToProps,
   {deleteView, getViewPromise, getView, getUserPromise,getUserOncePromise,
     getFollowingPromise, getFollowersPromise, getFollowingOnce, getFollowersOnce,
     getFavoritesOnce, getFavoritesPromise, getTrackedFavoritesOnce, getTrackedFavoritesPromise,
-    getPlaylistPromise, getPlaylistOnce})
+    getPlaylistPromise, getPlaylistOnce,getCommentsPromise})
 (View);
