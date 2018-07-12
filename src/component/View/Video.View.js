@@ -23,7 +23,7 @@ class VideoView extends Component {
   }
 
   render() {
-    const {view} = this.props;
+    const {view, auth} = this.props;
     return (
       <div>
         <Grid>
@@ -57,6 +57,7 @@ class VideoView extends Component {
                   upload={view.data}/>
                 </div>
                 {
+                  auth.currentUser && auth.currentUser.isAdmin &&
                   <Segment textAlign={'right'}>
                     <span style={{float: 'left'}}>Featured</span>
                     <FeaturedToggle upload={view.data}/>
@@ -95,7 +96,8 @@ class VideoView extends Component {
 }
 
 const mapStateToProps = state => ({
-  view: state.view
+  view: state.view,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {deleteUpload})(VideoView);

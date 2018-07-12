@@ -52,9 +52,9 @@ class ImageView extends Component {
           <Grid.Row>
             <Grid.Column width={10}>
               <Segment>
-              <h1>{view.data.content.title}</h1>
-              <p>{view.data.content.caption}</p>
-              <span>Tags</span><span style={{float: 'right'}}>{view.data.content.createdAt}</span>
+                <h1>{view.data.content.title}</h1>
+                <p>{view.data.content.caption}</p>
+                <span>Tags</span><span style={{float: 'right'}}>{view.data.content.createdAt}</span>
               </Segment>
             </Grid.Column>
             <Grid.Column width={6}>
@@ -66,7 +66,7 @@ class ImageView extends Component {
           <Grid.Row>
             <Grid.Column width={16}>
               <Segment>
-              <Comments/>
+                <Comments/>
               </Segment>
             </Grid.Column>
           </Grid.Row>

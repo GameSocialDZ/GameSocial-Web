@@ -23,7 +23,8 @@ class Comments extends Component {
 
   componentDidMount() {
     console.log(this.props.view.data.id);
-    this.props.getCommentsOnce(this.props.view.data.id)
+    //this.props.getCommentsOnce(this.props.view.data.id);
+    this.props.getComments(this.props.view.data.id);
   }
 
   onSubmit(values) {

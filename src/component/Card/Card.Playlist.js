@@ -4,9 +4,10 @@ import {connect} from 'react-redux';
 import {Player} from 'video-react';
 import _ from 'lodash';
 
-import {Button, Card, Image, Segment} from 'semantic-ui-react';
+import {Icon, Card, Image, Segment} from 'semantic-ui-react';
 
 import FormEditUserUpload from '../Form/Form.EditUserUpload';
+import {removeFromPlaylist, getPlaylistOnce} from '../../actions/action.playlist';
 
 class PlaylistCard extends Component {
   constructor(props) {
@@ -34,8 +35,16 @@ class PlaylistCard extends Component {
     }
   };
 
+  removePlaylist(){
+    const {auth, video, playlist} = this.props;
+
+    console.log(auth.currentUser.uid, video.id, playlist);
+    this.props.removeFromPlaylist(auth.currentUser.uid, video.id, playlist);
+    this.props.getPlaylistOnce(auth.currentUser.uid);
+  };
+
   render() {
-    const {auth, page, video} = this.props;
+    const {auth, user, video} = this.props;
     return (
         <Card fluid>
           <Player
@@ -45,6 +54,12 @@ class PlaylistCard extends Component {
             muted={true} autoPlay={false} loop={false}>
             <source src={video.url}/>
           </Player>
+          {
+            auth.currentUser &&(auth.currentUser.uid === user.data.id) &&
+            <Card.Content textAlign={'right'}>
+              <Icon onClick={() => this.removePlaylist()} name={'remove circle'}/>
+            </Card.Content>
+          }
         </Card>
     );
   };
@@ -52,6 +67,8 @@ class PlaylistCard extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  user: state.user
 });
 
-export default connect(mapStateToProps)(PlaylistCard);
+export default connect(mapStateToProps,
+  {removeFromPlaylist, getPlaylistOnce})(PlaylistCard);

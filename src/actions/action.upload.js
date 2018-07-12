@@ -56,10 +56,9 @@ export const getUploadsPromise = () => dispatch => {
 // Services
 
 export const upload = (data, file) => dispatch => {
-  // TODO: Check Authentication
   dispatch(uploadRequest());
 
-    let upload;
+  let upload;
   if(file.resource_type === 'video') {
     //TODO: Use the newVideo Obj
     // const newVideo = new VideoObject(data, file);

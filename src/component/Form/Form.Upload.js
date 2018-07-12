@@ -37,9 +37,15 @@ class FormUpload extends Component{
   }
 
   onSubmit(values, file) {
+    // Validation
     if(_.isEmpty(file)){
       return alert('File not selected or still uploading!');
     }
+
+    if(_.size(values) < 2){
+     return alert ('Missing Title or Caption!')
+    }
+
     // Add publisher
     values.publisher = this.props.user.data.profile;
     this.props.upload(values, file);

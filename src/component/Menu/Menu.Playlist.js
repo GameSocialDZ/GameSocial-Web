@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { Dropdown, Icon, Input, Menu, Form, Message} from 'semantic-ui-react'
 import {createPlaylist} from "../../actions/action.playlist";
 import {database} from "../../firebase";
+import ReactGA from '../../googleAnalytics';
 
 class PlaylistMenu extends Component {
   constructor(props) {

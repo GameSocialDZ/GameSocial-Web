@@ -65,6 +65,8 @@ class View extends Component {
       this.setState({loadingView: false})
     });
 
+
+
     // Get Auth info if logged in
     if(!_.isEmpty(auth.currentUser)) {
       // Get auth Following

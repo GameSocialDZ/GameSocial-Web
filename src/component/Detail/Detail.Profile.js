@@ -28,6 +28,7 @@ export class ProfileDetail extends Component {
       return (
         <Grid.Column mobile={16} computer={8} largeScreen={5} key={image.id}>
           <ImageCard
+            activeMenu={this.state.activeMenu}
             image={image}
             page={this.props.page}
           />
@@ -41,6 +42,7 @@ export class ProfileDetail extends Component {
       return (
         <Grid.Column mobile={16} computer={8} largeScreen={5} key={video.id}>
           <VideoCard
+            activeMenu={this.state.activeMenu}
             video={video}
             page={this.props.page}
           />
@@ -90,10 +92,12 @@ export class ProfileDetail extends Component {
           {
             favorite.config.type === 'video' ? (
               <VideoCard
+                activeMenu={this.state.activeMenu}
                 video={favorite}
                 page={this.props.page}/>
             ):(
               <ImageCard
+                activeMenu={this.state.activeMenu}
                 image={favorite}
                 page={this.props.page}/>
             )

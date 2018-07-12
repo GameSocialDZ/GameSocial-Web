@@ -34,11 +34,28 @@ class ImageCard extends Component {
     }
   };
 
+  hover = () => {
+    this.setState({
+      hover: true
+    })
+  };
+
+  unhover = () => {
+    this.setState({
+      hover: false
+    })
+  };
+
   render() {
-    const {auth, page, image, user} = this.props;
+    const {auth, page, image, user, activeMenu} = this.props;
+    const {hover} = this.state;
     return (
       <Segment style={{backgroundColor: 'transparent', border: '0 none'}}>
-      <Card fluid>
+      <Card
+        as={Link} to={`/view/${image.publisher.id}/${image.config.type}/${image.id}`}
+        fluid style={hover ? {background: 'rgb:(255, 255, 255)', boxShadow: 'rgb(204, 204, 204) 0px 0px 10px', zIndex: '1'}: null}
+        onMouseEnter={this.hover}
+        onMouseLeave={this.unhover}>
         <Image alt="upload" src={image.url}/>
           {
             // Render card details if not editing
@@ -59,27 +76,14 @@ class ImageCard extends Component {
                 <Card.Meta textAlign='right'>{image.publisher.username}</Card.Meta>
                 <Card.Header>{image.content.title}</Card.Header>
                 <Card.Meta><span className='date'>{image.content.createdAt}</span></Card.Meta>
-                <Card.Description>{image.content.caption}</Card.Description>
+                {/*<Card.Description>{image.content.caption}</Card.Description>*/}
               </Card.Content>
             )
           }
           {
             // Disable Edit button if on profile page and unAuthorized (not logged in)
-            (page === 'profile' && auth.currentUser && user.data && auth.currentUser.uid === user.data.id) ?(
-              <Button.Group>
-                <Button color={'orange'} type="button">
-                  <Link to={`/view/${image.publisher.id}/${image.config.type}/${image.id}`}>View</Link>
-                </Button>
-                <Button.Or />
-                <Button color={'orange'}
-                  type="button"
-                  onClick={() => this.setFormState(this.state.editing)}>Edit</Button>
-              </Button.Group>
-            ):(
-              <Button color={'orange'} type="button">
-                <Link to={`/view/${image.publisher.id}/${image.config.type}/${image.id}`}>View</Link>
-              </Button>
-            )
+            page === 'profile' && (activeMenu === 'images') && auth.currentUser && user.data && auth.currentUser.uid === user.data.id &&
+            <Button color={'orange'} type="button" onClick={() => this.setFormState(this.state.editing)}>Edit</Button>
           }
       </Card>
       </Segment>

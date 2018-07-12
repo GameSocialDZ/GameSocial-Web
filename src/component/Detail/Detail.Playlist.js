@@ -43,6 +43,7 @@ export class ProfileDetail extends Component {
           largeScreen={5}
           style={{marginBottom: '1rem'}} key={video.id}>
           <PlaylistCard
+            playlist={this.state.activeMenu}
             video={video}
             page={this.props.page}
           />

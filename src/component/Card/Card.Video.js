@@ -7,7 +7,7 @@ import _ from 'lodash';
 import {Button, Card, Image, Segment} from 'semantic-ui-react';
 
 import FormEditUserUpload from '../Form/Form.EditUserUpload';
-import FeaturedToggle from "../Toggle/Toggle.Featured";
+//import FeaturedToggle from "../Toggle/Toggle.Featured";
 
 class VideoCard extends Component {
   constructor(props) {
@@ -35,11 +35,28 @@ class VideoCard extends Component {
     }
   };
 
+  hover = () => {
+    this.setState({
+      hover: true
+    })
+  };
+
+  unhover = () => {
+    this.setState({
+      hover: false
+    })
+  };
+
   render() {
-    const {auth, page, video, user} = this.props;
+    const {auth, page, video, user, activeMenu} = this.props;
+    const {hover} = this.state;
     return (
       <Segment style={{backgroundColor: 'transparent', border: '0 none'}}>
-      <Card fluid>
+      <Card
+        as={Link} to={`/view/${video.publisher.id}/${video.config.type}/${video.id}`}
+        fluid style={hover ? {background: 'rgb:(255, 255, 255)', boxShadow: 'rgb(204, 204, 204) 0px 0px 10px', zIndex: '1'}: null}
+        onMouseEnter={this.hover}
+        onMouseLeave={this.unhover}>
         <Player
           className="card-img-top"
           alt="upload" aspectRatio='16:9'
@@ -65,24 +82,14 @@ class VideoCard extends Component {
                 <Card.Meta textAlign='right'>{video.publisher.username}</Card.Meta>
                 <Card.Header>{video.content.title}</Card.Header>
                 <Card.Meta><span className='date'>{video.content.createdAt}</span></Card.Meta>
-                <Card.Description>{video.content.caption}</Card.Description>
-                <Card.Meta textAlign={'right'}>
-                  <FeaturedToggle upload={video}/>
-                </Card.Meta>
+                {/*<Card.Description>{video.content.caption}</Card.Description>*/}
               </Card.Content>
             )
           }
-          <Button.Group>
-            <Button color={'orange'} type="button">
-              <Link to={`/view/${video.publisher.id}/${video.config.type}/${video.id}`}>View</Link>
-            </Button>
-            {
-              (page === 'profile' && auth.currentUser && user.data && auth.currentUser.uid === user.data.id) &&
-              <Button color={'orange'}
-                type="button"
-                onClick={() => this.setFormState(this.state.editing)}>Edit</Button>
-            }
-          </Button.Group>
+          {
+            page === 'profile' && (activeMenu === 'videos') && auth.currentUser && user.data && auth.currentUser.uid === user.data.id &&
+            <Button color={'orange'} type="button" onClick={() => this.setFormState(this.state.editing)}>Edit</Button>
+          }
       </Card>
       </Segment>
     );
